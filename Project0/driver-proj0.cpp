@@ -4,8 +4,7 @@
  * Student name: Wesley Anastasi
  * version: 1.0
  * 
- * This file contains the main for project 0
- * Project 0 is a simple text editor with undo and redo functions
+ * This file contains the main for this program
  */
 #include <iostream>
 #include <string>
@@ -21,12 +20,20 @@ using namespace std;
  *      argv -- the command line argument values
  *  return value: 0 (indicating a successful run)
  * 
- *  Takes an integer input and gets input that many times, user inputs
- * u for undo, r for redo, and t for normal text
- * at the end of the program, will output the text and undo stacks
+ *  This function takes input from the user and keeps track of the input provided
+ * The user must input an integer at the start of the program to determine
+ * the number of times they will provide input.The user will then
+ * input either u, r, or t followed by a string. u tells the program to undo the last
+ * text input. The last text input will be removed from the text stack and added to the top
+ * of the undo stack. r tells the program to redo the undo, and the text from the top
+ * of the undo stack will be removed and added to the top of the text stack. For either,
+ * if there is nothing to undo/redo and error message will be printed. t " " tells the 
+ * program to add the provided string to the text stack. After all input has been gathered,
+ * the program will print two lines: the contents of the text stack and the contents of the
+ * undo stack.
  */
 int main(int argc, char **argv) {
-    //argc and argv allow the user to pass additonal 
+    //argc and argv allow the user to pass additional 
     //arguments into the function from the command line 
     const string undoChar = "u";
     const string redoChar = "r";

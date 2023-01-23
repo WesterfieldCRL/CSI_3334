@@ -1,0 +1,13 @@
+Will the following C++ function terminate for all inputs (yes or no)? Give a short proof for your answer.
+
+void printToN(int n) {
+    for (int i = 0; i != n + 1; i++) {
+        cout << i << endl;
+    }
+}
+
+No, if n is negative the function will run infinitely.
+
+Ex: if n = -3, i starts at 0, so the function checks to see if 0 != -2. 
+0 != -2, so i is increased by one and the program checks again. 
+However, because i will only increase, it will never be equal to -3;

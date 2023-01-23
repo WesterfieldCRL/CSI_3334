@@ -4,7 +4,15 @@
  * Student name: Wesley Anastasi
  * version: 1.0
  * 
- * This file contains the main for this program
+ * This file contains the main function for this program.
+ * The main function includes the libraries:
+ * iostream,string,stack,cassert
+ * uses namespace std
+ * The main contains the implementation of a simplified text editor.
+ * It gets inputs from the user and based on those inputs performs either an undo
+ * operation, a redo operation, or adds text to the output. 
+ * It will output the result of the input after doing all the undos and redos.
+ * Further details are available in the function documentation
  */
 #include <iostream>
 #include <string>

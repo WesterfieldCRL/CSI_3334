@@ -30,7 +30,7 @@ Location Location::iterationCurrent() const
         returnLoc.row--;
         break;
     default:
-        cout << "something went wrong in iterationCurrent" << endl;
+        //cout << "something went wrong in iterationCurrent" << endl;
         break;
     }
 
@@ -53,7 +53,7 @@ void Location::iterationAdvance()
         this->nextDirection = DONE;
         break;
     default:
-        cout << "something went wrong in iterationAdvance" << endl;
+        //cout << "something went wrong in iterationAdvance" << endl;
         break;
     }
 }

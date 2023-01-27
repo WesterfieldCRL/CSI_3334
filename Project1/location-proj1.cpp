@@ -5,13 +5,10 @@ Location::Location()
 {
     this->row = 0;
     this->col = 0;
-    this->nextDirection = RIGHT;
 }
 
 void Location::iterationBegin()
 {
-    this->row = 0;
-    this->col = 0;
     this->nextDirection = RIGHT;
 }
 

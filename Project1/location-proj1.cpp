@@ -10,7 +10,9 @@ Location::Location()
 
 void Location::iterationBegin()
 {
-    //what is this function supposed to do?
+    this->row = 0;
+    this->col = 0;
+    this->nextDirection = RIGHT;
 }
 
 Location Location::iterationCurrent() const

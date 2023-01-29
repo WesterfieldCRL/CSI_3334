@@ -1,42 +1,113 @@
 #include "location-proj1.h"
+#include "stack-proj1.h"
+#include "maze-proj1.h"
 #include <iostream>
 
 using namespace std;
 
 int main()
 {
-    Location loc;
+    Location loc1;
     Location loc2;
+    LocationStack locStack1;
 
-    for (loc.iterationBegin(); !loc.iterationDone(); loc.iterationAdvance()) {
-        Location neighbor = loc.iterationCurrent();
-        cout << neighbor << endl;
-    }
+    cout << "testing with NULL top" << endl;
 
-    //set to different location
-    cin >> loc2;
+    cout << "printing stack" << endl;
+    cout << locStack1;
 
-    if (loc == loc2)
+    cout << "testing isOn with empty Stack" << endl;
+    if (locStack1.isOn(loc1))
     {
-        cout << "bad" << endl;
+        cout << "bad, isOn is true" << endl;
     }
     else
     {
-        cout << "not equal" << endl;
+        cout << "good, isOn is false" << endl;
     }
 
-    for (loc2.iterationBegin(); !loc2.iterationDone(); loc2.iterationAdvance()) {
-        Location neighbor = loc2.iterationCurrent();
-        cout << neighbor << endl;
-    }
-
-    //set back to same location
-    cin >> loc2;
-
-    if (loc == loc2)
+    cout << "testing isEmpty" << endl;
+    if (locStack1.isEmpty())
     {
-        cout << "equal!" << endl;
+        cout << "good, isEmpty is true" << endl;
     }
+    else
+    {
+        cout << "bad, isEmpty is false" << endl;
+    }
+
+    cout << endl;
+
+    cout << "adding 5 locations to the stack" << endl;
+
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "input a location" << endl;
+        cin >> loc1;
+        locStack1.push(loc1);
+        cout << locStack1.getTop() << endl;
+    }
+
+    cout << "printing stack" << endl;
+    cout << locStack1;
+
+    cout << "testing isOn" << endl;
+    if (locStack1.isOn(loc1))
+    {
+        cout << "good, isOn is true" << endl;
+    }
+    else
+    {
+        cout << "bad, isOn is false" << endl;
+    }
+
+    cout << "testing isEmpty" << endl;
+    if (locStack1.isEmpty())
+    {
+        cout << "bad, isEmpty is true" << endl;
+    }
+    else
+    {
+        cout << "good, isEmpty is false" << endl;
+    }
+
+    cout << "printing stack again" << endl;
+    cout << locStack1;
+
+    cout << endl;
+
+    cout << "testing pop" << endl;
+
+    for (int i = 0; i < 5; i++)
+    {
+        cout << locStack1.getTop() << endl;
+        locStack1.pop();
+    }
+
+    cout << "printing stack" << endl;
+    cout << locStack1;
+
+    cout << "testing isOn with empty Stack" << endl;
+    if (locStack1.isOn(loc1))
+    {
+        cout << "bad, isOn is true" << endl;
+    }
+    else
+    {
+        cout << "good, isOn is false" << endl;
+    }
+
+    cout << "testing isEmpty" << endl;
+    if (locStack1.isEmpty())
+    {
+        cout << "good, isEmpty is true" << endl;
+    }
+    else
+    {
+        cout << "bad, isEmpty is false" << endl;
+    }
+
+    cout << "Done" << endl;
 
     return 0;
 }

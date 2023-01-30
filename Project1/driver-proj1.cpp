@@ -8,8 +8,8 @@ using namespace std;
 int main()
 {
     Location loc1;
-    Location loc2;
     LocationStack locStack1;
+    Maze maze;
 
     cout << "testing with NULL top" << endl;
 
@@ -105,6 +105,53 @@ int main()
     else
     {
         cout << "bad, isEmpty is false" << endl;
+    }
+
+    cout << endl << "testing maze" << endl;
+
+    cout << "input maze" << endl;
+    cin >> maze;
+
+    cout << "start location = " << maze.getStartLocation() << endl;
+
+    for (int i = 0; i < 2; i++)
+    {
+        Location temp;
+        cout << "input location" << endl;
+        cin >> temp;
+        if (maze.isValidLocation(temp))
+        {
+            cout << "is valid" << endl;
+        }
+        else
+        {
+            cout << "not valid" << endl;
+        }
+    }
+
+    cout << "input end location" << endl;
+
+    cin >> loc1;
+    if (maze.isEndLocation(loc1))
+    {
+        cout << "good" << endl;
+    }
+    else
+    {
+        cout << "bad" << endl;
+    }
+
+    cout << "input non-end location" << endl;
+
+    cin >> loc1;
+
+    if (maze.isEndLocation(loc1))
+    {
+        cout << "bad" << endl;
+    }
+    else
+    {
+        cout << "good" << endl;
     }
 
     cout << "Done" << endl;

@@ -4,7 +4,7 @@
 Maze::Maze()
 {
     this->validLocationCount = 0;
-    this->validLocations = new Location[this->validLocationCount];
+    this->validLocations = NULL;
     this->startLocation = Location();
     this->endLocation = Location();
 }

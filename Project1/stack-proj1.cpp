@@ -57,7 +57,7 @@ LocationStack::~LocationStack() {
  * then sets top to be the temporary node.
  * 
  * Parameters:
- *   loc: constant Location passed by reference.
+ *   loc: Location object, object that is being pushed on the top of the stack.
  * 
  * Return value: none
  */
@@ -91,7 +91,7 @@ void LocationStack::pop() {
  * Parameters:
  *   none
  * 
- * Return value: Location
+ * Return value: The Location object on the top of the stack
  */
 const Location &LocationStack::getTop() const {
     return this->top->getLocation();
@@ -106,7 +106,7 @@ const Location &LocationStack::getTop() const {
  * Parameters:
  *   none
  * 
- * Return value: boolean
+ * Return value: A boolean to tell the user if the stack is empty or not
  */
 bool LocationStack::isEmpty() const {
     if (this->top == NULL) {
@@ -122,9 +122,10 @@ bool LocationStack::isEmpty() const {
  * to the location on the top of the stack.
  * 
  * Parameters:
- *   loc: constant Location passed by reference
+ *   loc: Location object, object being checked to see if an equivalent Location
+ *      is on the stack
  * 
- * Return value: boolean
+ * Return value: A boolean to tell the user if the provided Location is on the stack
  */
 bool LocationStack::isOn(const Location &loc) const {
     LocationStackNode *temp = this->top;
@@ -146,7 +147,7 @@ bool LocationStack::isOn(const Location &loc) const {
  *   os: ostream. to output the stack to
  *   s: LocationStack, the thing to be outputted
  * 
- * Return value: ostream
+ * Return value: the given ostream to permit output chaining
  */
 ostream &operator<<(ostream &os, const LocationStack &s) {
     LocationStackNode *temp = s.top;
@@ -196,7 +197,7 @@ ostream &operator<<(ostream &os, const LocationStack &s) {
  * The next Node has a default value of NULL
  * 
  * Parameters:
- *   loc: const Location passed by reference
+ *   loc: object that nextNode will point to
  *   next: LocationStackNode, next node in the link, default is NULL
  * 
  * Return value: none
@@ -230,7 +231,7 @@ LocationStackNode::~LocationStackNode() {
  * Parameters:
  *   none
  * 
- * Return value: Location
+ * Return value: the object stored in this Node
  */
 const Location &LocationStackNode::getLocation() const {
     return this->location;
@@ -244,7 +245,7 @@ const Location &LocationStackNode::getLocation() const {
  * Parameters:
  *   none
  * 
- * Return value: LocationStackNode
+ * Return value: The node pointed to by this node
  */
 LocationStackNode *LocationStackNode::getNextNode() const {
     return this->nextNode;

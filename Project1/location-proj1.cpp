@@ -1,3 +1,23 @@
+/* CSI 3334
+ * Project 1 -- Two-dimensional Maze Solver
+ * Filename: location-proj1.cpp
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the implementation of all functions defined in location-proj1.h.
+ * This includes the implementation of all of the functions used in the Location class
+ * This includes a constructor that sets row and col to 0, and nextDirection to the
+ * RIGHT enum value. This also includes a function iterationBegin for starting the
+ * iteration over the enum values stored in nextDirection. The function sets nextDirection
+ * equal to RIGHT. The function iterationBegin returns the neighbor of the current Location
+ * based on what nextDirection is set to. iterationAdvance sets nextDirection to the next
+ * enum value, and iterationDone returns true if nextDirection is set to DONE. The operator==
+ * function checks if the provided Location's row and col values are equal to this
+ * objects row and col values. The friend function operator>> allows for inputting
+ * values into row and col, and operator<< prints row and col to the ostream provided.
+ * 
+ */
+
 #include "location-proj1.h"
 #include <iostream>
 
@@ -45,7 +65,7 @@ void Location::iterationBegin() {
  * Parameters:
  *   none
  * 
- * Return value: Location
+ * Return value: the neighbor of the current location dictated by nextDirection
  */
 Location Location::iterationCurrent() const {
     Location returnLoc = *this;
@@ -113,7 +133,7 @@ void Location::iterationAdvance() {
  * Parameters:
  *   none
  * 
- * Return value: boolean
+ * Return value: A boolean to tell the user if iteration has finished over this location
  */
 bool Location::iterationDone() const {
     if (this->nextDirection == DONE) {
@@ -130,9 +150,9 @@ bool Location::iterationDone() const {
  * if it does, returns true, otherwise returns false
  * 
  * Parameters:
- *   loc: const Location passed by reference
+ *   loc: The object to be compared with this object
  * 
- * Return value: boolean
+ * Return value: A boolean to tell the user if the two Locations are equal
  */
 bool Location::operator==(const Location &loc) const {
     if (this->row == loc.row && this->col == loc.col) {
@@ -148,9 +168,9 @@ bool Location::operator==(const Location &loc) const {
  * 
  * Parameters:
  *   os: ostream to output the values to
- *   loc: const Location passed by reference
+ *   loc: where the values to output are coming from
  * 
- * Return value: ostream
+ * Return value: the given stream to permit output chaining
  */
 ostream &operator<<(ostream &os, const Location &loc) {
     os << loc.row << " " << loc.col;
@@ -164,9 +184,9 @@ ostream &operator<<(ostream &os, const Location &loc) {
  * 
  * Parameters:
  *   is: istream, where the input comes from
- *   loc: cpmst Location passed by reference
+ *   loc: where the values are being input into
  * 
- * Return value: none
+ * Return value: the given stream to permit output chaining
  */
 istream &operator>>(istream &is, Location &loc) {
     is >> loc.row >> loc.col;

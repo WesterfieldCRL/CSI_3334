@@ -5,7 +5,11 @@
  * version: 1.0
  * 
  * This file contains the implementation of all functions defined in maze-proj1.cpp.
- * 
+ * Includes a constructor for Maze, a destructor, a way of getting the Location
+ * object stored in startLocation, a check to see if a provided Location object is
+ * stored in the validLocations array, a check if the provided Location object is equal
+ * to the Location object stored in endLocation, and a way of getting input from the user
+ * to fill out Maze's array of valid locations.
  * 
  */
 
@@ -56,7 +60,7 @@ Maze::~Maze() {
  * Parameters:
  *   none
  * 
- * Return value: Location
+ * Return value: the start Location of the maze that is stored in startLocaiton
  */
 Location Maze::getStartLocation(void) const {
     return this->startLocation;
@@ -69,9 +73,9 @@ Location Maze::getStartLocation(void) const {
  * if it is in the array, returns true, else returns false
  * 
  * Parameters:
- *   loc: const Location passed by reference
+ *   loc: the object that is getting checked to see if it is in the array
  * 
- * Return value: boolean
+ * Return value: A boolean to tell the user if the provided object is in the array
  */
 bool Maze::isValidLocation(const Location &loc) const {
     for (int i = 0; i < this->validLocationCount; i++) {
@@ -90,9 +94,9 @@ bool Maze::isValidLocation(const Location &loc) const {
  * if it is, returns true, otherwise false
  * 
  * Parameters:
- *   loc: const Location passed by reference
+ *   loc: The object being checked against the end Location
  * 
- * Return value: boolean
+ * Return value: A boolean to tell the user if the provided object is the end Location
  */
 bool Maze::isEndLocation(const Location &loc) const {
     if (loc == this->endLocation) {
@@ -111,7 +115,7 @@ bool Maze::isEndLocation(const Location &loc) const {
  *   is: istream, where the input comes from
  *   m: the Maze object to fill out
  * 
- * Return value: istream
+ * Return value: the given istream to permit output chaining
  */
 istream &operator>>(istream &is, Maze &m) {
     int dataNum;

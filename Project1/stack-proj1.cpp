@@ -1,52 +1,135 @@
+/* CSI 3334
+ * Project 1 -- Two-dimensional Maze Solver
+ * Filename: stack-proj1.cpp
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the implementation of all functions defined in stack-proj1.h
+ * This file contains a constructor for locationStack class, which initalizes the top
+ * pointer to NULL, a destructor which deletes the stack, the functions push and pop
+ * which adds or removes nodes from the top of the stack. Also includes functions
+ * for getting the top of the stack, checking if it is empty, and checking if
+ * a given location is on top of the stack. This file also includes the implementation
+ * of the LocationStackNode as well. It is a object that contains a pointer to the
+ * next node and a Location. It has a constructor, a destructor, a way to get the
+ * Location, a way to set the location, and a way to set the pointer to a Node.
+ */
+
 #include "stack-proj1.h"
 #include <iostream>
 
-
-LocationStack::LocationStack()
-{
+/**
+ * LocationStack
+ * 
+ * Constructor for the LocationStack class.
+ * Sets top to Null
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+LocationStack::LocationStack() {
     this->top = NULL;
 }
 
-LocationStack::~LocationStack()
-{
+/**
+ * ~LocationStack
+ * 
+ * Destructor for the LocationStack class.
+ * delete's top
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+LocationStack::~LocationStack() {
     delete this->top;
 }
 
-void LocationStack::push(const Location &loc)
-{
+/**
+ * push
+ * 
+ * Constructor for the LocationStack class.
+ * creates a temporary node using loc
+ * and sets top to its next.
+ * then sets top to be the temporary node.
+ * 
+ * Parameters:
+ *   loc: constant Location passed by reference.
+ * 
+ * Return value: none
+ */
+void LocationStack::push(const Location &loc) {
     LocationStackNode *temp = new LocationStackNode(loc,this->top);
     this->top = temp;
 }
 
-void LocationStack::pop()
-{
+/**
+ * pop
+ * 
+ * removes the top of the stack
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+void LocationStack::pop() {
     LocationStackNode *temp = this->top;
     this->top = top->getNextNode();
     temp->setNextNode(NULL);
     delete temp;
 }
 
-const Location &LocationStack::getTop() const
-{
+/**
+ * getTop
+ * 
+ * returns the top Location on the stack
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: Location
+ */
+const Location &LocationStack::getTop() const {
     return this->top->getLocation();
 }
 
-bool LocationStack::isEmpty(void) const
-{
-    if (this->top == NULL)
-    {
+/**
+ * isEmpty
+ * 
+ * Checks to see if there are any nodes on the stack
+ * and if there are none returns true, otherwise false.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: boolean
+ */
+bool LocationStack::isEmpty() const {
+    if (this->top == NULL) {
         return true;
     }
     return false;
 }
 
-bool LocationStack::isOn(const Location &loc) const
-{
+/**
+ * isOn
+ * 
+ * takes the provided Location and checks to see if it is equal
+ * to the location on the top of the stack.
+ * 
+ * Parameters:
+ *   loc: constant Location passed by reference
+ * 
+ * Return value: boolean
+ */
+bool LocationStack::isOn(const Location &loc) const {
     LocationStackNode *temp = this->top;
-    while (temp != NULL)
-    {
-        if (temp->getLocation() == loc)
-        {
+    while (temp != NULL) {
+        if (temp->getLocation() == loc) {
             return true;
         }
         temp = temp->getNextNode();
@@ -54,21 +137,29 @@ bool LocationStack::isOn(const Location &loc) const
     return false;
 }
 
-ostream &operator<<(ostream &os, const LocationStack &s)
-{
+/**
+ * operator<<
+ * 
+ * outputs the contents of the provided stack to the provided ostream
+ * 
+ * Parameters:
+ *   os: ostream. to output the stack to
+ *   s: LocationStack, the thing to be outputted
+ * 
+ * Return value: ostream
+ */
+ostream &operator<<(ostream &os, const LocationStack &s) {
     LocationStackNode *temp = s.top;
     LocationStackNode *tempPrev = NULL;
     LocationStackNode *tempNext = NULL;
 
     //reverses links
-    if (temp != NULL)
-    {
+    if (temp != NULL) {
         tempPrev = temp;
         temp = temp->getNextNode();
         tempPrev->setNextNode(NULL);
     }
-    while (temp != NULL)
-    {
+    while (temp != NULL) {
         tempNext = temp->getNextNode();
         temp->setNextNode(tempPrev);
         tempPrev = temp;
@@ -79,15 +170,13 @@ ostream &operator<<(ostream &os, const LocationStack &s)
     temp = tempNext = tempPrev;
 
     //reverses links again and prints out each location
-    if (temp != NULL)
-    {
+    if (temp != NULL) {
         os << temp->getLocation() << endl;
         tempPrev = temp;
         temp = temp->getNextNode();
         tempPrev->setNextNode(NULL);
     }
-    while (temp != NULL)
-    {
+    while (temp != NULL) {
         os << temp->getLocation() << endl;
         tempNext = temp->getNextNode();
         temp->setNextNode(tempPrev);
@@ -99,28 +188,78 @@ ostream &operator<<(ostream &os, const LocationStack &s)
 
 }
 
-LocationStackNode::LocationStackNode(const Location &loc, LocationStackNode *next)
-{
+/**
+ * LocationStackNode
+ * 
+ * Constructor for a
+ * Node with a pointer to a next node, and a Location value
+ * The next Node has a default value of NULL
+ * 
+ * Parameters:
+ *   loc: const Location passed by reference
+ *   next: LocationStackNode, next node in the link, default is NULL
+ * 
+ * Return value: none
+ */
+LocationStackNode::LocationStackNode(const Location &loc, LocationStackNode *next) {
     this->location = loc;
     this->nextNode = next;
 }
 
-LocationStackNode::~LocationStackNode()
-{
+/**
+ * ~LocationStackNode
+ * 
+ * Destructor for the LocationStackNode
+ * delete's the pointer to the next node,
+ * which will call that nodes destructor as well 
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+LocationStackNode::~LocationStackNode() {
     delete this->nextNode;
 }
 
-const Location &LocationStackNode::getLocation() const
-{
+/**
+ * getLocation
+ * 
+ * returns the location stored by the node
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: Location
+ */
+const Location &LocationStackNode::getLocation() const {
     return this->location;
 }
 
-LocationStackNode *LocationStackNode::getNextNode() const
-{
+/**
+ * getNextNode
+ * 
+ * returns the node this node is pointing too
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: LocationStackNode
+ */
+LocationStackNode *LocationStackNode::getNextNode() const {
     return this->nextNode;
 }
 
-void LocationStackNode::setNextNode(LocationStackNode *next)
-{
+/**
+ * setNextNode
+ * 
+ * sets the pointer to the provided node
+ * 
+ * Parameters:
+ *   next: LocationStackNode, the node to point this node too
+ * 
+ * Return value: none
+ */
+void LocationStackNode::setNextNode(LocationStackNode *next) {
     this->nextNode = next;
 }

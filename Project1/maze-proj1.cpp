@@ -60,7 +60,7 @@ Maze::~Maze() {
  * Parameters:
  *   none
  * 
- * Return value: the start Location of the maze that is stored in startLocaiton
+ * Return value: the start Location of the maze
  */
 Location Maze::getStartLocation(void) const {
     return this->startLocation;
@@ -75,7 +75,7 @@ Location Maze::getStartLocation(void) const {
  * Parameters:
  *   loc: the object that is getting checked to see if it is in the array
  * 
- * Return value: A boolean to tell the user if the provided object is in the array
+ * Return value: tells the user if the provided object is in the array
  */
 bool Maze::isValidLocation(const Location &loc) const {
     for (int i = 0; i < this->validLocationCount; i++) {
@@ -94,9 +94,10 @@ bool Maze::isValidLocation(const Location &loc) const {
  * if it is, returns true, otherwise false
  * 
  * Parameters:
- *   loc: The object being checked against the end Location
+ *   loc: The object being compared to the end location
  * 
- * Return value: A boolean to tell the user if the provided object is the end Location
+ * Return value: tells the user if the provided location is equal to the end location
+ * of the maze
  */
 bool Maze::isEndLocation(const Location &loc) const {
     if (loc == this->endLocation) {
@@ -112,8 +113,8 @@ bool Maze::isEndLocation(const Location &loc) const {
  * and uses it to fill out the array with valid locations.
  * 
  * Parameters:
- *   is: istream, where the input comes from
- *   m: the Maze object to fill out
+ *   is: the stream to get input from
+ *   m: the object that is being filled with input
  * 
  * Return value: the given istream to permit output chaining
  */

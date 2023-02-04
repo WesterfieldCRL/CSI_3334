@@ -57,7 +57,7 @@ LocationStack::~LocationStack() {
  * then sets top to be the temporary node.
  * 
  * Parameters:
- *   loc: Location object, object that is being pushed on the top of the stack.
+ *   loc: item being added to the top of the stack
  * 
  * Return value: none
  */
@@ -91,7 +91,7 @@ void LocationStack::pop() {
  * Parameters:
  *   none
  * 
- * Return value: The Location object on the top of the stack
+ * Return value: The object on the top of the stack
  */
 const Location &LocationStack::getTop() const {
     return this->top->getLocation();
@@ -106,7 +106,7 @@ const Location &LocationStack::getTop() const {
  * Parameters:
  *   none
  * 
- * Return value: A boolean to tell the user if the stack is empty or not
+ * Return value: tells the user if the stack is empty or not
  */
 bool LocationStack::isEmpty() const {
     if (this->top == NULL) {
@@ -122,10 +122,10 @@ bool LocationStack::isEmpty() const {
  * to the location on the top of the stack.
  * 
  * Parameters:
- *   loc: Location object, object being checked to see if an equivalent Location
+ *   loc: object being checked to see if an equivalent Location
  *      is on the stack
  * 
- * Return value: A boolean to tell the user if the provided Location is on the stack
+ * Return value: tells the user if the provided Location is on the stack
  */
 bool LocationStack::isOn(const Location &loc) const {
     LocationStackNode *temp = this->top;
@@ -144,8 +144,8 @@ bool LocationStack::isOn(const Location &loc) const {
  * outputs the contents of the provided stack to the provided ostream
  * 
  * Parameters:
- *   os: ostream. to output the stack to
- *   s: LocationStack, the thing to be outputted
+ *   os: the place that this object is being outputted too
+ *   s: the object whose contents are being outputted
  * 
  * Return value: the given ostream to permit output chaining
  */
@@ -197,8 +197,8 @@ ostream &operator<<(ostream &os, const LocationStack &s) {
  * The next Node has a default value of NULL
  * 
  * Parameters:
- *   loc: object that nextNode will point to
- *   next: LocationStackNode, next node in the link, default is NULL
+ *   loc: the object that is being stored in the node
+ *   next: the object the pointer is being pointed too
  * 
  * Return value: none
  */
@@ -257,7 +257,7 @@ LocationStackNode *LocationStackNode::getNextNode() const {
  * sets the pointer to the provided node
  * 
  * Parameters:
- *   next: LocationStackNode, the node to point this node too
+ *   next: the node too point this node too
  * 
  * Return value: none
  */

@@ -133,7 +133,7 @@ void Location::iterationAdvance() {
  * Parameters:
  *   none
  * 
- * Return value: A boolean to tell the user if iteration has finished over this location
+ * Return value: tells the user if nextDirection is equal to DONE
  */
 bool Location::iterationDone() const {
     if (this->nextDirection == DONE) {
@@ -152,7 +152,7 @@ bool Location::iterationDone() const {
  * Parameters:
  *   loc: The object to be compared with this object
  * 
- * Return value: A boolean to tell the user if the two Locations are equal
+ * Return value: tells the user if this object is equal to the provided object
  */
 bool Location::operator==(const Location &loc) const {
     if (this->row == loc.row && this->col == loc.col) {
@@ -167,7 +167,7 @@ bool Location::operator==(const Location &loc) const {
  * outputs the row and col of this to the provided ostream
  * 
  * Parameters:
- *   os: ostream to output the values to
+ *   os: the place the values are being output too
  *   loc: where the values to output are coming from
  * 
  * Return value: the given stream to permit output chaining
@@ -183,7 +183,7 @@ ostream &operator<<(ostream &os, const Location &loc) {
  * takes input from the provided istream to set row and col to the provided values
  * 
  * Parameters:
- *   is: istream, where the input comes from
+ *   is: the place the input is coming from
  *   loc: where the values are being input into
  * 
  * Return value: the given stream to permit output chaining

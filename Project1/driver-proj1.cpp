@@ -50,6 +50,7 @@ int main() {
     cin >> maze;
 
     m = maze.getStartLocation();
+    m.iterationBegin();
     stack.push(m);
 
     while (!NoSolution && !maze.isEndLocation(stack.getTop())) {

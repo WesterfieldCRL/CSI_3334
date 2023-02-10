@@ -35,10 +35,6 @@ Location Location::iterationCurrent() const
     {
         temp.word.erase(this->indexToChange,1);
     }
-    else
-    {
-        cout << "iterationCurrent called on DONE" << endl;
-    }
     return temp;
 }
 void Location::iterationAdvance()
@@ -54,7 +50,17 @@ void Location::iterationAdvance()
             this->nextLetter = 'a';
             this->indexToChange++;
         }
-        
+
+        if (this->word[this->indexToChange] == this->nextLetter)
+        {
+            this->nextLetter++;
+            if (this->nextLetter >= 'z')
+            {
+                this->nextLetter = 'a';
+                this->indexToChange++;
+            }
+        }
+
         if (this->word.length() <= this->indexToChange)
         {
             this->iterationMode = INSERT_LETTER;
@@ -62,7 +68,7 @@ void Location::iterationAdvance()
             this->indexToChange = 0;
         }
 
-        if (this->word[this->indexToChange] == this->nextLetter)
+        /*if (this->word[this->indexToChange] == this->nextLetter)
         {
             this->nextLetter++;
             if (this->nextLetter == 'z')
@@ -79,7 +85,7 @@ void Location::iterationAdvance()
                     this->indexToChange = 0;
                 }
             }
-        }
+        }*/
     }
     else if (this->iterationMode == INSERT_LETTER)
     {

@@ -39,7 +39,6 @@ Location Location::iterationCurrent() const
     {
         cout << "iterationCurrent called on DONE" << endl;
     }
-
     return temp;
 }
 void Location::iterationAdvance()
@@ -55,7 +54,8 @@ void Location::iterationAdvance()
             this->nextLetter = 'a';
             this->indexToChange++;
         }
-        else
+        
+        if (this->word.length() <= this->indexToChange)
         {
             this->iterationMode = INSERT_LETTER;
             this->nextLetter = 'a';
@@ -65,12 +65,31 @@ void Location::iterationAdvance()
         if (this->word[this->indexToChange] == this->nextLetter)
         {
             this->nextLetter++;
+            if (this->nextLetter == 'z')
+            {
+                if (this->word.length() > this->indexToChange)
+                {
+                    this->nextLetter = 'a';
+                    this->indexToChange++;
+                }
+                else
+                {
+                    this->iterationMode = INSERT_LETTER;
+                    this->nextLetter = 'a';
+                    this->indexToChange = 0;
+                }
+            }
         }
     }
     else if (this->iterationMode == INSERT_LETTER)
     {
-        if (this->word.length() > this->indexToChange)
+        if (this->nextLetter != 'z')
         {
+            this->nextLetter++;
+        }
+        else if (this->word.length() > this->indexToChange)
+        {
+            this->nextLetter = 'a';
             this->indexToChange++;
         }
         else
@@ -81,7 +100,7 @@ void Location::iterationAdvance()
     }
     else if (this->iterationMode == DELETE_LETTER)
     {
-        if (this->indexToChange < this->word.length())
+        if (this->indexToChange < this->word.length()-1)
         {
             this->indexToChange++;
         }
@@ -113,6 +132,7 @@ bool Location::operator==(const Location &loc) const
 ostream &operator<<(ostream &os, const Location &loc)
 {
     os << loc.word;
+    return os;
 }
 
 istream &operator>>(istream &is, Location &loc)
@@ -120,6 +140,7 @@ istream &operator>>(istream &is, Location &loc)
     string temp;
     is >> temp;
     loc.word = temp;
+    return is;
 }
 
 bool Location::operator<(const Location &loc) const

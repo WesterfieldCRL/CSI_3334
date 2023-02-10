@@ -34,5 +34,16 @@ bool Maze::isEndLocation(const Location &loc) const
 
 istream &operator>>(istream &is, Maze &m)
 {
+    Location temp;
+    int num;
+    is >> num;
 
+    for (int i = 0; i < num; i++)
+    {
+        is >> temp;
+        m.validLocations.insert(temp);
+    }
+    is >> m.startLocation;
+    is >> m.endLocation;
+    return is;
 }

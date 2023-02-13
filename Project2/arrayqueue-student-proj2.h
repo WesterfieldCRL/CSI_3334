@@ -7,7 +7,7 @@
 template <class Base>
 ArrayQueue<Base>::ArrayQueue()
 {
-    this->capacity = 2;
+    this->capacity = 10;
     this->length = 0;
     this->front = 0;
     this->data = new Base[this->capacity];
@@ -35,13 +35,21 @@ ArrayQueue<Base>::~ArrayQueue()
 template <class Base>
 void ArrayQueue<Base>::add(const Base &item)
 {
-    
+    if (this->length >= this->capacity)
+    {
+        doubleCapacity();
+    }
+    int back = (this->front+this->length) % this->capacity;
+    this->data[back] = item;
+    this->length++;
+    cout << this->data[back] << endl;
 }
 
 template <class Base>
 void ArrayQueue<Base>::remove()
 {
-    
+    this->front = (this->front+1)%this->capacity;
+    this->length--;
 }
 
 template <class Base>
@@ -73,7 +81,7 @@ const ArrayQueue<Base> &ArrayQueue<Base>::operator=(const ArrayQueue<Base> &q)
             this->data[i] = q.data[i];
         }
     }
-    return this;
+    return *this;
 }
 
 template <class Base>
@@ -82,10 +90,13 @@ void ArrayQueue<Base>::doubleCapacity()
     this->capacity *= 2;
     Base *temp = this->data;
     this->data = new Base[this->capacity];
+    int back = -1;
 
-    for (int i = 0; i < this->capacity; i++)
+    for (int i = 0; i < this->length; i++)
     {
-        this->data[i] = temp[i];
+        this->front = (front+1)%this->length;
+        back++;
+        this->data[back] = temp[front];
     }
     delete [] temp;
 }

@@ -1,66 +1,30 @@
 #include <iostream>
 #include "location-proj2.h"
 #include "maze-proj2.h"
+#include "arrayqueue-prof-proj2.h"
+#include "arrayqueue-student-proj2.h"
 
 using namespace std;
 
 int main()
 {
-    Location test;
-    Maze mazeTest;
-    cin >> test;
+    ArrayQueue<int> q;
+    ArrayQueue<int> p;
 
-    for (test.iterationBegin(); !test.iterationDone(); test.iterationAdvance())
+    for (int i = 0; i < 20; i++)
     {
-        cout << test.iterationCurrent() << endl;
+        q.add(i);
     }
 
-    cout << endl << "testing maze" << endl;
+    p = q;
 
-    cout << "input maze" << endl;
-    cin >> mazeTest;
-
-    cout << "start location = " << mazeTest.getStartLocation() << endl;
-
-    for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 20; i++)
     {
-        Location temp;
-        cout << "input location" << endl;
-        cin >> temp;
-        if (mazeTest.isValidLocation(temp))
-        {
-            cout << "is valid" << endl;
-        }
-        else
-        {
-            cout << "not valid" << endl;
-        }
+        cout << q.getFront() << " " << q.getLength() << endl;
+        q.remove();
     }
 
-    cout << "input end location" << endl;
-
-    cin >> test;
-    if (mazeTest.isEndLocation(test))
-    {
-        cout << "good" << endl;
-    }
-    else
-    {
-        cout << "bad" << endl;
-    }
-
-    cout << "input non-end location" << endl;
-
-    cin >> test;
-
-    if (mazeTest.isEndLocation(test))
-    {
-        cout << "bad" << endl;
-    }
-    else
-    {
-        cout << "good" << endl;
-    }
+    cout << "p front = " << p.getFront() << endl;
 
     cout << "DONE" << endl;
 

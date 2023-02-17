@@ -131,11 +131,6 @@ template <class Base>
 void ArrayQueue<Base>::remove() {
     this->front = (this->front+1)%this->capacity;
     this->length--;
-    if (this->length <= 0)
-    {
-        this->length = 0;
-        this->front = 0;
-    }
 }
 
 /**
@@ -216,16 +211,14 @@ const ArrayQueue<Base> &ArrayQueue<Base>::operator=(const ArrayQueue<Base> &q) {
 template <class Base>
 void ArrayQueue<Base>::doubleCapacity() {
     this->capacity *= 2;
-    Base *temp = this->data;
-    this->data = new Base[this->capacity];
-    int back = -1;
-
+    Base *temp = new Base[this->capacity];
     for (int i = 0; i < this->length; i++) {
-        back++;
-        this->data[back] = temp[front];
-        this->front = (front+1)%this->length;
+        this->front = (front+i)%this->length;
+        temp[i] = this->data[this->front];
     }
-    delete [] temp;
+    delete [] this->data;
+    this->data = temp;
+    front = 0;
 }
 
 

@@ -1,5 +1,4 @@
 Solution found
 aa
-ac
-bc
+ba
 bz

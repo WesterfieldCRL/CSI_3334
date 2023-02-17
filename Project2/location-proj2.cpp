@@ -27,7 +27,7 @@
  */
 
 Location::Location() {
-    this->word = "default";
+    //this->word = "default";
     this->nextLetter = 'a';
     this->iterationMode = CHANGE_LETTER;
     this->indexToChange = 0;
@@ -115,7 +115,7 @@ Location Location::iterationCurrent() const {
 
 void Location::iterationAdvance() {
     if (this->iterationMode == CHANGE_LETTER) {
-        if (this->nextLetter != 'z') {
+        if (this->nextLetter < 'z') {
             this->nextLetter++;
         }
         else if (this->word.length() > this->indexToChange) {
@@ -125,7 +125,7 @@ void Location::iterationAdvance() {
 
         if (this->word[this->indexToChange] == this->nextLetter) {
             this->nextLetter++;
-            if (this->nextLetter >= 'z') {
+            if (this->nextLetter > 'z') {
                 this->nextLetter = 'a';
                 this->indexToChange++;
             }
@@ -138,7 +138,7 @@ void Location::iterationAdvance() {
         }
     }
     else if (this->iterationMode == INSERT_LETTER) {
-        if (this->nextLetter != 'z') {
+        if (this->nextLetter < 'z') {
             this->nextLetter++;
         }
         else if (this->word.length() > this->indexToChange) {

@@ -66,7 +66,6 @@ ArrayQueue<Base>::ArrayQueue(const ArrayQueue<Base> &q) {
     this->data = new Base[q.capacity];
     this->length = q.length;
     this->capacity = q.capacity;
-
     for (int i = 0; i < q.capacity; i++)
     {
         this->data[i] = q.data[i];
@@ -105,8 +104,7 @@ ArrayQueue<Base>::~ArrayQueue() {
 
 template <class Base>
 void ArrayQueue<Base>::add(const Base &item) {
-    if (this->length >= this->capacity)
-    {
+    if (this->length >= this->capacity) {
         doubleCapacity();
     }
     int back = (this->front+this->length) % this->capacity;
@@ -213,8 +211,7 @@ void ArrayQueue<Base>::doubleCapacity() {
     this->capacity *= 2;
     Base *temp = new Base[this->capacity];
     for (int i = 0; i < this->length; i++) {
-        this->front = (front+i)%this->length;
-        temp[i] = this->data[this->front];
+        temp[i] = this->data[(this->front+i)%this->length];
     }
     delete [] this->data;
     this->data = temp;

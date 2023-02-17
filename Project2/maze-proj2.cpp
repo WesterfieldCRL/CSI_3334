@@ -25,10 +25,7 @@
  * Return value: none
  */
 
-Maze::Maze() {
-    this->startLocation = Location();
-    this->endLocation = Location();
-    this->validLocations = set<Location>();
+Maze::Maze(void) {
 }
 
 /**
@@ -42,7 +39,7 @@ Maze::Maze() {
  * Return value: the startLocation of the maze
  */
 
-Location Maze::getStartLocation() const {
+Location Maze::getStartLocation(void) const {
     return this->startLocation;
 }
 

@@ -131,6 +131,11 @@ template <class Base>
 void ArrayQueue<Base>::remove() {
     this->front = (this->front+1)%this->capacity;
     this->length--;
+    if (this->length <= 0)
+    {
+        this->length = 0;
+        this->front = 0;
+    }
 }
 
 /**

@@ -66,8 +66,7 @@ ArrayQueue<Base>::ArrayQueue(const ArrayQueue<Base> &q) {
     this->data = new Base[q.capacity];
     this->length = q.length;
     this->capacity = q.capacity;
-    for (int i = 0; i < q.capacity; i++)
-    {
+    for (int i = 0; i < q.capacity; i++) {
         this->data[i] = q.data[i];
     }
 }

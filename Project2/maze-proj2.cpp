@@ -99,6 +99,7 @@ bool Maze::isEndLocation(const Location &loc) const {
 istream &operator>>(istream &is, Maze &m) {
     Location temp;
     int num;
+    m.validLocations.clear();
     is >> num;
 
     for (int i = 0; i < num; i++) {

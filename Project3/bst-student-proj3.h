@@ -133,7 +133,7 @@ void BST<Base>::remove(const Base &item)
             {
                 if (parent->left == toRemove)
                 {
-                    parent->left = NULL;
+                    parent->left = NULL:
                 }
                 else
                 {
@@ -144,12 +144,50 @@ void BST<Base>::remove(const Base &item)
         //if the item has one child
         else if (toRemove->left == NULL || toRemove->right == NULL)
         {
-
+            BSTNode<Base> *child = NULL;
+            if (toRemove->left != NULL)
+            {
+                child = toRemove;
+                toRemove->left = NULL;
+            }
+            else
+            {
+                child = toRemove;
+                toRemove->right = NULL;
+            }
+            if (parent->left == toRemove)
+            {
+                parent->left = child;
+            }
+            else
+            {
+                parent->right = child;
+            }
+            delete child;
         }
         //if the item has two children
         else
         {
-
+            BSTNode<Base> *leftMost = toRemove->right;
+            BSTNode<Base> *leftMostParent = toRemove;
+            while (leftMost->left != NULL)
+            {
+                leftMostParent = leftMost;
+                leftMost = leftMost->left;
+            }
+            leftMostParent->left = leftMost->right;
+            leftMost->right = toRemove->right;
+            leftMost->left = toRemove->left;
+            if (parent->left == toRemove)
+            {
+                parent->left = leftMost;
+            }
+            else
+            {
+                parent->right = leftMost;
+            }
+            toRemove->left = toRemove->right = NULL;
+            delete toRemove;
         }
 
         //delete pointers
@@ -159,6 +197,18 @@ void BST<Base>::remove(const Base &item)
         }
         delete toRemove;
     }
+}
+
+template <class Base>
+string EncryptionTree<Base>::encrypt(const Base &item) const
+{
+    
+}
+
+template <class Base>
+const Base *EncryptionTree<Base>::decrypt(const string &path) const
+{
+
 }
 
 #endif

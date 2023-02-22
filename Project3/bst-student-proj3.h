@@ -17,25 +17,31 @@ BSTNode<Base>::~BSTNode()
 }
 
 template <class Base>
-void BSTNode<Base>::printPreorder(ostream &os = cout, string indent = "") const
+void BSTNode<Base>::printPreorder(ostream &os, string indent) const
 {
 
 }
 
 template <class Base>
-void BSTNode<Base>::verifySearchOrder() const
+const BSTNode<Base> *BSTNode<Base>::minNode() const
 {
 
 }
 
 template <class Base>
-const BSTNode BSTNode<Base>::*minNode() const
+const BSTNode<Base> *BSTNode<Base>::maxNode() const
 {
 
 }
 
 template <class Base>
-const BSTNode<Base>BSTNode *maxNode() const
+BSTNode<Base> BSTNode<Base>::(const BSTNode &t)
+{
+
+}
+
+template <class Base>
+const BSTNode<Base> &BSTNode<Base>::operator=(const BSTNode &n) 
 {
 
 }

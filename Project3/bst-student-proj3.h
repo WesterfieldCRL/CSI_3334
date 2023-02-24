@@ -10,6 +10,8 @@
  * #include the professor file.
  */
 
+//BSTNode
+
 template <class Base>
 BSTNode<Base>::~BSTNode()
 {
@@ -40,7 +42,7 @@ void BSTNode<Base>::printPreorder(ostream &os, string indent) const
 template <class Base>
 const BSTNode<Base> *BSTNode<Base>::minNode() const
 {
-    BSTNode *temp = this;
+    BSTNode<Base> *temp = new BSTNode<Base>(this->data, this->left, this->right);
     while (temp->left != NULL)
     {
         temp = temp->left;
@@ -51,13 +53,15 @@ const BSTNode<Base> *BSTNode<Base>::minNode() const
 template <class Base>
 const BSTNode<Base> *BSTNode<Base>::maxNode() const
 {
-    BSTNode *temp = this;
+    BSTNode<Base> *temp = new BSTNode<Base>(this->data, this->left, this->right);
     while (temp->right != NULL)
     {
         temp = temp->right;
     }
     return temp;
 }
+
+//BST
 
 template <class Base>
 void BST<Base>::insert(const Base &item)
@@ -133,7 +137,7 @@ void BST<Base>::remove(const Base &item)
             {
                 if (parent->left == toRemove)
                 {
-                    parent->left = NULL:
+                    parent->left = NULL;
                 }
                 else
                 {
@@ -199,7 +203,7 @@ void BST<Base>::remove(const Base &item)
     }
 }
 
-template <class Base>
+/*template <class Base>
 string EncryptionTree<Base>::encrypt(const Base &item) const
 {
     
@@ -209,7 +213,7 @@ template <class Base>
 const Base *EncryptionTree<Base>::decrypt(const string &path) const
 {
 
-}
+}*/
 
 #endif
 

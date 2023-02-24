@@ -73,7 +73,7 @@ void BST<Base>::insert(const Base &item)
     }
     else
     {
-        BSTNode<Base> temp = this->root;
+        BSTNode<Base> temp = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
         while (temp != NULL)
         {
             if (item < temp->data)
@@ -109,7 +109,7 @@ template <class Base>
 void BST<Base>::remove(const Base &item)
 {
     //find the item
-    BSTNode<Base> *toRemove = this->root;
+    BSTNode<Base> *toRemove = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
     BSTNode<Base> *parent = NULL;
     while (toRemove != NULL || toRemove->data != item)
     {
@@ -203,17 +203,70 @@ void BST<Base>::remove(const Base &item)
     }
 }
 
-/*template <class Base>
+template <class Base>
 string EncryptionTree<Base>::encrypt(const Base &item) const
 {
-    
+    string result = "r";
+    bool found = false;
+    BSTNode<Base> *temp = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
+    while (temp != NULL)
+    {
+        if (item == temp->data)
+        {
+            found = true;
+            temp = NULL;
+        }
+        else if (item < temp->data)
+        {
+            result += "0";
+            temp = temp->left;
+        }
+        else
+        {
+            result += "1";
+            temp = temp->right;
+        }
+    }
+
+    delete temp;
+
+    if (!found)
+    {
+        result = "?";
+    }
+
+    return result;
 }
 
 template <class Base>
 const Base *EncryptionTree<Base>::decrypt(const string &path) const
 {
+    Base data;
+    BSTNode<Base> *temp = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
+    for (int i = 1; i < path.length() || temp != NULL; i++)
+    {
+        if (path[i] == '0')
+        {
+            temp = temp->left;
+        }
+        else
+        {
+            temp = temp->right;
+        }
+    }
 
-}*/
+    data = temp->data;
+    delete temp;
+
+    if (temp == NULL)
+    {
+        return NULL;
+    }
+    else
+    {
+        return &data;
+    }
+}
 
 #endif
 

@@ -42,7 +42,7 @@ void BSTNode<Base>::printPreorder(ostream &os, string indent) const
 template <class Base>
 const BSTNode<Base> *BSTNode<Base>::minNode() const
 {
-    BSTNode<Base> *temp = new BSTNode<Base>(this->data, this->left, this->right);
+    BSTNode<Base> temp(this->data, this->left, this->right);
     while (temp->left != NULL)
     {
         temp = temp->left;
@@ -53,7 +53,7 @@ const BSTNode<Base> *BSTNode<Base>::minNode() const
 template <class Base>
 const BSTNode<Base> *BSTNode<Base>::maxNode() const
 {
-    BSTNode<Base> *temp = new BSTNode<Base>(this->data, this->left, this->right);
+    BSTNode<Base> temp(this->data, this->left, this->right);
     while (temp->right != NULL)
     {
         temp = temp->right;
@@ -73,35 +73,32 @@ void BST<Base>::insert(const Base &item)
     }
     else
     {
-        BSTNode<Base> temp = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
-        while (temp != NULL)
+        BSTNode<Base> temp(this->root->data, this->root->left, this->root->right);
+        do
         {
-            if (item < temp->data)
+            if (item < temp.data)
             {
-                if (temp->left != NULL)
+                if (temp.left != NULL)
                 {
-                    temp = temp->left;
+                    temp = BSTNode<Base>(temp.left->data, temp.left->left, temp.left->right);
                 }
                 else
                 {
-                    temp->left = new BSTNode<Base>(item);
-                    temp = NULL;
+                    temp.left = new BSTNode<Base>(item);
                 }
             }
             else
             {
-                if (temp->right != NULL)
+                if (temp.right != NULL)
                 {
-                    temp = temp->right;
+                    temp = BSTNode<Base>(temp.right->data, temp.right->left, temp.right->right);
                 }
                 else
                 {
-                    temp->right = new BSTNode<Base>(item);
-                    temp = NULL;
+                    temp.right = new BSTNode<Base>(item);
                 }
             }
-        }
-        delete temp;
+        } while (temp.left != NULL && temp.right != NULL);
     }
 }
 
@@ -208,7 +205,7 @@ string EncryptionTree<Base>::encrypt(const Base &item) const
 {
     string result = "r";
     bool found = false;
-    BSTNode<Base> *temp = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
+    BSTNode<Base> *temp = new BSTNode<Base>(this->root->getData(), &this->root->getLeft(), &this->root->getRight());
     while (temp != NULL)
     {
         if (item == temp->data)

@@ -1,4 +1,6 @@
 #include <iostream>
+#include <random>
+#include <string>
 #include "bst-prof-proj3.h"
 #include "bst-student-proj3.h"
 
@@ -6,7 +8,30 @@ using namespace std;
 
 int main()
 {
-    EncryptionTree<string> tree;
+
+    BST<string> tree;
+    int lines;
+
+    mt19937 generator{random_device{}()};
+    //modify range according to your need "A-Z","a-z" or "0-9" or whatever you need.
+    uniform_int_distribution<int> distribution{'a', 'z'};
+
+    srand(time(0));
+
+    lines = rand() % 100;
+
+    for (int i = 0; i < lines; i++)
+    {
+        int generate_len = rand()%5 + 2;
+        string rand_str(generate_len, '\0');
+        for(auto& dis: rand_str)
+            dis = distribution(generator);
+        tree.insert(rand_str);
+    }
+
+    tree.verifySearchOrder();
+
+    /*EncryptionTree<string> tree;
     string input;
 
     cin >> input;
@@ -70,7 +95,7 @@ int main()
             tree.printPreorder();
         }
         cin >> input;
-    }
+    }*/
     
 
     return 0;

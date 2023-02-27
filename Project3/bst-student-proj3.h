@@ -33,32 +33,44 @@ void BSTNode<Base>::printPreorder(ostream &os, string indent) const
     {
         this->left->printPreorder(os, indent + "  ");
     }
+    else
+    {
+        os << indent << "  " << "NULL" << endl;
+    }
     if (this->right != NULL)
     {
         this->right->printPreorder(os, indent + "  ");
+    }
+    else
+    {
+        os << indent << "  " << "NULL" << endl;
     }
 }
 
 template <class Base>
 const BSTNode<Base> *BSTNode<Base>::minNode() const
 {
-    BSTNode<Base> temp(this->data, this->left, this->right);
-    while (temp->left != NULL)
+    if (this->left == NULL)
     {
-        temp = temp->left;
+        return this;
     }
-    return temp;
+    else
+    {
+        return this->left->minNode();
+    }
 }
 
 template <class Base>
 const BSTNode<Base> *BSTNode<Base>::maxNode() const
 {
-    BSTNode<Base> temp(this->data, this->left, this->right);
-    while (temp->right != NULL)
+    if (this->right == NULL)
     {
-        temp = temp->right;
+        return this;
     }
-    return temp;
+    else
+    {
+        return this->right->maxNode();
+    }
 }
 
 //BST
@@ -205,23 +217,23 @@ string EncryptionTree<Base>::encrypt(const Base &item) const
 {
     string result = "r";
     bool found = false;
-    BSTNode<Base> *temp = new BSTNode<Base>(this->root->getData(), &this->root->getLeft(), &this->root->getRight());
+    const BSTNode<Base> *temp = this->root;
     while (temp != NULL)
     {
-        if (item == temp->data)
+        if (item == temp->getData())
         {
             found = true;
             temp = NULL;
         }
-        else if (item < temp->data)
+        else if (item < temp->getData())
         {
             result += "0";
-            temp = temp->left;
+            temp = temp->getLeft();
         }
         else
         {
             result += "1";
-            temp = temp->right;
+            temp = temp->getRight();
         }
     }
 
@@ -239,21 +251,18 @@ template <class Base>
 const Base *EncryptionTree<Base>::decrypt(const string &path) const
 {
     Base data;
-    BSTNode<Base> *temp = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
+    const BSTNode<Base> *temp = this->root;
     for (int i = 1; i < path.length() || temp != NULL; i++)
     {
         if (path[i] == '0')
         {
-            temp = temp->left;
+            temp = temp->getLeft();
         }
         else
         {
-            temp = temp->right;
+            temp = temp->getRight();
         }
     }
-
-    data = temp->data;
-    delete temp;
 
     if (temp == NULL)
     {
@@ -261,7 +270,7 @@ const Base *EncryptionTree<Base>::decrypt(const string &path) const
     }
     else
     {
-        return &data;
+        return &temp->getData();
     }
 }
 

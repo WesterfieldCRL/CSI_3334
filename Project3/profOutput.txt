@@ -1,0 +1,73 @@
+DEBUG: read line "p"
+DEBUG: read line "i four"
+DEBUG: inserting word 'four'
+DEBUG: read line "i score"
+DEBUG: inserting word 'score'
+DEBUG: read line "i and"
+DEBUG: inserting word 'and'
+DEBUG: read line "i seven"
+DEBUG: inserting word 'seven'
+DEBUG: read line "i years"
+DEBUG: inserting word 'years'
+DEBUG: read line "i ago"
+DEBUG: inserting word 'ago'
+DEBUG: read line "p"
+four
+  and
+    ago
+      NULL
+      NULL
+    NULL
+  score
+    NULL
+    seven
+      NULL
+      years
+        NULL
+        NULL
+DEBUG: read line "e 'four score and seven years ago our forefathers'"
+DEBUG: encrypting message 'four score and seven years ago our forefathers'
+DEBUG: encrypting word 'four': r
+DEBUG: encrypting word 'score':  r1
+DEBUG: encrypting word 'and':  r0
+DEBUG: encrypting word 'seven':  r11
+DEBUG: encrypting word 'years':  r111
+DEBUG: encrypting word 'ago':  r00
+DEBUG: encrypting word 'our':  ?
+DEBUG: encrypting word 'forefathers':  ?
+
+DEBUG: read line "d 'r r0 r1 r00 r01 r10 r11'"
+DEBUG: decrypting message 'r r0 r1 r00 r01 r10 r11'
+DEBUG: decrypting word 'r': four
+DEBUG: decrypting word 'r0':  and
+DEBUG: decrypting word 'r1':  score
+DEBUG: decrypting word 'r00':  ago
+DEBUG: decrypting word 'r01':  ?
+DEBUG: decrypting word 'r10':  ?
+DEBUG: decrypting word 'r11':  seven
+
+DEBUG: read line "r ago"
+DEBUG: removing word 'ago'
+DEBUG: read line "p"
+four
+  and
+    NULL
+    NULL
+  score
+    NULL
+    seven
+      NULL
+      years
+        NULL
+        NULL
+DEBUG: read line "d 'r r0 r1 r00 r01 r10 r11'"
+DEBUG: decrypting message 'r r0 r1 r00 r01 r10 r11'
+DEBUG: decrypting word 'r': four
+DEBUG: decrypting word 'r0':  and
+DEBUG: decrypting word 'r1':  score
+DEBUG: decrypting word 'r00':  ?
+DEBUG: decrypting word 'r01':  ?
+DEBUG: decrypting word 'r10':  ?
+DEBUG: decrypting word 'r11':  seven
+
+DEBUG: read line "q"

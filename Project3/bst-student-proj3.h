@@ -78,7 +78,7 @@ const BSTNode<Base> *BSTNode<Base>::maxNode() const
 template <class Base>
 void BST<Base>::insert(const Base &item)
 {
-
+    cout << "DEBUG: inserting word \'" << item << "\'" << endl;
     if (this->root == NULL)
     {
         this->root = new BSTNode<Base>(item);
@@ -103,6 +103,7 @@ void BST<Base>::insert(const Base &item)
             {
                 if (temp.right != NULL)
                 {
+                    cout << "vibe check" << endl;
                     temp = BSTNode<Base>(temp.right->data, temp.right->left, temp.right->right);
                 }
                 else
@@ -220,20 +221,20 @@ string EncryptionTree<Base>::encrypt(const Base &item) const
     const BSTNode<Base> *temp = this->root;
     while (temp != NULL)
     {
-        if (item == temp->getData())
-        {
-            found = true;
-            temp = NULL;
-        }
-        else if (item < temp->getData())
+        if (item < temp->getData())
         {
             result += "0";
             temp = temp->getLeft();
         }
-        else
+        else if (item > temp->getData())
         {
             result += "1";
             temp = temp->getRight();
+        }
+        else
+        {
+            found = true;
+            temp = NULL;
         }
     }
 

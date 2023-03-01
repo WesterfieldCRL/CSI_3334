@@ -31,14 +31,11 @@
  */
 
 template <class Base>
-BSTNode<Base>::~BSTNode()
-{
-    if (this->left != NULL)
-    {
+BSTNode<Base>::~BSTNode() {
+    if (this->left != NULL) {
         delete this->left;
     }
-    if (this->right != NULL)
-    {
+    if (this->right != NULL) {
         delete this->right;
     }
 }
@@ -57,23 +54,18 @@ BSTNode<Base>::~BSTNode()
  */
 
 template <class Base>
-void BSTNode<Base>::printPreorder(ostream &os, string indent) const
-{
+void BSTNode<Base>::printPreorder(ostream &os, string indent) const {
     os << indent << this->data << endl;
-    if (this->left != NULL)
-    {
+    if (this->left != NULL) {
         this->left->printPreorder(os, indent + "  ");
     }
-    else
-    {
+    else {
         os << indent << "  " << "NULL" << endl;
     }
-    if (this->right != NULL)
-    {
+    if (this->right != NULL) {
         this->right->printPreorder(os, indent + "  ");
     }
-    else
-    {
+    else {
         os << indent << "  " << "NULL" << endl;
     }
 }
@@ -92,14 +84,11 @@ void BSTNode<Base>::printPreorder(ostream &os, string indent) const
  */
 
 template <class Base>
-const BSTNode<Base> *BSTNode<Base>::minNode() const
-{
-    if (this->left == NULL)
-    {
+const BSTNode<Base> *BSTNode<Base>::minNode() const {
+    if (this->left == NULL) {
         return this;
     }
-    else
-    {
+    else {
         return this->left->minNode();
     }
 }
@@ -118,14 +107,11 @@ const BSTNode<Base> *BSTNode<Base>::minNode() const
  */
 
 template <class Base>
-const BSTNode<Base> *BSTNode<Base>::maxNode() const
-{
-    if (this->right == NULL)
-    {
+const BSTNode<Base> *BSTNode<Base>::maxNode() const {
+    if (this->right == NULL) {
         return this;
     }
-    else
-    {
+    else {
         return this->right->maxNode();
     }
 }
@@ -149,8 +135,7 @@ const BSTNode<Base> *BSTNode<Base>::maxNode() const
  */
 
 template <class Base>
-void BST<Base>::insert(const Base &item)
-{
+void BST<Base>::insert(const Base &item) {
     bool inserted = false;
     if (this->root == NULL) {
         this->root = new BSTNode<Base>(item);
@@ -201,8 +186,7 @@ void BST<Base>::insert(const Base &item)
  */
 
 template <class Base>
-void BST<Base>::remove(const Base &item)
-{
+void BST<Base>::remove(const Base &item) {
     //find the item
     BSTNode<Base> *toRemove = this->root;
     BSTNode<Base> *parent = NULL;
@@ -264,8 +248,7 @@ void BST<Base>::remove(const Base &item)
                 leftMost->left = toRemove->left;
             }
             //if the leftmost node is not the right child of the node to be removed
-            else
-            {
+            else {
                 leftMostParent->left = leftMost->right;
                 leftMost->right = toRemove->right;
                 leftMost->left = toRemove->left;

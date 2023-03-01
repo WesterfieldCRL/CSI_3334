@@ -50,8 +50,7 @@ using namespace std;
  * Return value: 0 (indicating a successful run)
  */
 
-int main()
-{
+int main() {
 
     EncryptionTree<string> tree;
     string input;
@@ -59,8 +58,7 @@ int main()
 
     cin >> input;
 
-    while (input != "q")
-    {
+    while (input != "q") {
         if (input == "i") {
             cin >> input;
             tree.insert(input);

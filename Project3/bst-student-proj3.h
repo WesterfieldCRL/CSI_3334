@@ -1,14 +1,19 @@
+/* CSI 3334
+ * Project 3 -- Tree-Based Encryption
+ * Filename: bst-student-proj3.h
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains all the functions for the Maze class.
+ * The functions include the default constructor, the getStartLocation function,
+ * the isValidLocation function, the isEndLocation function, and the operator>> function.
+ * 
+ */
+
 #ifndef BST_STUDENT_PROJ3 
 #define BST_STUDENT_PROJ3 
 
 #include "bst-prof-proj3.h"
-
-/* Place your implementation of the BSTNode, BST, and EncryptionTree classes
- * here.
- *
- * Your driver should #include this file, which (as you can see above) will also
- * #include the professor file.
- */
 
 //BSTNode
 

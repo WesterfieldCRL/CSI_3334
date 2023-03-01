@@ -79,35 +79,26 @@ template <class Base>
 void BST<Base>::insert(const Base &item)
 {
     bool inserted = false;
-    if (this->root == NULL)
-    {
+    if (this->root == NULL) {
         this->root = new BSTNode<Base>(item);
     }
-    else
-    {
+    else {
         BSTNode<Base> *temp = this->root;
-        while (!inserted)
-        {
-            if (item < temp->data)
-            {
-                if (temp->left != NULL)
-                {
+        while (!inserted) {
+            if (item < temp->data) {
+                if (temp->left != NULL) {
                     temp = temp->left;
                 }
-                else
-                {
+                else {
                     temp->left = new BSTNode<Base>(item);
                     inserted = true;
                 }
             }
-            else
-            {
-                if (temp->right != NULL)
-                {
+            else {
+                if (temp->right != NULL) {
                     temp = temp->right;
                 }
-                else
-                {
+                else {
                     temp->right = new BSTNode<Base>(item);
                     inserted = true;
                 }
@@ -122,83 +113,65 @@ void BST<Base>::remove(const Base &item)
     //find the item
     BSTNode<Base> *toRemove = this->root;
     BSTNode<Base> *parent = NULL;
-    while (toRemove != NULL && toRemove->data != item)
-    {
+    while (toRemove != NULL && toRemove->data != item) {
         parent = toRemove;
-        if (item < toRemove->data)
-        {
+        if (item < toRemove->data) {
             toRemove = toRemove->left;
         }
-        else if (item > toRemove->data)
-        {
+        else if (item > toRemove->data) {
             toRemove = toRemove->right;
         }
     }
     
-    if (toRemove != NULL)
-    {
+    if (toRemove != NULL) {
         //if the item is a leaf
-        if (toRemove->left == NULL && toRemove->right == NULL)
-        {
-            if (parent == NULL)
-            {
+        if (toRemove->left == NULL && toRemove->right == NULL) {
+            if (parent == NULL) {
                 this->root = NULL;
             }
-            else
-            {
-                if (parent->left == toRemove)
-                {
+            else {
+                if (parent->left == toRemove) {
                     parent->left = NULL;
                 }
-                else
-                {
+                else {
                     parent->right = NULL;
                 }
             }
         }
         //if the item has one child
-        else if (toRemove->left == NULL || toRemove->right == NULL)
-        {
+        else if (toRemove->left == NULL || toRemove->right == NULL) {
             BSTNode<Base> *child = NULL;
-            if (toRemove->left != NULL)
-            {
+            if (toRemove->left != NULL) {
                 child = toRemove;
                 toRemove->left = NULL;
             }
-            else
-            {
+            else {
                 child = toRemove;
                 toRemove->right = NULL;
             }
-            if (parent->left == toRemove)
-            {
+            if (parent->left == toRemove) {
                 parent->left = child;
             }
-            else
-            {
+            else {
                 parent->right = child;
             }
             delete child;
         }
         //if the item has two children
-        else
-        {
+        else {
             BSTNode<Base> *leftMost = toRemove->right;
             BSTNode<Base> *leftMostParent = toRemove;
-            while (leftMost->left != NULL)
-            {
+            while (leftMost->left != NULL) {
                 leftMostParent = leftMost;
                 leftMost = leftMost->left;
             }
             leftMostParent->left = leftMost->right;
             leftMost->right = toRemove->right;
             leftMost->left = toRemove->left;
-            if (parent->left == toRemove)
-            {
+            if (parent->left == toRemove) {
                 parent->left = leftMost;
             }
-            else
-            {
+            else {
                 parent->right = leftMost;
             }
             toRemove->left = toRemove->right = NULL;
@@ -215,25 +188,20 @@ void BST<Base>::remove(const Base &item)
 }
 
 template <class Base>
-string EncryptionTree<Base>::encrypt(const Base &item) const
-{
+string EncryptionTree<Base>::encrypt(const Base &item) const {
     string result = "r";
     bool found = false;
     const BSTNode<Base> *temp = this->root;
-    while (temp != NULL)
-    {
-        if (item < temp->getData())
-        {
+    while (temp != NULL) {
+        if (item < temp->getData()) {
             result += "0";
             temp = temp->getLeft();
         }
-        else if (item > temp->getData())
-        {
+        else if (item > temp->getData()) {
             result += "1";
             temp = temp->getRight();
         }
-        else
-        {
+        else {
             found = true;
             temp = NULL;
         }
@@ -241,8 +209,7 @@ string EncryptionTree<Base>::encrypt(const Base &item) const
 
     delete temp;
 
-    if (!found)
-    {
+    if (!found) {
         result = "?";
     }
 
@@ -250,27 +217,21 @@ string EncryptionTree<Base>::encrypt(const Base &item) const
 }
 
 template <class Base>
-const Base *EncryptionTree<Base>::decrypt(const string &path) const
-{
+const Base *EncryptionTree<Base>::decrypt(const string &path) const {
     const BSTNode<Base> *temp = this->root;
-    for (int i = 1; i < path.length() && temp != NULL; i++)
-    {
-        if (path[i] == '0')
-        {
+    for (int i = 1; i < path.length() && temp != NULL; i++) {
+        if (path[i] == '0') {
             temp = temp->getLeft();
         }
-        else
-        {
+        else {
             temp = temp->getRight();
         }
     }
 
-    if (temp == NULL)
-    {
+    if (temp == NULL) {
         return NULL;
     }
-    else
-    {
+    else {
         return &temp->getData();
     }
 }

@@ -11,6 +11,7 @@ int main()
 
     EncryptionTree<string> tree;
     string input;
+    const string *decryptWord = new string;
 
     cin >> input;
 
@@ -18,14 +19,11 @@ int main()
     {
         if (input == "i")
         {
-            cout << "DEBUG: read line \"i";
             cin >> input;
-            cout << " " << input << "\"" << endl;
             tree.insert(input);
         }
         else if (input == "r")
         {
-            cout << "DEBUG: read line \"r\"" << endl;
             cin >> input;
             tree.remove(input);
         }
@@ -36,15 +34,15 @@ int main()
             getline(cin, input, '\'');
             getline(cin, input, '\'');
             cin.ignore();
-
-            for (int i = 0; i < input.length(); i++)
+            int length = input.length();
+            for (int i = 0; i < length; i++)
             {
                 if (input[i] == ' ')
                 {
                     word = input.substr(prev, i-prev);
                     prev = i+1;
 
-                    cout << tree.encrypt(word) << " ";
+                    cout << tree.encrypt(word) << " "; //change endl to space
                 }
             }
             word = input.substr(prev, input.length()-prev);
@@ -64,16 +62,30 @@ int main()
                 {
                     word = input.substr(prev, i-prev);
                     prev = i+1;
-
-                    cout << tree.decrypt(word) << " ";
+                    decryptWord = tree.decrypt(word);
+                    if (decryptWord != NULL)
+                    {
+                        cout << *decryptWord << " "; //change endl to space
+                    }
+                    else
+                    {
+                        cout << "? ";
+                    }
                 }
             }
             word = input.substr(prev, input.length()-prev);
-            cout << tree.decrypt(word) << endl;
+            decryptWord = tree.decrypt(word);
+            if (decryptWord != NULL)
+            {
+                cout << *decryptWord << endl;
+            }
+            else
+            {
+                cout << "?" << endl;
+            }
         }
         else if (input == "p")
         {
-            cout << "DEBUG: read line \"p\"" << endl;
             tree.printPreorder();
         }
         cin >> input;

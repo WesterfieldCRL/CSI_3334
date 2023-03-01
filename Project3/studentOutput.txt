@@ -1,18 +1,27 @@
-DEBUG: read line "p"
-DEBUG: read line "i four"
-DEBUG: inserting word 'four'
-DEBUG: read line "i score"
-DEBUG: inserting word 'score'
-DEBUG: read line "i and"
-DEBUG: inserting word 'and'
-DEBUG: read line "i seven"
-DEBUG: inserting word 'seven'
-DEBUG: read line "i years"
-DEBUG: inserting word 'years'
-DEBUG: read line "i ago"
-DEBUG: inserting word 'ago'
-DEBUG: read line "p"
 four
-  NULL
-  NULL
-r ? ? ? ? ? ? ?
+  and
+    ago
+      NULL
+      NULL
+    NULL
+  score
+    NULL
+    seven
+      NULL
+      years
+        NULL
+        NULL
+r r1 r0 r11 r111 r00 ? ?
+four and score ago ? ? seven
+four
+  and
+    NULL
+    NULL
+  score
+    NULL
+    seven
+      NULL
+      years
+        NULL
+        NULL
+four and score ? ? ? seven

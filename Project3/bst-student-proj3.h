@@ -78,40 +78,41 @@ const BSTNode<Base> *BSTNode<Base>::maxNode() const
 template <class Base>
 void BST<Base>::insert(const Base &item)
 {
-    cout << "DEBUG: inserting word \'" << item << "\'" << endl;
+    bool inserted = false;
     if (this->root == NULL)
     {
         this->root = new BSTNode<Base>(item);
     }
     else
     {
-        BSTNode<Base> temp(this->root->data, this->root->left, this->root->right);
-        do
+        BSTNode<Base> *temp = this->root;
+        while (!inserted)
         {
-            if (item < temp.data)
+            if (item < temp->data)
             {
-                if (temp.left != NULL)
+                if (temp->left != NULL)
                 {
-                    temp = BSTNode<Base>(temp.left->data, temp.left->left, temp.left->right);
+                    temp = temp->left;
                 }
                 else
                 {
-                    temp.left = new BSTNode<Base>(item);
+                    temp->left = new BSTNode<Base>(item);
+                    inserted = true;
                 }
             }
             else
             {
-                if (temp.right != NULL)
+                if (temp->right != NULL)
                 {
-                    cout << "vibe check" << endl;
-                    temp = BSTNode<Base>(temp.right->data, temp.right->left, temp.right->right);
+                    temp = temp->right;
                 }
                 else
                 {
-                    temp.right = new BSTNode<Base>(item);
+                    temp->right = new BSTNode<Base>(item);
+                    inserted = true;
                 }
             }
-        } while (temp.left != NULL && temp.right != NULL);
+        }
     }
 }
 
@@ -119,16 +120,16 @@ template <class Base>
 void BST<Base>::remove(const Base &item)
 {
     //find the item
-    BSTNode<Base> *toRemove = new BSTNode<Base>(this->root->data, this->root->left, this->root->right);
+    BSTNode<Base> *toRemove = this->root;
     BSTNode<Base> *parent = NULL;
-    while (toRemove != NULL || toRemove->data != item)
+    while (toRemove != NULL && toRemove->data != item)
     {
         parent = toRemove;
         if (item < toRemove->data)
         {
             toRemove = toRemove->left;
         }
-        else
+        else if (item > toRemove->data)
         {
             toRemove = toRemove->right;
         }
@@ -205,11 +206,11 @@ void BST<Base>::remove(const Base &item)
         }
 
         //delete pointers
-        if (parent != NULL)
+        /*if (parent != NULL)
         {
             delete parent;
         }
-        delete toRemove;
+        delete toRemove;*/
     }
 }
 
@@ -251,9 +252,8 @@ string EncryptionTree<Base>::encrypt(const Base &item) const
 template <class Base>
 const Base *EncryptionTree<Base>::decrypt(const string &path) const
 {
-    Base data;
     const BSTNode<Base> *temp = this->root;
-    for (int i = 1; i < path.length() || temp != NULL; i++)
+    for (int i = 1; i < path.length() && temp != NULL; i++)
     {
         if (path[i] == '0')
         {

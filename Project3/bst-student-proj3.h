@@ -152,7 +152,7 @@ void BST<Base>::insert(const Base &item) {
                     inserted = true;
                 }
             }
-            else {
+            else if (temp->data < item){
                 if (temp->right != NULL) {
                     temp = temp->right;
                 }
@@ -160,6 +160,9 @@ void BST<Base>::insert(const Base &item) {
                     temp->right = new BSTNode<Base>(item);
                     inserted = true;
                 }
+            }
+            else {
+                inserted = true;
             }
         }
     }

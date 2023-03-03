@@ -190,12 +190,12 @@ void BST<Base>::remove(const Base &item) {
     //find the item
     BSTNode<Base> *toRemove = this->root;
     BSTNode<Base> *parent = NULL;
-    while (toRemove != NULL && toRemove->data != item) {
+    while (toRemove != NULL && (toRemove->data < item || item < toRemove->data)) {
         parent = toRemove;
         if (item < toRemove->data) {
             toRemove = toRemove->left;
         }
-        else if (item > toRemove->data) {
+        else if (toRemove->data < item) {
             toRemove = toRemove->right;
         }
     }
@@ -299,7 +299,7 @@ string EncryptionTree<Base>::encrypt(const Base &item) const {
             result += "0";
             temp = temp->getLeft();
         }
-        else if (item > temp->getData()) {
+        else if (temp->getData() < item) {
             result += "1";
             temp = temp->getRight();
         }
@@ -333,7 +333,8 @@ string EncryptionTree<Base>::encrypt(const Base &item) const {
 template <class Base>
 const Base *EncryptionTree<Base>::decrypt(const string &path) const {
     const BSTNode<Base> *temp = this->root;
-    for (int i = 1; i < path.length() && temp != NULL; i++) {
+    int length = path.length();
+    for (int i = 1; i < length && temp != NULL; i++) {
         if (path[i] == '0') {
             temp = temp->getLeft();
         }

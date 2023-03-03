@@ -91,8 +91,8 @@ int main() {
             getline(cin, input, '\'');
             getline(cin, input, '\'');
             cin.ignore();
-
-            for (int i = 0; i < input.length(); i++) {
+            int length = input.length();
+            for (int i = 0; i < length; i++) {
                 if (input[i] == ' ') {
                     word = input.substr(prev, i-prev);
                     prev = i+1;

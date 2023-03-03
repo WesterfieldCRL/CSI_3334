@@ -253,11 +253,17 @@ void BST<Base>::remove(const Base &item) {
                 leftMost->right = toRemove->right;
                 leftMost->left = toRemove->left;
             }
-            if (parent->left == toRemove) {
-                parent->left = leftMost;
+            if (parent == NULL) {
+                this->root = leftMost;
             }
-            else {
-                parent->right = leftMost;
+            else
+            {
+                if (parent->left == toRemove) {
+                    parent->left = leftMost;
+                }
+                else {
+                    parent->right = leftMost;
+                }
             }
             toRemove->left = toRemove->right = NULL;
             leftMost = NULL;

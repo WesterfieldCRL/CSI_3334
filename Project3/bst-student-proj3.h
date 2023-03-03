@@ -165,6 +165,8 @@ void BST<Base>::insert(const Base &item) {
                 inserted = true;
             }
         }
+        temp = NULL;
+        delete temp;
     }
 }
 
@@ -229,11 +231,16 @@ void BST<Base>::remove(const Base &item) {
                 child = toRemove->right;
                 toRemove->right = NULL;
             }
-            if (parent->left == toRemove) {
-                parent->left = child;
+            if (parent == NULL) {
+                this->root = child;
             }
             else {
-                parent->right = child;
+                if (parent->left == toRemove) {
+                    parent->left = child;
+                }
+                else {
+                    parent->right = child;
+                }
             }
             child = NULL;
             delete child;

@@ -32,12 +32,10 @@
 
 template <class Base>
 BSTNode<Base>::~BSTNode() {
-    if (this->left != NULL)
-    {
+    if (this->left != NULL) {
         delete this->left;
     }
-    if (this->right != NULL)
-    {
+    if (this->right != NULL) {
         delete this->right;
     }
 }
@@ -272,8 +270,7 @@ void BST<Base>::remove(const Base &item) {
             if (parent == NULL) {
                 this->root = leftMost;
             }
-            else
-            {
+            else {
                 if (parent->left == toRemove) {
                     parent->left = leftMost;
                 }

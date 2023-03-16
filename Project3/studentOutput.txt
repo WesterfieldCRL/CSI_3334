@@ -1,8 +1,340 @@
-that good old baylor line
-that good old baylor line
-well march forever down the years
-as long as stars shall shine
-well fling our green and gold afar
-to light the ways of time
-and guide us as we onward go
-that good old baylor line
+? ?
+? ? ? ? ? ? ?
+u
+  o
+    NULL
+    NULL
+  NULL
+? u
+u
+  o
+    NULL
+    NULL
+  NULL
+u
+  o
+    NULL
+    NULL
+  NULL
+? ?
+? ? ? ? ? o rms
+? ? ? ?
+?
+u
+  o
+    lw
+      NULL
+      NULL
+    rms
+      NULL
+      NULL
+  wrdx
+    NULL
+    NULL
+? ? ? ? ? ? ? ? ? ?
+rms u ? ? ? ? ? ? ? u
+? ? ? ? ? ? ? ?
+u
+  o
+    lw
+      NULL
+      NULL
+    rms
+      NULL
+      NULL
+  wrdx
+    NULL
+    NULL
+u
+  o
+    lw
+      brwe
+        NULL
+        NULL
+      NULL
+    rms
+      rk
+        NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    NULL
+?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          NULL
+          NULL
+      NULL
+    rms
+      rk
+        NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    NULL
+wrdx wrdx o ? ? ? ? ? vs
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          NULL
+          NULL
+      NULL
+    rms
+      rk
+        NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    NULL
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          NULL
+          NULL
+      NULL
+    rms
+      rk
+        NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          NULL
+          NULL
+      NULL
+    rms
+      rk
+        NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+? ? ?
+? ? ? ? ? ? ? ? ? ?
+? ? ?
+? ? ? ? ? ? ?
+? ? ? ?
+r0 ? ?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          NULL
+          NULL
+      NULL
+    rms
+      rk
+        oqyg
+          NULL
+          NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+hn
+? ? ? ?
+u
+r ? ? ?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          dfhal
+            NULL
+            NULL
+          NULL
+      NULL
+    rms
+      rk
+        oqyg
+          NULL
+          NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+? rms ? o vs ? ? ? ?
+rk ?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          dfhal
+            NULL
+            glvry
+              NULL
+              NULL
+          NULL
+      NULL
+    rms
+      rk
+        oqyg
+          NULL
+          NULL
+        NULL
+      NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+? ? ? ? ? ? ? ?
+? ? ? ? ? ? ? ?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          dfhal
+            NULL
+            glvry
+              NULL
+              hik
+                NULL
+                NULL
+          NULL
+      NULL
+    rms
+      rk
+        oqyg
+          NULL
+          NULL
+        NULL
+      tif
+        NULL
+        NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          dfhal
+            NULL
+            glvry
+              NULL
+              hik
+                NULL
+                NULL
+          NULL
+      NULL
+    rms
+      rk
+        oqyg
+          NULL
+          NULL
+        NULL
+      tif
+        NULL
+        NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      NULL
+wttzs rk dfhal
+? ? ? ?
+? ? ?
+? ?
+u brwe zt
+? wttzs ? ? zt ? ? ? ?
+u
+  o
+    lw
+      brwe
+        NULL
+        hn
+          dfhal
+            NULL
+            glvry
+              NULL
+              hik
+                NULL
+                NULL
+          NULL
+      NULL
+    rms
+      rk
+        oqyg
+          NULL
+          NULL
+        NULL
+      tif
+        NULL
+        NULL
+  wrdx
+    vs
+      NULL
+      NULL
+    wttzs
+      NULL
+      zt
+        yclc
+          NULL
+          NULL
+        NULL
+? ? ? ? ? ? ? ?

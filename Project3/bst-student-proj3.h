@@ -148,7 +148,7 @@ void BST<Base>::insert(const Base &item) {
                     temp = temp->left;
                 }
                 else {
-                    temp->left = new BSTNode<Base>(item);
+                   temp->left = new BSTNode<Base>(item);
                     inserted = true;
                 }
             }
@@ -209,16 +209,21 @@ void BST<Base>::remove(const Base &item) {
         //if the item is a leaf
         if (toRemove->left == NULL && toRemove->right == NULL) {
             if (parent == NULL) {
+                delete this->root;
                 this->root = NULL;
             }
             else {
                 if (parent->left == toRemove) {
+                    delete parent->left;
                     parent->left = NULL;
                 }
                 else {
+                    delete parent->right;
                     parent->right = NULL;
                 }
             }
+            toRemove = NULL;
+            delete toRemove;
         }
         //if the item has one child
         else if (toRemove->left == NULL || toRemove->right == NULL) {
@@ -242,8 +247,7 @@ void BST<Base>::remove(const Base &item) {
                     parent->right = child;
                 }
             }
-            child = NULL;
-            delete child;
+            delete toRemove;
         }
         //if the item has two children
         else {
@@ -266,8 +270,7 @@ void BST<Base>::remove(const Base &item) {
             if (parent == NULL) {
                 this->root = leftMost;
             }
-            else
-            {
+            else {
                 if (parent->left == toRemove) {
                     parent->left = leftMost;
                 }
@@ -280,15 +283,8 @@ void BST<Base>::remove(const Base &item) {
             leftMostParent = NULL;
             delete leftMost;
             delete leftMostParent;
+            delete toRemove;
         }
-
-        //delete pointers
-
-        toRemove = NULL;
-        parent = NULL;
-
-        delete parent;
-        delete toRemove;
     }
 }
 

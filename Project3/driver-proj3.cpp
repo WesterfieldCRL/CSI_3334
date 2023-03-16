@@ -54,7 +54,7 @@ int main() {
 
     EncryptionTree<string> tree;
     string input;
-    const string *decryptWord = new string;
+    const string *decryptWord;
 
     cin >> input;
 
@@ -119,7 +119,7 @@ int main() {
         }
         cin >> input;
     }
-    
+
 
     return 0;
 }

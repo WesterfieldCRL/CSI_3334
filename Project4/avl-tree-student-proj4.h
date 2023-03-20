@@ -88,19 +88,15 @@ AVLNode<Base> *AVLNode<Base>::singleRotateRight()
 template<class Base>
 AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight()
 {
-    AVLNode<Base> *returnValue = this->left->right;
-    this->left->singleRotateLeft();
-    this->singleRotateRight();
-    return returnValue;
+    this->left = this->left->singleRotateLeft();
+    return this->singleRotateRight();
 }
 
 template<class Base>
 AVLNode<Base> *AVLNode<Base>::doubleRotateRightLeft()
 {
-    AVLNode<Base> *returnValue = this->right->left;
-    this->right->singleRotateRight();
-    this->singleRotateLeft();
-    return returnValue;
+    this->right = this->right->singleRotateRight();
+    return this->singleRotateLeft();
 }
 
 template<class Base>
@@ -227,6 +223,18 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
             }
         }
     }
+}
+
+template<class Base>
+void AVLTree<Base>::remove(const Base &item)
+{
+
+}
+
+template<class Base>
+void AVLTree<Base>::printLevelOrder(ostream &os) const
+{
+
 }
 
 #endif

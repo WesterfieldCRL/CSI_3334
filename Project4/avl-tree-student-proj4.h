@@ -338,19 +338,115 @@ void AVLTree<Base>::printLevelOrder(ostream &os) const
 {
     if (this->root != NULL) {
         queue<AVLNode<Base> *> q;
+        int nodesPerLine = 0;
         q.push(this->root);
         while (!q.empty()) {
             AVLNode<Base> *node = q.front();
             q.pop();
-            os << node->data << " ";
-            if (node->left != NULL) {
-                q.push(node->left);
+            if (node == NULL) {
+                os << "NULL";
+                if (q.empty()) {
+                    break;
+                }
             }
-            if (node->right != NULL) {
+            else
+            {
+                os << node->data;
+
+                q.push(node->left);
                 q.push(node->right);
+            }
+            nodesPerLine++;
+            if (nodesPerLine >= 20)
+            {
+                os << endl;
+                nodesPerLine = 0;
+            }
+            else
+            {
+                os << " ";
             }
         }
         os << endl;
+    }
+    else
+    {
+        os << "NULL" << endl;
+    }
+}
+
+/**
+ * encrypt
+ * 
+ * Encrypts an item by finding the item in the tree and returning the path
+ * to the item. If the item is not found, the path is set to "?".
+ * 
+ * Parameters:
+ *   item - item to be found
+ * 
+ * Return value: the path to the item in the form r01 (r is the root, 0 is left, 1 is right)
+ */
+
+
+template <class Base>
+string EncryptionTree<Base>::encrypt(const Base &item) const {
+    string result = "r";
+    bool found = false;
+    const AVLNode<Base> *temp = this->root;
+    while (temp != NULL) {
+        if (item < temp->getData()) {
+            result += "0";
+            temp = temp->getLeft();
+        }
+        else if (temp->getData() < item) {
+            result += "1";
+            temp = temp->getRight();
+        }
+        else {
+            found = true;
+            temp = NULL;
+        }
+    }
+
+    delete temp;
+
+    if (!found) {
+        result = "?";
+    }
+
+    return result;
+}
+
+/**
+ * decrypt
+ * 
+ * Decrypts an item by following the provided path.
+ * If the path is invalid, NULL is returned.
+ * 
+ * Parameters:
+ *   path - path to the item in the form r01 (r is the root, 0 is left, 1 is right)
+ * 
+ * Return value: pointer to the item
+ */
+
+template <class Base>
+const Base *EncryptionTree<Base>::decrypt(const string &path) const {
+    const AVLNode<Base> *temp = this->root;
+    int length = path.length();
+    for (int i = 1; i < length && temp != NULL; i++) {
+        if (path[i] == '0') {
+            temp = temp->getLeft();
+        }
+        else {
+            temp = temp->getRight();
+        }
+    }
+
+    if (temp == NULL) {
+        return NULL;
+    }
+    else {
+        return &temp->getData();
     }
 }
 

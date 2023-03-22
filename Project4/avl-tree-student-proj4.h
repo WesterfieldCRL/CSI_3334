@@ -18,8 +18,7 @@
  */
 
 template<class Base>
-AVLNode<Base>::~AVLNode()
-{
+AVLNode<Base>::~AVLNode() {
     if (this->left != NULL) {
         delete this->left;
     }
@@ -42,8 +41,7 @@ AVLNode<Base>::~AVLNode()
  */
 
 template<class Base>
-void AVLNode<Base>::printPreorder(ostream &os, string indent) const
-{
+void AVLNode<Base>::printPreorder(ostream &os, string indent) const {
     os << indent << this->data << endl;
     if (this->left != NULL) {
         this->left->printPreorder(os, indent + "  ");
@@ -71,8 +69,7 @@ void AVLNode<Base>::printPreorder(ostream &os, string indent) const
  */
 
 template<class Base>
-const AVLNode<Base> *AVLNode<Base>::minNode() const
-{
+const AVLNode<Base> *AVLNode<Base>::minNode() const {
     if (this->left == NULL) {
         return this;
     }
@@ -93,8 +90,7 @@ const AVLNode<Base> *AVLNode<Base>::minNode() const
  */
 
 template<class Base>
-const AVLNode<Base> *AVLNode<Base>::maxNode() const
-{
+const AVLNode<Base> *AVLNode<Base>::maxNode() const {
     if (this->right == NULL) {
         return this;
     }
@@ -115,8 +111,7 @@ const AVLNode<Base> *AVLNode<Base>::maxNode() const
  */
 
 template<class Base>
-AVLNode<Base> *AVLNode<Base>::singleRotateLeft()
-{
+AVLNode<Base> *AVLNode<Base>::singleRotateLeft() {
     AVLNode<Base> *rightChild = this->right;
     this->right = rightChild->left;
     rightChild->left = this;
@@ -137,8 +132,7 @@ AVLNode<Base> *AVLNode<Base>::singleRotateLeft()
  */
 
 template<class Base>
-AVLNode<Base> *AVLNode<Base>::singleRotateRight()
-{
+AVLNode<Base> *AVLNode<Base>::singleRotateRight() {
     AVLNode<Base> *leftChild = this->left;
     this->left = leftChild->right;
     leftChild->right = this;
@@ -159,8 +153,7 @@ AVLNode<Base> *AVLNode<Base>::singleRotateRight()
  */
 
 template<class Base>
-AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight()
-{
+AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight() {
     this->left = this->left->singleRotateLeft();
     return this->singleRotateRight();
 }
@@ -179,8 +172,7 @@ AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight()
  */
 
 template<class Base>
-AVLNode<Base> *AVLNode<Base>::doubleRotateRightLeft()
-{
+AVLNode<Base> *AVLNode<Base>::doubleRotateRightLeft() {
     this->right = this->right->singleRotateRight();
     return this->singleRotateLeft();
 }
@@ -199,8 +191,7 @@ AVLNode<Base> *AVLNode<Base>::doubleRotateRightLeft()
  */
 
 template<class Base>
-void AVLTree<Base>::insert(const Base &item)
-{
+void AVLTree<Base>::insert(const Base &item) {
     //insert
     vector<AVLNode<Base> *> path;
     bool inserted = false;
@@ -247,7 +238,8 @@ void AVLTree<Base>::insert(const Base &item)
 /**
  * rebalancePathToRoot
  * 
- * Rebalances the tree using the path to the inserted node.
+ * Rebalances the tree using the path to the inserted node by calling
+ * the appropriate rotation functions.
  * 
  * Parameters:
  *   path - vector containing a path to the root of the tree
@@ -256,41 +248,32 @@ void AVLTree<Base>::insert(const Base &item)
  */
 
 template<class Base>
-void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
-{   
+void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {   
     for (int i = path.size() - 1; i >= 0; i--) {
         path[i]->updateHeight();
         if (this->root->getHeight(path[i]->left) - this->root->getHeight(path[i]->right) >= 2) {
             if (this->root->getHeight(path[i]->left->left) - this->root->getHeight(path[i]->left->right) > 0) {
-                if (i == 0)
-                {
+                if (i == 0) {
                     this->root = path[i]->singleRotateRight();
                 }
-                else
-                {
-                    if (path[i-1]->left == path[i])
-                    {
+                else {
+                    if (path[i-1]->left == path[i]) {
                         path[i-1]->left = path[i]->singleRotateRight();
                     }
-                    else
-                    {
+                    else {
                         path[i-1]->right = path[i]->singleRotateRight();
                     }
                 }
             }
             else {
-                if (i == 0)
-                {
+                if (i == 0) {
                     this->root = path[i]->doubleRotateLeftRight();
                 }
-                else
-                {
-                    if (path[i-1]->left == path[i])
-                    {
+                else {
+                    if (path[i-1]->left == path[i]) {
                         path[i-1]->left = path[i]->doubleRotateLeftRight();
                     }
-                    else
-                    {
+                    else {
                         path[i-1]->right = path[i]->doubleRotateLeftRight();
                     }
                 }
@@ -298,35 +281,27 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
         }
         else if (this->root->getHeight(path[i]->left) - this->root->getHeight(path[i]->right) <= -2) {
             if (this->root->getHeight(path[i]->right->left) - this->root->getHeight(path[i]->right->right) < 0) {
-                if (i == 0)
-                {
+                if (i == 0) {
                     this->root = path[i]->singleRotateLeft();
                 }
-                else
-                {
-                    if (path[i-1]->left == path[i])
-                    {
+                else {
+                    if (path[i-1]->left == path[i]) {
                         path[i-1]->left = path[i]->singleRotateLeft();
                     }
-                    else
-                    {
+                    else {
                         path[i-1]->right = path[i]->singleRotateLeft();
                     }
                 }
             }
             else {
-                if (i == 0)
-                {
+                if (i == 0) {
                     this->root = path[i]->doubleRotateRightLeft();
                 }
-                else
-                {
-                    if (path[i-1]->left == path[i])
-                    {
+                else {
+                    if (path[i-1]->left == path[i]) {
                         path[i-1]->left = path[i]->doubleRotateRightLeft();
                     }
-                    else
-                    {
+                    else {
                         path[i-1]->right = path[i]->doubleRotateRightLeft();
                     }
                 }
@@ -335,9 +310,21 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
     }
 }
 
+/**
+ * remove
+ * 
+ * Removes a node from the tree using the provided item as data.
+ * Stores the path to the removed node in a vector and then calls
+ * rebalancePathToRoot to rebalance the tree.
+ * 
+ * Parameters:
+ *   item - data to remove from the tree
+ * 
+ * Return value: none
+ */
+
 template<class Base>
-void AVLTree<Base>::remove(const Base &item)
-{
+void AVLTree<Base>::remove(const Base &item) {
     vector<AVLNode<Base> *> path;
     //find the item
     AVLNode<Base> *toRemove = this->root;
@@ -443,9 +430,19 @@ void AVLTree<Base>::remove(const Base &item)
 
 }
 
+/**
+ * printLevelOrder
+ * 
+ * Prints the tree in level order, outputing NULL for empty nodes.
+ * 
+ * Parameters:
+ *   os - output stream to print to
+ * 
+ * Return value: none
+ */
+
 template<class Base>
-void AVLTree<Base>::printLevelOrder(ostream &os) const
-{
+void AVLTree<Base>::printLevelOrder(ostream &os) const {
     if (this->root != NULL) {
         queue<AVLNode<Base> *> q;
         int nodesPerLine = 0;
@@ -459,28 +456,24 @@ void AVLTree<Base>::printLevelOrder(ostream &os) const
                     break;
                 }
             }
-            else
-            {
+            else {
                 os << node->data;
 
                 q.push(node->left);
                 q.push(node->right);
             }
             nodesPerLine++;
-            if (nodesPerLine >= 20)
-            {
+            if (nodesPerLine >= 20) {
                 os << endl;
                 nodesPerLine = 0;
             }
-            else
-            {
+            else {
                 os << " ";
             }
         }
         os << endl;
     }
-    else
-    {
+    else {
         os << "NULL" << endl;
     }
 }

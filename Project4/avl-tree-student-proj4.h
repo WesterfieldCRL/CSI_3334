@@ -4,11 +4,17 @@
 #include "avl-tree-prof-proj4.h"
 #include <queue>
 
-/* Place your implementation of the AVLNode, AVLNode, and EncryptionTree classes
- * here.
- *
- * Your driver should #include this file, which (as you can see above) will also
- * #include the professor file.
+//AVLNode
+
+/**
+ * ~AVLNode
+ * 
+ * Destructor for AVLNode. Deletes the left and right nodes recursively.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
  */
 
 template<class Base>
@@ -22,6 +28,18 @@ AVLNode<Base>::~AVLNode()
     }
 }
 
+/**
+ * printPreorder
+ * 
+ * Prints the tree in preorder. Prints the data of the node, then recursively
+ * calls printPreorder on the left node and then the right node with an indent added.
+ * 
+ * Parameters:
+ *   os - output stream to print to
+ *   indent - string to indent the tree
+ * 
+ * Return value: none
+ */
 
 template<class Base>
 void AVLNode<Base>::printPreorder(ostream &os, string indent) const
@@ -41,6 +59,17 @@ void AVLNode<Base>::printPreorder(ostream &os, string indent) const
     }
 }
 
+/**
+ * minNode
+ * 
+ * Returns the node with the minimum value in the tree.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template<class Base>
 const AVLNode<Base> *AVLNode<Base>::minNode() const
 {
@@ -51,6 +80,17 @@ const AVLNode<Base> *AVLNode<Base>::minNode() const
         return this->left->minNode();
     }
 }
+
+/**
+ * maxNode
+ * 
+ * Returns the node with the maximum value in the tree.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
 
 template<class Base>
 const AVLNode<Base> *AVLNode<Base>::maxNode() const
@@ -63,6 +103,17 @@ const AVLNode<Base> *AVLNode<Base>::maxNode() const
     }
 }
 
+/**
+ * singleRotateLeft
+ * 
+ * Performs a single rotation to the left.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template<class Base>
 AVLNode<Base> *AVLNode<Base>::singleRotateLeft()
 {
@@ -73,6 +124,17 @@ AVLNode<Base> *AVLNode<Base>::singleRotateLeft()
     rightChild->updateHeight();
     return rightChild;
 }
+
+/**
+ * singleRotateRight
+ * 
+ * Performs a single rotation to the right.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
 
 template<class Base>
 AVLNode<Base> *AVLNode<Base>::singleRotateRight()
@@ -85,6 +147,17 @@ AVLNode<Base> *AVLNode<Base>::singleRotateRight()
     return leftChild;
 }
 
+/**
+ * doubleRotateLeftRight
+ * 
+ * Performs a double rotation to the left and then to the right.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template<class Base>
 AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight()
 {
@@ -92,12 +165,38 @@ AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight()
     return this->singleRotateRight();
 }
 
+//AVLTree
+
+/**
+ * doubleRotateRightLeft
+ * 
+ * Performs a double rotation to the right and then to the left.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template<class Base>
 AVLNode<Base> *AVLNode<Base>::doubleRotateRightLeft()
 {
     this->right = this->right->singleRotateRight();
     return this->singleRotateLeft();
 }
+
+/**
+ * insert
+ * 
+ * Insertes a node into the tree using the provided item as data.
+ * Stores the path to the inserted node in a vector and then calls
+ * rebalancePathToRoot to rebalance the tree.
+ * 
+ * Parameters:
+ *   item - data to insert into the tree
+ * 
+ * Return value: none
+ */
 
 template<class Base>
 void AVLTree<Base>::insert(const Base &item)
@@ -144,6 +243,17 @@ void AVLTree<Base>::insert(const Base &item)
     this->rebalancePathToRoot(path);
     
 }
+
+/**
+ * rebalancePathToRoot
+ * 
+ * Rebalances the tree using the path to the inserted node.
+ * 
+ * Parameters:
+ *   path - vector containing a path to the root of the tree
+ * 
+ * Return value: none
+ */
 
 template<class Base>
 void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)

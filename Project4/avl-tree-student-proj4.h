@@ -151,7 +151,7 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
     for (int i = path.size() - 1; i >= 0; i--) {
         path[i]->updateHeight();
         if (this->root->getHeight(path[i]->left) - this->root->getHeight(path[i]->right) >= 2) {
-            if (this->root->getHeight(path[i]->left) >= 1 && this->root->getHeight(path[i]->left->right) < 1) {
+            if (this->root->getHeight(path[i]->left->left) - this->root->getHeight(path[i]->left->right) > 0) {
                 if (i == 0)
                 {
                     this->root = path[i]->singleRotateRight();
@@ -187,7 +187,7 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
             }
         }
         else if (this->root->getHeight(path[i]->left) - this->root->getHeight(path[i]->right) <= -2) {
-            if (this->root->getHeight(path[i]->right) >= 1 && this->root->getHeight(path[i]->right->left) < 1) {
+            if (this->root->getHeight(path[i]->right->left) - this->root->getHeight(path[i]->right->right) < 0) {
                 if (i == 0)
                 {
                     this->root = path[i]->singleRotateLeft();
@@ -228,13 +228,130 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path)
 template<class Base>
 void AVLTree<Base>::remove(const Base &item)
 {
+    vector<AVLNode<Base> *> path;
+    //find the item
+    AVLNode<Base> *toRemove = this->root;
+    AVLNode<Base> *parent = NULL;
+
+    while (toRemove != NULL && (toRemove->data < item || item < toRemove->data)) {
+        parent = toRemove;
+        if (item < toRemove->data) {
+            path.push_back(toRemove);
+            toRemove = toRemove->left;
+        }
+        else if (toRemove->data < item) {
+            path.push_back(toRemove);
+            toRemove = toRemove->right;
+        }
+    }
+    
+    if (toRemove != NULL) {
+        //if the item is a leaf
+        if (toRemove->left == NULL && toRemove->right == NULL) {
+            if (parent == NULL) {
+                delete this->root;
+                this->root = NULL;
+            }
+            else {
+                if (parent->left == toRemove) {
+                    delete parent->left;
+                    parent->left = NULL;
+                }
+                else {
+                    delete parent->right;
+                    parent->right = NULL;
+                }
+            }
+            toRemove = NULL;
+            delete toRemove;
+        }
+        //if the item has one child
+        else if (toRemove->left == NULL || toRemove->right == NULL) {
+            AVLNode<Base> *child = NULL;
+            if (toRemove->left != NULL) {
+                child = toRemove->left;
+                toRemove->left = NULL;
+            }
+            else {
+                child = toRemove->right;
+                toRemove->right = NULL;
+            }
+            if (parent == NULL) {
+                this->root = child;
+            }
+            else {
+                if (parent->left == toRemove) {
+                    parent->left = child;
+                }
+                else {
+                    parent->right = child;
+                }
+            }
+            delete toRemove;
+        }
+        //if the item has two children
+        else {
+            AVLNode<Base> *leftMost = toRemove->right;
+            AVLNode<Base> *leftMostParent = toRemove;
+            while (leftMost->left != NULL) {
+                leftMostParent = leftMost;
+                leftMost = leftMost->left;
+            }
+            //if the leftmost node is the right child of the node to be removed
+            if (leftMost == toRemove->right) { 
+                leftMost->left = toRemove->left;
+                
+            }
+            //if the leftmost node is not the right child of the node to be removed
+            else {
+                leftMostParent->left = leftMost->right;
+                leftMost->right = toRemove->right;
+                leftMost->left = toRemove->left;
+            }
+            if (parent == NULL) {
+                this->root = leftMost;
+            }
+            else {
+                if (parent->left == toRemove) {
+                    parent->left = leftMost;
+                }
+                else {
+                    parent->right = leftMost;
+                }
+            }
+            path.push_back(leftMost);
+            toRemove->left = toRemove->right = NULL;
+            leftMost = NULL;
+            leftMostParent = NULL;
+            delete leftMost;
+            delete leftMostParent;
+            delete toRemove;
+        }
+    }
+
+    this->rebalancePathToRoot(path);
 
 }
 
 template<class Base>
 void AVLTree<Base>::printLevelOrder(ostream &os) const
 {
-
+    if (this->root != NULL) {
+        queue<AVLNode<Base> *> q;
+        q.push(this->root);
+        while (!q.empty()) {
+            AVLNode<Base> *node = q.front();
+            q.pop();
+            os << node->data << " ";
+            if (node->left != NULL) {
+                q.push(node->left);
+            }
+            if (node->right != NULL) {
+                q.push(node->right);
+            }
+        }
+        os << endl;
+    }
 }
 
 #endif

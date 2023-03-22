@@ -10,13 +10,27 @@ int main()
         tree.insert(i);
     }*/
     string input;
-    while (cin >> input && input != "DONE") {
+    while (cin >> input && input != "NEXT") {
         tree.insert(input);
     }
 
     tree.printPreorder();
 
     tree.verifyBalance();
+    tree.verifySearchOrder();
+
+    while (cin >> input && input != "DONE") {
+        tree.remove(input);
+        tree.printPreorder();
+
+        tree.verifyBalance();
+        tree.verifySearchOrder();
+    }
+
+    tree.printPreorder();
+
+    tree.verifyBalance();
+    tree.verifySearchOrder();
 
     cout << "DONE" << endl;
 

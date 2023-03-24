@@ -251,8 +251,10 @@ template<class Base>
 void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {   
     for (int i = path.size() - 1; i >= 0; i--) {
         path[i]->updateHeight();
-        if (this->root->getHeight(path[i]->left) - this->root->getHeight(path[i]->right) >= 2) {
-            if (this->root->getHeight(path[i]->left->left) - this->root->getHeight(path[i]->left->right) > 0) {
+        if (this->root->getHeight(path[i]->left) - 
+        this->root->getHeight(path[i]->right) >= 2) {
+            if (this->root->getHeight(path[i]->left->left) - 
+            this->root->getHeight(path[i]->left->right) >= 0) {
                 if (i == 0) {
                     this->root = path[i]->singleRotateRight();
                 }
@@ -279,8 +281,10 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {
                 }
             }
         }
-        else if (this->root->getHeight(path[i]->left) - this->root->getHeight(path[i]->right) <= -2) {
-            if (this->root->getHeight(path[i]->right->left) - this->root->getHeight(path[i]->right->right) < 0) {
+        else if (this->root->getHeight(path[i]->left) - 
+        this->root->getHeight(path[i]->right) <= -2) {
+            if (this->root->getHeight(path[i]->right->left) - 
+            this->root->getHeight(path[i]->right->right) <= 0) {
                 if (i == 0) {
                     this->root = path[i]->singleRotateLeft();
                 }
@@ -419,13 +423,10 @@ void AVLTree<Base>::remove(const Base &item) {
                 }
             }
             path.push_back(leftMost);
-            if (twoChildren)
-            {
-                if (leftMost->right != NULL)
-                {
+            if (twoChildren) {
+                if (leftMost->right != NULL) {
                     leftMost = leftMost->right;
-                    while (leftMost != NULL)
-                    {
+                    while (leftMost != NULL) {
                         path.push_back(leftMost);
                         leftMost = leftMost->left;
                     }

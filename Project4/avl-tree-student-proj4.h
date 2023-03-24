@@ -326,6 +326,7 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {
 template<class Base>
 void AVLTree<Base>::remove(const Base &item) {
     vector<AVLNode<Base> *> path;
+    bool twoChildren = false;
     //find the item
     AVLNode<Base> *toRemove = this->root;
     AVLNode<Base> *parent = NULL;
@@ -388,6 +389,7 @@ void AVLTree<Base>::remove(const Base &item) {
         }
         //if the item has two children
         else {
+            twoChildren = true;
             AVLNode<Base> *leftMost = toRemove->right;
             AVLNode<Base> *leftMostParent = toRemove;
             while (leftMost->left != NULL) {
@@ -417,6 +419,18 @@ void AVLTree<Base>::remove(const Base &item) {
                 }
             }
             path.push_back(leftMost);
+            if (twoChildren)
+            {
+                if (leftMost->right != NULL)
+                {
+                    leftMost = leftMost->right;
+                    while (leftMost != NULL)
+                    {
+                        path.push_back(leftMost);
+                        leftMost = leftMost->left;
+                    }
+                }
+            }
             toRemove->left = toRemove->right = NULL;
             leftMost = NULL;
             leftMostParent = NULL;

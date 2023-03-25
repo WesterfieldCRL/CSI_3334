@@ -1,3 +1,19 @@
+/* CSI 3334
+ * Project 4 -- Balanced tree-based encryption and decryption
+ * Filename: avl-tree-student-proj4.h
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the implementation of the AVLNode and EncryptionTree classes.
+ * The AVLNode class contains the data for the node, the left and right nodes,
+ * the height of the node and the data stored in the node. This file implements
+ * the destructor, printPreorder, minNode, maxNode, and all rotations. The
+ * AVLTree class contains the root node. This file implements the insert,
+ * remove, rebalancePathToRoot, and the printLevelOrder functions. The
+ * EncryptionTree class inherits from the AVLTree class. This file implements
+ * the encrypt, and decrypt functions.
+ */
+
 #ifndef AVL_TREE_STUDENT_PROJ4 
 #define AVL_TREE_STUDENT_PROJ4 
 
@@ -107,7 +123,7 @@ const AVLNode<Base> *AVLNode<Base>::maxNode() const {
  * Parameters:
  *   none
  * 
- * Return value: none
+ * Return value: A pointer to the new root of the subtree
  */
 
 template<class Base>
@@ -128,7 +144,7 @@ AVLNode<Base> *AVLNode<Base>::singleRotateLeft() {
  * Parameters:
  *   none
  * 
- * Return value: none
+ * Return value: A pointer to the new root of the subtree
  */
 
 template<class Base>
@@ -149,7 +165,7 @@ AVLNode<Base> *AVLNode<Base>::singleRotateRight() {
  * Parameters:
  *   none
  * 
- * Return value: none
+ * Return value: A pointer to the new root of the subtree
  */
 
 template<class Base>
@@ -168,7 +184,7 @@ AVLNode<Base> *AVLNode<Base>::doubleRotateLeftRight() {
  * Parameters:
  *   none
  * 
- * Return value: none
+ * Return value: A pointer to the new root of the subtree
  */
 
 template<class Base>
@@ -180,7 +196,7 @@ AVLNode<Base> *AVLNode<Base>::doubleRotateRightLeft() {
 /**
  * insert
  * 
- * Insertes a node into the tree using the provided item as data.
+ * Inserts a node into the tree using the provided item as data.
  * Stores the path to the inserted node in a vector and then calls
  * rebalancePathToRoot to rebalance the tree.
  * 
@@ -249,10 +265,11 @@ void AVLTree<Base>::insert(const Base &item) {
 
 template<class Base>
 void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {   
+    int unbalancedHeight = 2;
     for (int i = path.size() - 1; i >= 0; i--) {
         path[i]->updateHeight();
         if (this->root->getHeight(path[i]->left) - 
-        this->root->getHeight(path[i]->right) >= 2) {
+        this->root->getHeight(path[i]->right) >= unbalancedHeight) {
             if (this->root->getHeight(path[i]->left->left) - 
             this->root->getHeight(path[i]->left->right) >= 0) {
                 if (i == 0) {
@@ -282,7 +299,7 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {
             }
         }
         else if (this->root->getHeight(path[i]->left) - 
-        this->root->getHeight(path[i]->right) <= -2) {
+        this->root->getHeight(path[i]->right) <= -1 * unbalancedHeight) {
             if (this->root->getHeight(path[i]->right->left) - 
             this->root->getHeight(path[i]->right->right) <= 0) {
                 if (i == 0) {
@@ -461,6 +478,7 @@ void AVLTree<Base>::printLevelOrder(ostream &os) const {
     if (this->root != NULL) {
         queue<AVLNode<Base> *> q;
         int nodesPerLine = 0;
+        int allowedNodesPerLine = 20;
         q.push(this->root);
         while (!q.empty()) {
             AVLNode<Base> *node = q.front();
@@ -478,7 +496,7 @@ void AVLTree<Base>::printLevelOrder(ostream &os) const {
                 q.push(node->right);
             }
             nodesPerLine++;
-            if (nodesPerLine >= 20) {
+            if (nodesPerLine >= allowedNodesPerLine) {
                 os << endl;
                 nodesPerLine = 0;
             }

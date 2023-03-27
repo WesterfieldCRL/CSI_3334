@@ -265,11 +265,11 @@ void AVLTree<Base>::insert(const Base &item) {
 
 template<class Base>
 void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {   
-    int unbalancedHeight = 2;
+    const int UNBALANCEDHEIGHT = 2;
     for (int i = path.size() - 1; i >= 0; i--) {
         path[i]->updateHeight();
         if (this->root->getHeight(path[i]->left) - 
-        this->root->getHeight(path[i]->right) >= unbalancedHeight) {
+        this->root->getHeight(path[i]->right) >= UNBALANCEDHEIGHT) {
             if (this->root->getHeight(path[i]->left->left) - 
             this->root->getHeight(path[i]->left->right) >= 0) {
                 if (i == 0) {
@@ -299,7 +299,7 @@ void AVLTree<Base>::rebalancePathToRoot(vector<AVLNode<Base> *> const &path) {
             }
         }
         else if (this->root->getHeight(path[i]->left) - 
-        this->root->getHeight(path[i]->right) <= -1 * unbalancedHeight) {
+        this->root->getHeight(path[i]->right) <= -1 * UNBALANCEDHEIGHT) {
             if (this->root->getHeight(path[i]->right->left) - 
             this->root->getHeight(path[i]->right->right) <= 0) {
                 if (i == 0) {
@@ -477,7 +477,7 @@ template<class Base>
 void AVLTree<Base>::printLevelOrder(ostream &os) const {
     if (this->root != NULL) {
         queue<AVLNode<Base> *> q;
-        const int NODESPERLINE = 0;
+        int NODESPERLINE = 0;
         const int ALLOWEDNODESPERLINE = 20;
         q.push(this->root);
         while (!q.empty()) {

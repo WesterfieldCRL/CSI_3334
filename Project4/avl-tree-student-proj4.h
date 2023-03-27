@@ -477,8 +477,8 @@ template<class Base>
 void AVLTree<Base>::printLevelOrder(ostream &os) const {
     if (this->root != NULL) {
         queue<AVLNode<Base> *> q;
-        int nodesPerLine = 0;
-        int allowedNodesPerLine = 20;
+        const int NODESPERLINE = 0;
+        const int ALLOWEDNODESPERLINE = 20;
         q.push(this->root);
         while (!q.empty()) {
             AVLNode<Base> *node = q.front();
@@ -495,10 +495,10 @@ void AVLTree<Base>::printLevelOrder(ostream &os) const {
                 q.push(node->left);
                 q.push(node->right);
             }
-            nodesPerLine++;
-            if (nodesPerLine >= allowedNodesPerLine) {
+            NODESPERLINE++;
+            if (NODESPERLINE >= ALLOWEDNODESPERLINE) {
                 os << endl;
-                nodesPerLine = 0;
+                NODESPERLINE = 0;
             }
             else {
                 os << " ";

@@ -39,10 +39,40 @@ int Process::getSubmissionTime() const
 
 bool Process::operator<(Process const &p) const
 {
-
+    if (this->deadline < p.deadline)
+    {
+        return true;
+    }
+    else if (this->deadline > p.deadline)
+    {
+        return false;
+    }
+    else
+    {
+        if (this->requiredTime < p.requiredTime)
+        {
+            return true;
+        }
+        else if (this->requiredTime > p.requiredTime)
+        {
+            return false;
+        }
+        else
+        {
+            if (this->id < p.id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
 }
 
 istream &operator>>(istream &is, Process &p)
 {
-
+    is >> p.submissionTime >> p.deadline >> p.requiredTime >> p.information;
+    return is;
 }

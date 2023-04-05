@@ -1,6 +1,6 @@
 #include "process-proj5.h"
 
-Process::Process(int theId = 0)
+Process::Process(int theId)
 {
     this->id = theId;
     this->submissionTime = 0;

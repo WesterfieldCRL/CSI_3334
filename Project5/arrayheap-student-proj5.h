@@ -6,12 +6,6 @@
 
 using namespace std;
 
-/*T *data;
-int *heapAndFreeStack;
-
-int numItems;
-int capacity;*/
-
 template <typename T>
 ArrayHeap<T>::ArrayHeap()
 {
@@ -28,7 +22,11 @@ ArrayHeap<T>::ArrayHeap(ArrayHeap<T> const &h)
     this->numItems = h.numItems;
     this->data = new T[this->capacity];
     this->heapAndFreeStack = new int[this->capacity];
-    this = h;
+    for(int i = 0; i < this->capacity; i++)
+    {
+        this->data[i] = h.data[i];
+        this->heapAndFreeStack[i] = h.heapAndFreeStack[i];
+    }
 }
 
 template <typename T>
@@ -92,13 +90,37 @@ int ArrayHeap<T>::getNumItems() const
 template <typename T>
 void bubbleUp(int ndx)
 {
-    
+    if (ndx == 0)
+    {
+        return;
+    }
+    int parent = (ndx - 1) / 2;
+    if (this->data[ndx] < this->data[parent])
+    {
+        swap(this->data[ndx], this->data[parent]);
+        this->bubbleUp(parent);
+    }
 }
 
 template <typename T>
 void bubbleDown(int ndx)
 {
-
+    int child1 = (ndx * 2) + 1;
+    int child2 = (ndx * 2) + 2;
+    if (child1 < this->numItems)
+    {
+        int lesserChild = this->child1;
+        if ((this->child2 < this->numItems) && (this->data[child2] < this->data[ndx]))
+        {
+            lesserChild = this->child2;
+        }
+        if (this->data[lesserChild] < this->data[ndx])
+        {
+            swap(this->data[lesserChild], this->data[ndx]);
+            this->bubbleDown(lesserChild);
+        }
+        
+    }
 }
 
 

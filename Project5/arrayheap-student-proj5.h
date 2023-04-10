@@ -72,7 +72,9 @@ void ArrayHeap<T>::insert(T const &item)
 template <typename T>
 void ArrayHeap<T>::removeMinItem()
 {
-
+    this->heapAndFreeStack[this->numItems - 1] = this->heapAndFreeStack[0];
+    this->numItems--;
+    this->bubbleDown(0);
 }
 
 template <typename T>
@@ -88,7 +90,7 @@ int ArrayHeap<T>::getNumItems() const
 }
 
 template <typename T>
-void bubbleUp(int ndx)
+void ArrayHeap<T>::bubbleUp(int ndx)
 {
     if (ndx == 0)
     {
@@ -97,13 +99,13 @@ void bubbleUp(int ndx)
     int parent = (ndx - 1) / 2;
     if (this->data[ndx] < this->data[parent])
     {
-        swap(this->data[ndx], this->data[parent]);
+        swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[parent]);
         this->bubbleUp(parent);
     }
 }
 
 template <typename T>
-void bubbleDown(int ndx)
+void ArrayHeap<T>::bubbleDown(int ndx)
 {
     int child1 = (ndx * 2) + 1;
     int child2 = (ndx * 2) + 2;

@@ -12,6 +12,7 @@ Process::Process(int theId)
 int Process::run(int currentSystemTime) const
 {
     cout << "running process id " << this->id << " at time " << currentSystemTime << endl;
+    cout << this->information << endl;
     return currentSystemTime + this->requiredTime;
 }
 

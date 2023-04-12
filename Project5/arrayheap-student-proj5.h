@@ -59,19 +59,34 @@ ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah)
 template <typename T>
 void ArrayHeap<T>::insert(T const &item)
 {
+
     if(this->numItems == this->capacity)
     {
         this->doubleCapacity();
     }
-    this->data[this->numItems] = item;
-    this->heapAndFreeStack[this->numItems] = this->numItems;
-    this->numItems++;
+
+    //check for free slots
+
+    for (int i = 0; i < numItems; i++)
+    {
+        for (int j = 0; j < numItems; j++)
+        {
+            if (this->heapAndFreeStack[j] != i)
+            {
+                this->data[i] = item;
+                this->heapAndFreeStack[this->numItems] = i;
+                this->numItems++;
+            }
+        }
+    }
+
     this->bubbleUp(this->numItems - 1);
 }
 
 template <typename T>
 void ArrayHeap<T>::removeMinItem()
 {
+
     this->heapAndFreeStack[0] = this->heapAndFreeStack[this->numItems-1];
     this->numItems--;
     this->bubbleDown(0);

@@ -11,7 +11,7 @@ Process::Process(int theId)
 
 int Process::run(int currentSystemTime) const
 {
-    cout << "running process id " << this->id << " at time " << currentSystemTime << endl;
+    cout << "running process id " << this->id << " at " << currentSystemTime << endl;
     cout << this->information << endl;
     return currentSystemTime + this->requiredTime;
 }
@@ -74,6 +74,7 @@ bool Process::operator<(Process const &p) const
 
 istream &operator>>(istream &is, Process &p)
 {
-    is >> p.submissionTime >> p.deadline >> p.requiredTime >> p.information;
+    is >> p.submissionTime >> p.deadline >> p.requiredTime;
+    getline(is >> ws, p.information);
     return is;
 }

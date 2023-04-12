@@ -1,6 +1,7 @@
 #include <iostream>
 #include "process-proj5.h"
 #include "arrayheap-prof-proj5.h"
+#include "arrayheap-student-proj5.h"
 
 using namespace std;
 
@@ -12,21 +13,23 @@ int main()
     int numSkipped = 0;
     ArrayHeap<Process> heap;
     Process currProcess;
-    Process nextProcess;
+    Process *nextProcess = new Process(0);
     cin >> numProcesses;
-    cin >> nextProcess;
+    cin >> *nextProcess;
     bool noInput = false;
 
     while (numRun + numSkipped < numProcesses)
     {
         
-        while (nextProcess.getSubmissionTime() <= currTime && !noInput)
+        while (nextProcess->getSubmissionTime() <= currTime && !noInput)
         {
-            heap.insert(nextProcess);
-            if (!(cin >> nextProcess))
+            heap.insert(*nextProcess);
+            nextProcess = new Process(nextProcess->getId() + 1);
+            if (!(cin >> *nextProcess))
             {
                 noInput = true;
             }
+            
         }
 
         if (heap.getNumItems() == 0)
@@ -36,6 +39,7 @@ int main()
         else
         {
             currProcess = heap.getMinItem();
+            heap.removeMinItem();
             if (currProcess.canComplete(currTime))
             {
                 currTime = currProcess.run(currTime);
@@ -44,7 +48,7 @@ int main()
             else
             {
                 numSkipped++;
-                cout << "skipping process id " << currProcess.getId() << "at " << currTime << endl;
+                cout << "skipping process id " << currProcess.getId() << " at " << currTime << endl;
                 currTime++;
             }
         }

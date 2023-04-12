@@ -54,13 +54,14 @@ class Process {
         bool operator<(Process const &p) const;
 
         friend istream &operator>>(istream &is, Process &p);
+        string information;
 
     protected:
         int id;
         int submissionTime;
         int deadline;
         int requiredTime;
-        string information;
+        
 };
 
 #endif

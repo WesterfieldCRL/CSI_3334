@@ -1,31 +1,15 @@
-inserting before, data : 
-inserting after, data : id zero| 
-removing before, data : id zero| 
-removing after, data : 
 running process id 0 at 0
-id zero
-inserting before, data : 
-inserting after, data : id one| 
-inserting before, data : id one| 
-inserting after, data : id one| id two| 
-inserting before, data : id one| id two| 
-inserting after, data : id one| id two| id three| 
-removing before, data : id one| id two| id three| 
-removing after, data : id two| id three| 
-running process id 1 at 10
-id one
-inserting before, data : id two| id three| 
-inserting after, data : id four| id four| id two| 
-removing before, data : id four| id four| id two| 
-removing after, data : id four| id two| 
-running process id 4 at 20
-id four
-removing before, data : id four| id two| 
-removing after, data : id two| 
-skipping process id 4 at 25
-removing before, data : id two| 
-removing after, data : 
-skipping process id 2 at 26
-final clock is                 27
-number of processes run is     3
+there
+running process id 1 at 20
+is
+skipping process id 2 at 25
+skipping process id 3 at 29
+running process id 4 at 41
+the
+running process id 5 at 58
+right
+running process id 6 at 67
+tool
+final clock is                 68
+number of processes run is     5
 number of processes skipped is 2

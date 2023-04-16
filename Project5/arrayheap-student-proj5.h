@@ -116,36 +116,15 @@ ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah) {
 
 template <typename T>
 void ArrayHeap<T>::insert(T const &item) {
-    //bool inserted = false;
-    //bool inHeap = true;
+
     if(this->numItems == this->capacity) {
         this->doubleCapacity();
     }
 
-    //check for free slots
+    this->data[this->numItems] = item;
+    this->heapAndFreeStack[this->numItems] = this->numItems;
+    this->numItems++;
 
-    /*for (int i = 0; i < numItems; i++) {
-        for (int j = 0; j < numItems; j++) {
-            if (heapAndFreeStack[j] == i) {
-                inHeap = false;
-            }
-        }
-
-        if (inHeap == true) {
-            this->data[i] = item;
-            this->heapAndFreeStack[this->numItems] = i;
-            this->numItems++;
-            inserted = true;
-            break;
-        }
-        inHeap = true;
-    }*/
-
-    //if (inserted == false) {
-        this->data[this->numItems] = item;
-        this->heapAndFreeStack[this->numItems] = this->numItems;
-        this->numItems++;
-    //}
 
     this->bubbleUp(this->numItems - 1);
 }
@@ -165,10 +144,8 @@ void ArrayHeap<T>::insert(T const &item) {
 
 template <typename T>
 void ArrayHeap<T>::removeMinItem() {
-    //this->heapAndFreeStack[0] = this->heapAndFreeStack[this->numItems-1];
 
     this->data[this->heapAndFreeStack[0]] = this->data[this->heapAndFreeStack[this->numItems-1]];
-
     this->numItems--;
     this->bubbleDown(0);
 }
@@ -258,7 +235,6 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
             swap(this->heapAndFreeStack[lesserChild], this->heapAndFreeStack[ndx]);
             this->bubbleDown(lesserChild);
         }
-        
     }
 }
 

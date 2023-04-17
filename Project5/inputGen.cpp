@@ -30,7 +30,11 @@ int main()
             dis = distribution(generator);
         out << rand_str << "\n";
 
-        lines += rand()%100;
+        int temp = rand()%2;
+        if (temp == 0)
+        {
+            lines++;
+        }
     }
 
 

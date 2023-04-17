@@ -1,3 +1,17 @@
+/* CSI 3334
+ * Project 5 -- Real-Time Batch Operating System Simulator
+ * Filename: process-proj5.cpp
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the Process class. The Process class contains the
+ * information for a process. The Process class contains the id, submission
+ * time, deadline, required time, and information for the process. The
+ * Process class contains a constructor, a run function, a canComplete
+ * function, an getId function, a getSubmissionTime function, an
+ * overloaded < operator, and an overloaded >> operator.
+ */
+
 #include "process-proj5.h"
 
 /**
@@ -14,9 +28,9 @@
 
 Process::Process(int theId) {
     this->id = theId;
-    this->submissionTime = 0;
-    this->deadline = 0;
-    this->requiredTime = 0;
+    this->submissionTime = -1;
+    this->deadline = -1;
+    this->requiredTime = -1;
     this->information = "";
 }
 
@@ -134,6 +148,7 @@ bool Process::operator<(Process const &p) const {
             }
         }
     }
+    return false;
 }
 
 /**

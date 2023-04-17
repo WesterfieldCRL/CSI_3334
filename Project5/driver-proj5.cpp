@@ -1,5 +1,5 @@
 /* CSI 3334
- * Project 5 -- 
+ * Project 5 -- Real-Time Batch Operating System Simulator
  * Filename: driver-proj5.cpp
  * Student name: Wesley Anastasi
  * version: 1.0

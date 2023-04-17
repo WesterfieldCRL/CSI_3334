@@ -1,3 +1,18 @@
+/* CSI 3334
+ * Project 5 -- Real-Time Batch Operating System Simulator
+ * Filename: arrayheap-student-proj5.h
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the ArrayHeap class. The ArrayHeap class is a heap
+ * implemented using an array. The heap is implemented using a min-heap.
+ * The heapAndFreeStack array is used to keep track of the free spaces in the
+ * data array. The heapAndFreeStack array is implemented using a max-heap.
+ * This file implements the constructor, copy constructor, destructor, and
+ * assignment operator, insert, removeMinItem, getMinItem, bubbleUp,
+ * bubbleDown, and doubleCapacity functions.
+ */
+
 #ifndef ARRAY_HEAP_PROJ5_STUDENT_H
 #define ARRAY_HEAP_PROJ5_STUDENT_H
 
@@ -145,7 +160,8 @@ void ArrayHeap<T>::insert(T const &item) {
 template <typename T>
 void ArrayHeap<T>::removeMinItem() {
 
-    this->data[this->heapAndFreeStack[0]] = this->data[this->heapAndFreeStack[this->numItems-1]];
+    //this->data[this->heapAndFreeStack[0]] = this->data[this->heapAndFreeStack[this->numItems-1]];
+    data[0] = data[numItems-1];
     this->numItems--;
     this->bubbleDown(0);
 }
@@ -163,7 +179,8 @@ void ArrayHeap<T>::removeMinItem() {
 
 template <typename T>
 T const &ArrayHeap<T>::getMinItem() const {
-    return this->data[this->heapAndFreeStack[0]];
+    //return this->data[this->heapAndFreeStack[0]];
+    return data[0];
 }
 
 /**
@@ -200,8 +217,15 @@ void ArrayHeap<T>::bubbleUp(int ndx) {
     if (ndx == 0) {
         return;
     }
-    int parent = (ndx - 1) / 2;
+    /*int parent = (ndx - 1) / 2;
     if (this->data[this->heapAndFreeStack[ndx]] < this->data[this->heapAndFreeStack[parent]]) {
+        swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[parent]);
+        this->bubbleUp(parent);
+    }*/
+    int parent = (ndx - 1) / 2;
+    if (this->data[ndx] < this->data[parent])
+    {
+        swap(this->data[ndx], this->data[parent]);
         swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[parent]);
         this->bubbleUp(parent);
     }
@@ -222,7 +246,7 @@ void ArrayHeap<T>::bubbleUp(int ndx) {
 
 template <typename T>
 void ArrayHeap<T>::bubbleDown(int ndx) {
-    int child1 = (ndx * 2) + 1;
+    /*int child1 = (ndx * 2) + 1;
     int child2 = (ndx * 2) + 2;
     if (child1 < this->numItems) {
         int lesserChild = child1;
@@ -232,6 +256,19 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
         }
         if (this->data[this->heapAndFreeStack[lesserChild]] < 
         this->data[this->heapAndFreeStack[ndx]]) {
+            swap(this->heapAndFreeStack[lesserChild], this->heapAndFreeStack[ndx]);
+            this->bubbleDown(lesserChild);
+        }
+    }*/
+    int child1 = (ndx * 2) + 1;
+    int child2 = (ndx * 2) + 2;
+    if (child1 < this->numItems) {
+        int lesserChild = child1;
+        if ((child2 < this->numItems) && (this->data[child2] < this->data[child1])) {
+            lesserChild = child2;
+        }
+        if (this->data[lesserChild] < this->data[ndx]) {
+            swap(this->data[lesserChild], this->data[ndx]);
             swap(this->heapAndFreeStack[lesserChild], this->heapAndFreeStack[ndx]);
             this->bubbleDown(lesserChild);
         }

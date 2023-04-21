@@ -148,7 +148,7 @@ void dfs(Graph const &g, int current, vector<VisitStatus> *status, vector<int> *
 //                     to once current becomes BEING_VISITED
 void bfs(Graph const &g, int current, vector<VisitStatus> *status, vector<int> *discovery_order) {
     // FILL IN HERE -- my code is 16 lines long
-    status->at(current) = BEING_VISITED;
+    /*status->at(current) = BEING_VISITED;
     vector<int> queue;
     queue.push_back(current);
     while (!queue.empty())
@@ -165,6 +165,25 @@ void bfs(Graph const &g, int current, vector<VisitStatus> *status, vector<int> *
         }
         status->at(x) = VISITED;
         discovery_order->push_back(x);
+    }*/
+
+    //same thing but implemented with queue
+    queue<int> q;
+    q.push(current);
+    status->at(current) = BEING_VISITED;
+    discovery_order->push_back(current);
+
+    while (!q.empty()) {
+        int x = q.front();
+        q.pop();
+        for (int i = 0; i < g.size(); i++) {
+            if (g.has_edge(x, i) && status->at(i) == UNVISITED) {
+                discovery_order->push_back(i);
+                status->at(i) = BEING_VISITED;
+                q.push(i);
+            }
+        }
+        status->at(x) = VISITED;
     }
 }
 

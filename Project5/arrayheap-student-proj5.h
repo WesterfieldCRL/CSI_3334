@@ -223,8 +223,7 @@ void ArrayHeap<T>::bubbleUp(int ndx) {
         this->bubbleUp(parent);
     }*/
     int parent = (ndx - 1) / 2;
-    if (this->data[ndx] < this->data[parent])
-    {
+    if (this->data[ndx] < this->data[parent]) {
         swap(this->data[ndx], this->data[parent]);
         swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[parent]);
         this->bubbleUp(parent);

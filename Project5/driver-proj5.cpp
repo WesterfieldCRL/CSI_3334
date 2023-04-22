@@ -56,8 +56,9 @@ int main() {
         
         while (nextProcess->getSubmissionTime() <= currTime && !noInput) {
             heap.insert(*nextProcess);
+            int tempId = nextProcess->getId();
             delete nextProcess;
-            nextProcess = new Process(nextProcess->getId() + 1);
+            nextProcess = new Process(tempId + 1);
             if (!(cin >> *nextProcess)) {
                 noInput = true;
             }
@@ -85,6 +86,8 @@ int main() {
     cout << "final clock is                 " << currTime << endl;
     cout << "number of processes run is     " << numRun << endl;
     cout << "number of processes skipped is " << numSkipped << endl;
+
+    delete nextProcess;
 
     return 0;
 }

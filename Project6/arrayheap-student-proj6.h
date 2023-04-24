@@ -7,10 +7,65 @@
 
 using namespace std;
 
-/********************************************************* 
- * INSERT YOUR CODE HERE                                 * 
- *********************************************************/
+template <typename T>
+ArrayHeap<T>::ArrayHeap()
+{
 
+}
+
+template <typename T>
+ArrayHeap<T>::ArrayHeap(ArrayHeap<T> const &h)
+{
+
+}
+
+template <typename T>
+ArrayHeap<T>::~ArrayHeap()
+{
+
+}
+
+template <typename T>
+ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah)
+{
+
+}
+
+template <typename T>
+int ArrayHeap<T>::insert(T const &item)
+{
+
+}
+ 
+template <typename T>
+void ArrayHeap<T>::removeMinItem()
+{
+
+}
+
+template <typename T>
+T const &ArrayHeap<T>::getMinItem() const
+{
+
+}
+
+template <typename T>
+int ArrayHeap<T>::getNumItems() const
+{
+
+}
+
+template <typename T>
+bool ArrayHeap<T>::isOnHeap(int key) const
+{
+
+}
+
+template <typename T>
+void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem)
+{
+
+}
 
 #endif
 

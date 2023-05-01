@@ -1,4 +1,6 @@
 #include "graph-proj6.h"
+#include "arrayheap-student-proj6.h"
+#include <utility>
 
 #include <iostream>
 
@@ -18,39 +20,38 @@ void Graph::addEdge(int from, int to, int cost)
 
 vector<int> Graph::dijkstra(int source) const
 {
-    vector<int> distance(adjacencyList.size(), INFINITE_COST);
-    vector<bool> visited(adjacencyList.size(), false);
-    distance[source] = 0;
+    vector<int> dist;
+    ArrayHeap<pair<int, int>> heap; //pair of (distance, vertex)
 
     for (int i = 0; i < adjacencyList.size(); i++)
     {
-        int min = INFINITE_COST;
-        int minIndex = -1;
+        dist.push_back(INFINITE_COST);
+    }
 
-        for (int j = 0; j < adjacencyList.size(); j++)
+    dist[source] = 0;
+
+    heap.insert(make_pair(0, source));
+
+    while (heap.getNumItems() > 0)
+    {
+        //remove min item
+        pair<int, int> min = heap.getMinItem();
+        heap.removeMinItem();
+
+        int minVertex = min.second;
+        int minCost = min.first;
+
+        //relax edges
+        for (auto it = adjacencyList[minVertex].begin(); it != adjacencyList[minVertex].end(); it++)
         {
-            if (!visited[j] && distance[j] < min)
+            int newCost = minCost + it->cost;
+            if (newCost < dist[it->to])
             {
-                min = distance[j];
-                minIndex = j;
-            }
-        }
-
-        if (minIndex == -1)
-        {
-            break;
-        }
-
-        visited[minIndex] = true;
-
-        for (auto it = adjacencyList[minIndex].begin(); it != adjacencyList[minIndex].end(); it++)
-        {
-            if (distance[minIndex] + it->cost < distance[it->to])
-            {
-                distance[it->to] = distance[minIndex] + it->cost;
+                dist[it->to] = newCost;
+                heap.insert(make_pair(newCost, it->to));
             }
         }
     }
 
-    return distance;
+    return dist;
 }

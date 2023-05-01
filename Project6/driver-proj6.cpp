@@ -1,42 +1,125 @@
 #include <iostream>
 #include <random>
+#include <string>
+#include <map>
 #include "arrayheap-student-proj6.h"
+#include "graph-proj6.h"
 
 
 using namespace std;
 
 int main()
 {
-    ArrayHeap<int> testHeap;
-    srand(time(0));
+    ArrayHeap<int> heap;
+    map<string, int> computerToIndex;
+    vector<bool> canBeServer;
+    vector<int> serverCosts;
+    int edges;
 
-    for (int i = 0; i < 50; i++)
+    cin >> edges;
+
+    Graph graph(edges);
+
+    for (int i = 0; i < edges; i++)
     {
-        int IorR = rand()%2;
-        if (IorR == 0)
+        string computer1;
+        string computer2;
+        int cost;
+        cin >> computer1 >> computer2 >> cost; //read in data
+
+        //Update map of computer names to index
+        if (computerToIndex.size() == 0)
         {
-            int temp = rand()%100;
-            testHeap.insert(temp);
-            cout << "inserting " << temp << endl;
+            //if map is empty, add both computers to map
+            computerToIndex[computer1] = computerToIndex.size();
+            computerToIndex[computer2] = computerToIndex.size();
+
+            //check if a server
+            if (computer1.length() > 7)
+            {
+                string temp = computer1.substr(computer1.length()-7, 7);
+                if (temp == "_server")
+                {
+                    canBeServer.push_back(true);
+                }
+                else
+                {
+                    canBeServer.push_back(false);
+                }
+            }
+            if (computer2.length() > 7)
+            {
+                string temp = computer2.substr(computer2.length()-7, 7);
+                if (temp == "_server")
+                {
+                    canBeServer.push_back(true);
+                }
+                else
+                {
+                    canBeServer.push_back(false);
+                }
+            }
         }
         else
         {
-            if (testHeap.getNumItems() > 0)
+            //check if computer already in map
+            if (computerToIndex.find(computer1) == computerToIndex.end())
             {
-                cout << "removing " << testHeap.getMinItem() << endl;
-                testHeap.removeMinItem();
+                computerToIndex[computer1] = computerToIndex.size();
+
+                //check if a server
+                if (computer1.length() > 7)
+                {
+                    string temp = computer1.substr(computer1.length()-7, 7);
+                    if (temp == "_server")
+                    {
+                        canBeServer.push_back(true);
+                    }
+                    else
+                    {
+                        canBeServer.push_back(false);
+                    }
+                }
             }
-            else
+            if (computerToIndex.find(computer2) == computerToIndex.end())
             {
-                cout << "no items in heap" << endl;
+                computerToIndex[computer2] = computerToIndex.size();
+
+                //check if a server
+                if (computer2.length() > 7)
+                {
+                    string temp = computer2.substr(computer2.length()-7, 7);
+                    if (temp == "_server")
+                    {
+                        canBeServer.push_back(true);
+                    }
+                    else
+                    {
+                        canBeServer.push_back(false);
+                    }
+                }
             }
         }
+
+        //Add edge to graph
+        graph.addEdge(computerToIndex[computer1], computerToIndex[computer2], cost);
     }
-
-    cout << endl;
-    cout << testHeap.getNumItems() << endl;
-
     
+
+    for (int i = 0; i < canBeServer.size(); i++)
+    {
+        serverCosts.push_back(-1);
+        if (canBeServer[i])
+        {
+            vector<int> distances = graph.dijkstra(i);
+            int totalCost = 0;
+            for (int i = 0; i < distances.size(); i++)
+            {
+                totalCost += distances[i];
+            }
+            serverCosts[i] = totalCost;
+        }
+    }
 
     return 0;
 }

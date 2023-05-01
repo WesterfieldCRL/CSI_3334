@@ -35,10 +35,14 @@ using namespace std;
 
 template <typename T>
 ArrayHeap<T>::ArrayHeap() {
-    this->capacity = 1000;
+    this->capacity = 10;
     this->numItems = 0;
     this->data = new T[this->capacity];
     this->heapAndFreeStack = new int[this->capacity];
+    for (int i = 0; i < this->capacity; i++)
+    {
+        this->heapAndFreeStack[i] = i;
+    }
 }
 
 /**
@@ -132,14 +136,13 @@ ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah) {
 template <typename T>
 void ArrayHeap<T>::insert(T const &item) {
 
-    if(this->numItems == this->capacity) {
+    if(this->numItems >= this->capacity) {
         this->doubleCapacity();
     }
 
-    this->data[this->numItems] = item;
-    this->heapAndFreeStack[this->numItems] = this->numItems;
+    this->data[this->heapAndFreeStack[this->numItems]] = item;
+    //this->heapAndFreeStack[this->numItems] = this->numItems;
     this->numItems++;
-
 
     this->bubbleUp(this->numItems - 1);
 }
@@ -160,9 +163,16 @@ void ArrayHeap<T>::insert(T const &item) {
 template <typename T>
 void ArrayHeap<T>::removeMinItem() {
 
-    this->data[this->heapAndFreeStack[0]] = this->data[this->heapAndFreeStack[this->numItems-1]];
+    if(this->numItems <= 0) {
+        return;
+    }
+    
+    swap(this->heapAndFreeStack[0], this->heapAndFreeStack[this->numItems - 1]);
     this->numItems--;
+
     this->bubbleDown(0);
+
+
 }
 
 /**
@@ -178,6 +188,11 @@ void ArrayHeap<T>::removeMinItem() {
 
 template <typename T>
 T const &ArrayHeap<T>::getMinItem() const {
+    //return this->data[this->heapAndFreeStack[0]];
+    if (this->numItems == 0)
+    {
+        throw std::out_of_range("Heap is empty");
+    }
     return this->data[this->heapAndFreeStack[0]];
 }
 
@@ -212,11 +227,12 @@ int ArrayHeap<T>::getNumItems() const {
 
 template <typename T>
 void ArrayHeap<T>::bubbleUp(int ndx) {
-    if (ndx == 0) {
+    int parent = (ndx - 1) / 2;
+    if(parent < 0 && ndx < this->numItems) {
         return;
     }
-    int parent = (ndx - 1) / 2;
-    if (this->data[this->heapAndFreeStack[ndx]] < this->data[this->heapAndFreeStack[parent]]) {
+
+    if(this->data[this->heapAndFreeStack[ndx]] < this->data[this->heapAndFreeStack[parent]]) {
         swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[parent]);
         this->bubbleUp(parent);
     }
@@ -237,19 +253,26 @@ void ArrayHeap<T>::bubbleUp(int ndx) {
 
 template <typename T>
 void ArrayHeap<T>::bubbleDown(int ndx) {
-    int child1 = (ndx * 2) + 1;
-    int child2 = (ndx * 2) + 2;
-    if (child1 < this->numItems) {
-        int lesserChild = child1;
-        if ((child2 < this->numItems) && (this->data[this->heapAndFreeStack[child2]] < 
-        this->data[this->heapAndFreeStack[child1]])) {
-            lesserChild = child2;
-        }
-        if (this->data[this->heapAndFreeStack[lesserChild]] < 
-        this->data[this->heapAndFreeStack[ndx]]) {
-            swap(this->heapAndFreeStack[lesserChild], this->heapAndFreeStack[ndx]);
-            this->bubbleDown(lesserChild);
-        }
+    int leftChild = (2 * ndx) + 1;
+    int rightChild = (2 * ndx) + 2;
+    int minChild = leftChild;
+
+    if (rightChild >= this->numItems && leftChild >= this->numItems)
+    {
+        return;
+    }
+
+    if(leftChild >= this->numItems) {
+        return;
+    }
+
+    if(rightChild < this->numItems && this->data[this->heapAndFreeStack[rightChild]] < this->data[this->heapAndFreeStack[leftChild]]) {
+        minChild = rightChild;
+    }
+
+    if(this->data[this->heapAndFreeStack[minChild]] < this->data[this->heapAndFreeStack[ndx]]) {
+        swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[minChild]);
+        this->bubbleDown(minChild);
     }
 }
 
@@ -268,13 +291,26 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
 
 template <typename T>
 void ArrayHeap<T>::doubleCapacity() {
+    int tempCap = this->capacity;
     this->capacity *= 2;
     T *tempData = new T[this->capacity];
     int *tempHeapAndFreeStack = new int[this->capacity];
-    for(int i = 0; i < this->numItems; i++) {
+    /*for(int i = 0; i < this->capacity/2; i++) {
         tempData[i] = this->data[i];
         tempHeapAndFreeStack[i] = this->heapAndFreeStack[i];
+    }*/
+
+    for (int i = 0; i < tempCap; i++)
+    {
+        tempHeapAndFreeStack[i] = this->heapAndFreeStack[i];
+        tempData[i] = this->data[i];
     }
+
+    for (int i = tempCap; i < this->capacity; i++)
+    {
+        tempHeapAndFreeStack[i] = i;
+    }
+
     delete [] this->data;
     delete [] this->heapAndFreeStack;
     this->data = tempData;
@@ -283,4 +319,3 @@ void ArrayHeap<T>::doubleCapacity() {
 
 
 #endif
-

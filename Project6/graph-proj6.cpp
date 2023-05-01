@@ -43,7 +43,7 @@ vector<int> Graph::dijkstra(int source) const
 
         visited[minIndex] = true;
 
-        for (list<Edge>::const_iterator it = adjacencyList[minIndex].begin(); it != adjacencyList[minIndex].end(); it++)
+        for (auto it = adjacencyList[minIndex].begin(); it != adjacencyList[minIndex].end(); it++)
         {
             if (distance[minIndex] + it->cost < distance[it->to])
             {

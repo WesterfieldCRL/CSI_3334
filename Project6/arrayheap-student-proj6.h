@@ -123,7 +123,7 @@ bool ArrayHeap<T>::isOnHeap(int key) const
 {
     bool isOnHeap = false;
     if(this->dataToHeap[key] != -1) {
-        isOnHeap = true;
+        isOnHeap = true;s
     }
     return isOnHeap;
 }

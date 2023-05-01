@@ -39,8 +39,7 @@ ArrayHeap<T>::ArrayHeap() {
     this->numItems = 0;
     this->data = new T[this->capacity];
     this->heapAndFreeStack = new int[this->capacity];
-    for (int i = 0; i < this->capacity; i++)
-    {
+    for (int i = 0; i < this->capacity; i++) {
         this->heapAndFreeStack[i] = i;
     }
 }
@@ -141,7 +140,6 @@ void ArrayHeap<T>::insert(T const &item) {
     }
 
     this->data[this->heapAndFreeStack[this->numItems]] = item;
-    //this->heapAndFreeStack[this->numItems] = this->numItems;
     this->numItems++;
 
     this->bubbleUp(this->numItems - 1);
@@ -188,11 +186,6 @@ void ArrayHeap<T>::removeMinItem() {
 
 template <typename T>
 T const &ArrayHeap<T>::getMinItem() const {
-    //return this->data[this->heapAndFreeStack[0]];
-    if (this->numItems == 0)
-    {
-        throw std::out_of_range("Heap is empty");
-    }
     return this->data[this->heapAndFreeStack[0]];
 }
 
@@ -257,8 +250,7 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
     int rightChild = (2 * ndx) + 2;
     int minChild = leftChild;
 
-    if (rightChild >= this->numItems && leftChild >= this->numItems)
-    {
+    if (rightChild >= this->numItems && leftChild >= this->numItems) {
         return;
     }
 
@@ -266,7 +258,8 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
         return;
     }
 
-    if(rightChild < this->numItems && this->data[this->heapAndFreeStack[rightChild]] < this->data[this->heapAndFreeStack[leftChild]]) {
+    if(rightChild < this->numItems && this->data[this->heapAndFreeStack[rightChild]] 
+    < this->data[this->heapAndFreeStack[leftChild]]) {
         minChild = rightChild;
     }
 
@@ -295,19 +288,13 @@ void ArrayHeap<T>::doubleCapacity() {
     this->capacity *= 2;
     T *tempData = new T[this->capacity];
     int *tempHeapAndFreeStack = new int[this->capacity];
-    /*for(int i = 0; i < this->capacity/2; i++) {
-        tempData[i] = this->data[i];
-        tempHeapAndFreeStack[i] = this->heapAndFreeStack[i];
-    }*/
 
-    for (int i = 0; i < tempCap; i++)
-    {
+    for (int i = 0; i < tempCap; i++) {
         tempHeapAndFreeStack[i] = this->heapAndFreeStack[i];
         tempData[i] = this->data[i];
     }
 
-    for (int i = tempCap; i < this->capacity; i++)
-    {
+    for (int i = tempCap; i < this->capacity; i++) {
         tempHeapAndFreeStack[i] = i;
     }
 

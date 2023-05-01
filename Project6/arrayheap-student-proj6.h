@@ -122,8 +122,15 @@ template <typename T>
 bool ArrayHeap<T>::isOnHeap(int key) const
 {
     bool isOnHeap = false;
-    if(this->dataToHeap[key] != -1) {
-        isOnHeap = true;s
+    if (0 <= key && key < this->capacity)
+    {
+        if (0 <= this->dataToHeap[key] && this->dataToHeap[key] < this->numItems)
+        {
+            if (this->heapAndFreeStack[this->dataToHeap[key]] == key)
+            {
+                isOnHeap = true;
+            }
+        }
     }
     return isOnHeap;
 }
@@ -135,9 +142,9 @@ void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem)
         return;
     }
 
-    this->data[this->heapAndFreeStack[this->dataToHeap[key]]] = newItem;
-    this->bubbleUp(this->heapAndFreeStack[this->dataToHeap[key]]);
-    this->bubbleDown(this->heapAndFreeStack[this->dataToHeap[key]]);
+    this->data[this->heapAndFreeStack[key]] = newItem;
+    this->bubbleUp(this->heapAndFreeStack[key]);
+    this->bubbleDown(this->heapAndFreeStack[key]);
 }
 
 template <typename T>

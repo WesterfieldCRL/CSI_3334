@@ -10,10 +10,11 @@ using namespace std;
 
 int main()
 {
-    ArrayHeap<int> heap;
+    enum { INFINITE_COST = 1000000000 };
+    ArrayHeap<pair<int, int>> serverCosts; //cost, vertex
     map<string, int> computerToIndex;
     vector<bool> canBeServer;
-    vector<int> serverCosts;
+    //vector<int> serverCosts;
     int edges;
 
     cin >> edges;
@@ -108,7 +109,6 @@ int main()
 
     for (int i = 0; i < canBeServer.size(); i++)
     {
-        serverCosts.push_back(-1);
         if (canBeServer[i])
         {
             vector<int> distances = graph.dijkstra(i);
@@ -117,9 +117,45 @@ int main()
             {
                 totalCost += distances[i];
             }
-            serverCosts[i] = totalCost;
+            serverCosts.insert(make_pair(totalCost, i));
         }
     }
+
+    pair<int, int> min = serverCosts.getMinItem();
+
+    if (min.first >= INFINITE_COST)
+    {
+        cout << "no server can serve the whole network." << endl;
+    }
+    else
+    {
+    
+        cout << "total delay: " << min.first << endl;
+
+        
+
+        for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++)
+        {
+            if (it->second == min.second)
+            {
+                cout << it->first << endl;
+            }
+        }
+        serverCosts.removeMinItem();
+
+        while (serverCosts.getMinItem().first == min.first && serverCosts.getNumItems() > 0)
+        {
+            for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++)
+            {
+                if (it->second == min.second)
+                {
+                    cout << it->first << endl;
+                }
+            }
+            serverCosts.removeMinItem();
+        }
+    }
+
 
     return 0;
 }

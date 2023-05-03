@@ -157,7 +157,6 @@ void ArrayHeap<T>::doubleCapacity()
 
     for (int i = 0; i < this->capacity; i++)
     {
-        newData[i] = -1;
         newDataToHeap[i] = -1;
     }
 

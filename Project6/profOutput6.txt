@@ -1,3 +1,2 @@
-total delay: 100
-boston_server
-washington_dc_server
+total delay: 80
+seattle_server

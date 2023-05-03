@@ -14,12 +14,16 @@ int main()
     ArrayHeap<pair<int, int>> serverCosts; //cost, vertex
     map<string, int> computerToIndex;
     vector<bool> canBeServer;
-    //vector<int> serverCosts;
+
+    vector<int> computers1;
+    vector<int> computers2;
+    vector<int> costs;
+
     int edges;
 
     cin >> edges;
 
-    Graph graph(edges);
+    //Graph graph(edges);
 
     for (int i = 0; i < edges; i++)
     {
@@ -103,7 +107,17 @@ int main()
         }
 
         //Add edge to graph
-        graph.addEdge(computerToIndex[computer1], computerToIndex[computer2], cost);
+        //graph.addEdge(computerToIndex[computer1], computerToIndex[computer2], cost);
+        computers1.push_back(computerToIndex[computer1]);
+        computers2.push_back(computerToIndex[computer2]);
+        costs.push_back(cost);
+    }
+
+    Graph graph(computerToIndex.size());
+
+    for (int i = 0; i < costs.size(); i++)
+    {
+        graph.addEdge(computers1[i], computers2[i], costs[i]);
     }
     
 

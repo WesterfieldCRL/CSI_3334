@@ -1,2 +1,2 @@
-total delay: 80
-seattle_server
+total delay: 10
+waco_server

@@ -1,3 +1,12 @@
+/* CSI 3334
+ * Project 6 -- Network Brodcasting
+ * Filename: arrayheap-student-proj6.h
+ * Student name: Wesley Anastasi
+ * version: 1.0
+ * 
+ * This file contains the implementation of the ArrayHeap class.
+ */
+
 #ifndef ARRAY_HEAP_STUDENT_PROJ6_H
 #define ARRAY_HEAP_STUDENT_PROJ6_H
 
@@ -7,24 +16,45 @@
 
 using namespace std;
 
+/**
+ * ArrayHeap
+ *
+ * This function is the constructor for the ArrayHeap class. It initializes the
+ * heap and free stack arrays to the correct size.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-ArrayHeap<T>::ArrayHeap()
-{
+ArrayHeap<T>::ArrayHeap() {
     this->capacity = 10;
     this->numItems = 0;
     this->data = new T[this->capacity];
     this->heapAndFreeStack = new int[this->capacity];
     this->dataToHeap = new int[this->capacity];
-    for (int i = 0; i < this->capacity; i++)
-    {
+    for (int i = 0; i < this->capacity; i++) {
         this->heapAndFreeStack[i] = -1;
         this->dataToHeap[i] = -1;
     }
 }
 
+/**
+ * ArrayHeap
+ *
+ * This function is the copy constructor for the ArrayHeap class. It copies
+ * the heap and free stack arrays from the given ArrayHeap.
+ * 
+ * Parameters:
+ *   h - the ArrayHeap to copy
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-ArrayHeap<T>::ArrayHeap(ArrayHeap<T> const &h)
-{
+ArrayHeap<T>::ArrayHeap(ArrayHeap<T> const &h) {
     this->capacity = h.capacity;
     this->numItems = h.numItems;
     this->data = new T[this->capacity];
@@ -38,9 +68,20 @@ ArrayHeap<T>::ArrayHeap(ArrayHeap<T> const &h)
     }
 }
 
+/**
+ * ~ArrayHeap
+ *
+ * This function is the destructor for the ArrayHeap class. It frees the memory
+ * allocated for the heap and free stack arrays.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-ArrayHeap<T>::~ArrayHeap()
-{
+ArrayHeap<T>::~ArrayHeap() {
     delete [] this->data;
     delete [] this->heapAndFreeStack;
     delete [] this->dataToHeap;
@@ -48,9 +89,20 @@ ArrayHeap<T>::~ArrayHeap()
     this->numItems = 0;
 }
 
+/**
+ * operator=
+ *
+ * This function is the assignment operator for the ArrayHeap class. It copies
+ * the heap and free stack arrays from the given ArrayHeap.
+ * 
+ * Parameters:
+ *   ah - the ArrayHeap to copy
+ * 
+ * Return value: a reference to the ArrayHeap
+ */
+
 template <typename T>
-ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah)
-{
+ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah) {
     this->capacity = ah.capacity;
     this->numItems = ah.numItems;
     delete [] this->data;
@@ -67,17 +119,25 @@ ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah)
     }
 }
 
+/**
+ * doubleCapacity
+ *
+ * This function doubles the capacity of the heap and free stack arrays.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-int ArrayHeap<T>::insert(T const &item)
-{
+int ArrayHeap<T>::insert(T const &item) {
     if(this->numItems >= this->capacity) {
         this->doubleCapacity();
     }
 
-    for (int i = 0; i < this->capacity; i++)
-    {
-        if (this->dataToHeap[i] == -1)
-        {
+    for (int i = 0; i < this->capacity; i++) {
+        if (this->dataToHeap[i] == -1) {
             this->data[i] = item;
             this->heapAndFreeStack[this->numItems] = i;
             this->dataToHeap[i] = this->numItems;
@@ -90,10 +150,20 @@ int ArrayHeap<T>::insert(T const &item)
 
     return this->numItems - 1;
 }
+
+/**
+ * removeMinItem
+ *
+ * This function removes the minimum item from the heap.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
  
 template <typename T>
-void ArrayHeap<T>::removeMinItem()
-{
+void ArrayHeap<T>::removeMinItem() {
     if(this->numItems <= 0) {
         return;
     }
@@ -106,28 +176,55 @@ void ArrayHeap<T>::removeMinItem()
     this->bubbleDown(0);
 }
 
+/**
+ * getMinItem
+ *
+ * This function returns the minimum item from the heap.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: the minimum item
+ */
+
 template <typename T>
-T const &ArrayHeap<T>::getMinItem() const
-{
+T const &ArrayHeap<T>::getMinItem() const {
     return this->data[this->heapAndFreeStack[0]];
 }
 
+/**
+ * getNumItems
+ *
+ * This function returns the number of items in the heap.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: the number of items in the heap
+ */
+
 template <typename T>
-int ArrayHeap<T>::getNumItems() const
-{
+int ArrayHeap<T>::getNumItems() const {
     return this->numItems;
 }
 
+/**
+ * isOnHeap
+ *
+ * This function returns whether or not the given key is on the heap.
+ * 
+ * Parameters:
+ *   key - the key to check
+ * 
+ * Return value: whether or not the given key is on the heap
+ */
+
 template <typename T>
-bool ArrayHeap<T>::isOnHeap(int key) const
-{
+bool ArrayHeap<T>::isOnHeap(int key) const {
     bool isOnHeap = false;
-    if (0 <= key && key < this->capacity)
-    {
-        if (0 <= this->dataToHeap[key] && this->dataToHeap[key] < this->numItems)
-        {
-            if (this->heapAndFreeStack[this->dataToHeap[key]] == key)
-            {
+    if (0 <= key && key < this->capacity) {
+        if (0 <= this->dataToHeap[key] && this->dataToHeap[key] < this->numItems) {
+            if (this->heapAndFreeStack[this->dataToHeap[key]] == key) {
                 isOnHeap = true;
             }
         }
@@ -135,9 +232,20 @@ bool ArrayHeap<T>::isOnHeap(int key) const
     return isOnHeap;
 }
 
+/**
+ * changeItemAtKey
+ *
+ * This function changes the item at the given key to the given item.
+ * 
+ * Parameters:
+ *   key - the key to check
+ *   newItem - the item to change to
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem)
-{
+void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem) {
     if(this->dataToHeap[key] == -1) {
         return;
     }
@@ -147,16 +255,25 @@ void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem)
     this->bubbleDown(this->heapAndFreeStack[key]);
 }
 
+/**
+ * doubleCapacity
+ *
+ * This function doubles the capacity of the heap and free stack arrays.
+ * 
+ * Parameters:
+ *   none
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-void ArrayHeap<T>::doubleCapacity()
-{
+void ArrayHeap<T>::doubleCapacity() {
     this->capacity *= 2;
     T *newData = new T[this->capacity];
     int *newHeapAndFreeStack = new int[this->capacity];
     int *newDataToHeap = new int[this->capacity];
 
-    for (int i = 0; i < this->capacity; i++)
-    {
+    for (int i = 0; i < this->capacity; i++) {
         newDataToHeap[i] = -1;
     }
 
@@ -174,9 +291,19 @@ void ArrayHeap<T>::doubleCapacity()
     this->dataToHeap = newDataToHeap;
 }
 
+/**
+ * bubbleUp
+ *
+ * This function bubbles up the item at the given index.
+ * 
+ * Parameters:
+ *   ndx - the index to bubble up
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-void ArrayHeap<T>::bubbleUp(int ndx)
-{
+void ArrayHeap<T>::bubbleUp(int ndx) {
     int parent = (ndx - 1) / 2;
     if(parent < 0) {
         return;
@@ -189,9 +316,19 @@ void ArrayHeap<T>::bubbleUp(int ndx)
     }
 }
 
+/**
+ * bubbleDown
+ *
+ * This function bubbles down the item at the given index.
+ * 
+ * Parameters:
+ *   ndx - the index to bubble down
+ * 
+ * Return value: none
+ */
+
 template <typename T>
-void ArrayHeap<T>::bubbleDown(int ndx)
-{
+void ArrayHeap<T>::bubbleDown(int ndx) {
     int leftChild = (2 * ndx) + 1;
     int rightChild = (2 * ndx) + 2;
     int minChild = leftChild;

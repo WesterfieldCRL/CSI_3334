@@ -117,6 +117,8 @@ ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah) {
         this->heapAndFreeStack[i] = ah.heapAndFreeStack[i];
         this->dataToHeap[i] = ah.dataToHeap[i];
     }
+
+    return *this;
 }
 
 /**
@@ -341,7 +343,7 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
         minChild = rightChild;
     }
 
-    if(this->data[this->heapAndFreeStack[ndx]] > this->data[this->heapAndFreeStack[minChild]]) {
+    if(this->data[this->heapAndFreeStack[minChild]] < this->data[this->heapAndFreeStack[ndx]]) {
         swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[minChild]);
         swap(this->dataToHeap[this->heapAndFreeStack[ndx]], this->dataToHeap[this->heapAndFreeStack[minChild]]);
         this->bubbleDown(minChild);

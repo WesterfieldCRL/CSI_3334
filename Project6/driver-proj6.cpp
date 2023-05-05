@@ -122,17 +122,18 @@ int main() {
     }
 
     Graph graph(computerToIndex.size());
-
-    for (int i = 0; i < costs.size(); i++) {
+    int tempCosts = costs.size();
+    for (int i = 0; i < tempCosts; i++) {
         graph.addEdge(computers1[i], computers2[i], costs[i]);
     }
     
-
-    for (int i = 0; i < canBeServer.size(); i++) {
+    int tempServerSize = canBeServer.size();
+    for (int i = 0; i < tempServerSize; i++) {
         if (canBeServer[i]) {
             vector<int> distances = graph.dijkstra(i);
             int totalCost = 0;
-            for (int i = 0; i < distances.size(); i++) {
+            int tempDistances = distances.size();
+            for (int i = 0; i < tempDistances; i++) {
                 totalCost += distances[i];
             }
             serverCosts.insert(make_pair(totalCost, i));

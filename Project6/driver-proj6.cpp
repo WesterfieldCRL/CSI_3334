@@ -126,14 +126,12 @@ int main() {
             bool isTooBig = false;
             for (int i = 0; i < tempDistances; i++) {
                 totalCost += distances[i];
-                if (distances[i] >= INFINITE_COST)
-                {
+                if (distances[i] >= INFINITE_COST) {
                     isTooBig = true;
                     i = tempDistances;
                 }
             }
-            if (!isTooBig)
-            {
+            if (!isTooBig) {
                 serverCosts.insert(make_pair(totalCost, i));
             }
         }
@@ -152,7 +150,6 @@ int main() {
 
         for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++) {
             if (it->second == min.second) {
-                //cout << it->first << endl;
                 outputAlphabetically.push_back(it->first);
             }
         }
@@ -160,7 +157,6 @@ int main() {
         while (serverCosts.getMinItem().first == min.first && serverCosts.getNumItems() > 0) {
             for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++) {
                 if (it->second == serverCosts.getMinItem().second) {
-                    //cout << it->first << endl;
                     outputAlphabetically.push_back(it->first);
                 }
             }

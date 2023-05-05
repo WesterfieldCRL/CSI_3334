@@ -49,11 +49,13 @@ void Graph::addEdge(int from, int to, int cost) {
 
 vector<int> Graph::dijkstra(int source) const {
     vector<int> dist;
+    vector<int> keys;
     ArrayHeap<pair<int, int>> heap; //pair of (distance, vertex)
 
     int tempListSize = adjacencyList.size();
     for (int i = 0; i < tempListSize; i++) {
         dist.push_back(INFINITE_COST);
+        keys.push_back(-1);
     }
 
     dist[source] = 0;
@@ -73,7 +75,14 @@ vector<int> Graph::dijkstra(int source) const {
             int newCost = minCost + it->cost;
             if (newCost < dist[it->to]) {
                 dist[it->to] = newCost;
-                heap.insert(make_pair(newCost, it->to));
+                if (keys[it->to] != -1)
+                {
+                    heap.changeItemAtKey(keys[it->to], make_pair(newCost, it->to));
+                }
+                else
+                {
+                    keys[it->to] = heap.insert(make_pair(newCost, it->to));
+                }
             }
         }
     }

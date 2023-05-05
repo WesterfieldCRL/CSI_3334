@@ -179,23 +179,19 @@ int main() {
 
         int tempValue = outputAlphabetically.size();
         bool swap;
-        do
-        {
+        do {
             swap = false;
-            for (int i = 0; i < tempValue-1; i++)
-            {
-                if (outputAlphabetically[i] > outputAlphabetically[i+1])
-                {
+            for (int i = 0; i < tempValue-1; i++) {
+                if (outputAlphabetically[i] > outputAlphabetically[i+1]) {
                     string temp = outputAlphabetically[i];
                     outputAlphabetically[i] = outputAlphabetically[i+1];
                     outputAlphabetically[i+1] = temp;
                     swap = true;
                 }
             }
-        }while(swap);
+        } while(swap);
 
-        for (int i = 0; i < tempValue; i++)
-        {
+        for (int i = 0; i < tempValue; i++) {
             cout << outputAlphabetically[i] << endl;
         }
 

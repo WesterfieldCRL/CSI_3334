@@ -1,4 +1,1 @@
-total delay: 100
-a_server
-b_server
-c_server
+no server can serve the whole network

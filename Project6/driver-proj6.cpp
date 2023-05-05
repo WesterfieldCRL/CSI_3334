@@ -133,17 +133,26 @@ int main() {
             vector<int> distances = graph.dijkstra(i);
             int totalCost = 0;
             int tempDistances = distances.size();
+            bool isTooBig = false;
             for (int i = 0; i < tempDistances; i++) {
                 totalCost += distances[i];
+                if (distances[i] >= INFINITE_COST)
+                {
+                    isTooBig = true;
+                    i = tempDistances;
+                }
             }
-            serverCosts.insert(make_pair(totalCost, i));
+            if (!isTooBig)
+            {
+                serverCosts.insert(make_pair(totalCost, i));
+            }
         }
     }
 
     pair<int, int> min = serverCosts.getMinItem();
     
 
-    if (serverCosts.getNumItems() == 0 || min.first >= INFINITE_COST) {
+    if (serverCosts.getNumItems() == 0) {
         cout << "no server can serve the whole network" << endl;
     }
     else {

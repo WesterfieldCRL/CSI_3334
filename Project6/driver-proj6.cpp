@@ -124,11 +124,11 @@ int main() {
             int totalCost = 0;
             int tempDistances = distances.size();
             bool isTooBig = false;
-            for (int i = 0; i < tempDistances; i++) {
-                totalCost += distances[i];
-                if (distances[i] >= INFINITE_COST) {
+            for (int j = 0; j < tempDistances; j++) {
+                totalCost += distances[j];
+                if (distances[j] >= INFINITE_COST) {
                     isTooBig = true;
-                    i = tempDistances;
+                    j = tempDistances;
                 }
             }
             if (!isTooBig) {
@@ -164,7 +164,7 @@ int main() {
         }
 
         int tempValue = outputAlphabetically.size();
-        bool swap;
+        bool swap = false;
         do {
             swap = false;
             for (int i = 0; i < tempValue-1; i++) {

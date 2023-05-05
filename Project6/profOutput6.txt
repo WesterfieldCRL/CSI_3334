@@ -1,1 +1,2 @@
-no server can serve the whole network
+total delay: 289
+f_server

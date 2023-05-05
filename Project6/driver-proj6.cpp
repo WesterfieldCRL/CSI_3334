@@ -39,7 +39,7 @@ int main() {
     ArrayHeap<pair<int, int>> serverCosts; //cost, vertex
     map<string, int> computerToIndex;
     vector<bool> canBeServer;
-
+    vector<string> outputAlphabetically;
     vector<int> computers1;
     vector<int> computers2;
     vector<int> costs;
@@ -141,31 +141,55 @@ int main() {
     }
 
     pair<int, int> min = serverCosts.getMinItem();
+    
 
-    if (min.first >= INFINITE_COST) {
-        cout << "no server can serve the whole network." << endl;
+    if (serverCosts.getNumItems() == 0 || min.first >= INFINITE_COST) {
+        cout << "no server can serve the whole network" << endl;
     }
     else {
     
         cout << "total delay: " << min.first << endl;
-
-        
+        serverCosts.removeMinItem();
 
         for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++) {
             if (it->second == min.second) {
-                cout << it->first << endl;
+                //cout << it->first << endl;
+                outputAlphabetically.push_back(it->first);
             }
         }
-        serverCosts.removeMinItem();
 
         while (serverCosts.getMinItem().first == min.first && serverCosts.getNumItems() > 0) {
             for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++) {
-                if (it->second == min.second) {
-                    cout << it->first << endl;
+                if (it->second == serverCosts.getMinItem().second) {
+                    //cout << it->first << endl;
+                    outputAlphabetically.push_back(it->first);
                 }
             }
             serverCosts.removeMinItem();
         }
+
+        int tempValue = outputAlphabetically.size();
+        bool swap;
+        do
+        {
+            swap = false;
+            for (int i = 0; i < tempValue-1; i++)
+            {
+                if (outputAlphabetically[i] > outputAlphabetically[i+1])
+                {
+                    string temp = outputAlphabetically[i];
+                    outputAlphabetically[i] = outputAlphabetically[i+1];
+                    outputAlphabetically[i+1] = temp;
+                    swap = true;
+                }
+            }
+        }while(swap);
+
+        for (int i = 0; i < tempValue; i++)
+        {
+            cout << outputAlphabetically[i] << endl;
+        }
+
     }
 
 

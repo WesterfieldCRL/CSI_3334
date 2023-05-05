@@ -1,2 +1,4 @@
-total delay: 10
-waco_server
+total delay: 100
+a_server
+b_server
+c_server

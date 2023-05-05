@@ -1,0 +1,7 @@
+6
+a_server b_server 50
+b_server a_server 50
+a_server c_server 50
+c_server a_server 50
+b_server c_server 50
+c_server b_server 50

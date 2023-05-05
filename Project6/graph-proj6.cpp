@@ -52,6 +52,7 @@ vector<int> Graph::dijkstra(int source) const {
     vector<int> keys;
     ArrayHeap<pair<int, int>> heap; //pair of (distance, vertex)
 
+
     int tempListSize = adjacencyList.size();
     for (int i = 0; i < tempListSize; i++) {
         dist.push_back(INFINITE_COST);

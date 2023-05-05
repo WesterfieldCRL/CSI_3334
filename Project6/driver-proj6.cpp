@@ -63,22 +63,18 @@ int main() {
             computerToIndex[computer2] = computerToIndex.size();
 
             //check if a server
+            canBeServer.push_back(false);
             if (computer1.length() > 7) {
                 string temp = computer1.substr(computer1.length()-7, 7);
                 if (temp == "_server") {
-                    canBeServer.push_back(true);
-                }
-                else {
-                    canBeServer.push_back(false);
+                    canBeServer[0] = true;
                 }
             }
+            canBeServer.push_back(false);
             if (computer2.length() > 7) {
                 string temp = computer2.substr(computer2.length()-7, 7);
                 if (temp == "_server") {
-                    canBeServer.push_back(true);
-                }
-                else {
-                    canBeServer.push_back(false);
+                    canBeServer[1] = true;
                 }
             }
         }
@@ -88,13 +84,11 @@ int main() {
                 computerToIndex[computer1] = computerToIndex.size();
 
                 //check if a server
+                canBeServer.push_back(false);
                 if (computer1.length() > 7) {
                     string temp = computer1.substr(computer1.length()-7, 7);
                     if (temp == "_server") {
-                        canBeServer.push_back(true);
-                    }
-                    else {
-                        canBeServer.push_back(false);
+                        canBeServer[canBeServer.size()-1] = true;
                     }
                 }
             }
@@ -102,20 +96,16 @@ int main() {
                 computerToIndex[computer2] = computerToIndex.size();
 
                 //check if a server
+                canBeServer.push_back(false);
                 if (computer2.length() > 7) {
                     string temp = computer2.substr(computer2.length()-7, 7);
                     if (temp == "_server") {
-                        canBeServer.push_back(true);
-                    }
-                    else {
-                        canBeServer.push_back(false);
+                        canBeServer[canBeServer.size()-1] = true;
                     }
                 }
             }
         }
 
-        //Add edge to graph
-        //graph.addEdge(computerToIndex[computer1], computerToIndex[computer2], cost);
         computers1.push_back(computerToIndex[computer1]);
         computers2.push_back(computerToIndex[computer2]);
         costs.push_back(cost);
@@ -126,7 +116,7 @@ int main() {
     for (int i = 0; i < tempCosts; i++) {
         graph.addEdge(computers1[i], computers2[i], costs[i]);
     }
-    
+
     int tempServerSize = canBeServer.size();
     for (int i = 0; i < tempServerSize; i++) {
         if (canBeServer[i]) {

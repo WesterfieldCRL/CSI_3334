@@ -20,7 +20,7 @@ int main()
     int length = 0;
     vector<pair<string, string>> output;
 
-    for (int i = 0; i < 1000; i++)
+    for (int i = 0; i < 3000; i++)
     {
         string rand_str(1, '\0');
         for(auto& dis: rand_str)
@@ -31,13 +31,14 @@ int main()
             rand_str = rand_str + isServer;
         }
         string rand_str2(1, '\0');
+        for(auto& dis: rand_str2)
+            dis = distribution(generator);
         canBeServer = rand()%2;
         if (canBeServer == 0)
         {
             rand_str2 = rand_str2 + isServer;
         }
-        for(auto& dis: rand_str2)
-            dis = distribution(generator);
+
         if (rand_str2 != rand_str)
         {
             pair<string,string> temp = make_pair(rand_str, rand_str2);

@@ -11,7 +11,6 @@
  */
 
 #include <iostream>
-#include <random>
 #include <string>
 #include <map>
 #include "arrayheap-student-proj6.h"
@@ -43,17 +42,25 @@ int main() {
     vector<int> computers1;
     vector<int> computers2;
     vector<int> costs;
+    bool swap = false;
+    string tempOutput;
+    string computer1;
+    string computer2;
+    int cost;
+    string temp;
+    int totalCost;
+    int tempDistances;
+    bool isTooBig;
+    vector<int> distances;
 
     int edges;
 
     cin >> edges;
 
     //Graph graph(edges);
-
+    
     for (int i = 0; i < edges; i++) {
-        string computer1;
-        string computer2;
-        int cost;
+        
         cin >> computer1 >> computer2 >> cost; //read in data
 
         //Update map of computer names to index
@@ -65,14 +72,14 @@ int main() {
             //check if a server
             canBeServer.push_back(false);
             if (computer1.length() > 7) {
-                string temp = computer1.substr(computer1.length()-7, 7);
+                temp = computer1.substr(computer1.length()-7, 7);
                 if (temp == "_server") {
                     canBeServer[0] = true;
                 }
             }
             canBeServer.push_back(false);
             if (computer2.length() > 7) {
-                string temp = computer2.substr(computer2.length()-7, 7);
+                temp = computer2.substr(computer2.length()-7, 7);
                 if (temp == "_server") {
                     canBeServer[1] = true;
                 }
@@ -86,7 +93,7 @@ int main() {
                 //check if a server
                 canBeServer.push_back(false);
                 if (computer1.length() > 7) {
-                    string temp = computer1.substr(computer1.length()-7, 7);
+                    temp = computer1.substr(computer1.length()-7, 7);
                     if (temp == "_server") {
                         canBeServer[canBeServer.size()-1] = true;
                     }
@@ -98,7 +105,7 @@ int main() {
                 //check if a server
                 canBeServer.push_back(false);
                 if (computer2.length() > 7) {
-                    string temp = computer2.substr(computer2.length()-7, 7);
+                    temp = computer2.substr(computer2.length()-7, 7);
                     if (temp == "_server") {
                         canBeServer[canBeServer.size()-1] = true;
                     }
@@ -120,10 +127,10 @@ int main() {
     int tempServerSize = canBeServer.size();
     for (int i = 0; i < tempServerSize; i++) {
         if (canBeServer[i]) {
-            vector<int> distances = graph.dijkstra(i);
-            int totalCost = 0;
-            int tempDistances = distances.size();
-            bool isTooBig = false;
+            distances = graph.dijkstra(i);
+            totalCost = 0;
+            tempDistances = distances.size();
+            isTooBig = false;
             for (int j = 0; j < tempDistances; j++) {
                 totalCost += distances[j];
                 if (distances[j] >= INFINITE_COST) {
@@ -164,14 +171,13 @@ int main() {
         }
 
         int tempValue = outputAlphabetically.size();
-        bool swap = false;
         do {
             swap = false;
             for (int i = 0; i < tempValue-1; i++) {
                 if (outputAlphabetically[i] > outputAlphabetically[i+1]) {
-                    string temp = outputAlphabetically[i];
+                    tempOutput = outputAlphabetically[i];
                     outputAlphabetically[i] = outputAlphabetically[i+1];
-                    outputAlphabetically[i+1] = temp;
+                    outputAlphabetically[i+1] = tempOutput;
                     swap = true;
                 }
             }

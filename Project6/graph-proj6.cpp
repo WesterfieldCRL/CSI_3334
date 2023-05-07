@@ -76,7 +76,14 @@ vector<int> Graph::dijkstra(int source) const {
             int newCost = minCost + it->cost;
             if (newCost < dist[it->to]) {
                 dist[it->to] = newCost;
-                keys[it->to] = heap.insert(make_pair(newCost, it->to));
+                if (heap.isOnHeap(keys[it->to]))
+                {
+                    heap.changeItemAtKey(keys[it->to], make_pair(newCost, it->to));
+                }
+                else
+                {
+                    keys[it->to] = heap.insert(make_pair(newCost, it->to));
+                }
             }
         }
     }

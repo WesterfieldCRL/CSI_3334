@@ -36,7 +36,9 @@ ArrayHeap<T>::ArrayHeap() {
     this->heapAndFreeStack = new int[this->capacity];
     this->dataToHeap = new int[this->capacity];
     for (int i = 0; i < this->capacity; i++) {
-        this->heapAndFreeStack[i] = -1;
+        this->heapAndFreeStack[i] = i;
+    }
+    for (int i = 0; i < this->capacity; i++) {
         this->dataToHeap[i] = -1;
     }
 }
@@ -60,7 +62,6 @@ ArrayHeap<T>::ArrayHeap(ArrayHeap<T> const &h) {
     this->data = new T[this->capacity];
     this->heapAndFreeStack = new int[this->capacity];
     this->dataToHeap = new int[this->capacity];
-
     for(int i = 0; i < this->capacity; i++) {
         this->data[i] = h.data[i];
         this->heapAndFreeStack[i] = h.heapAndFreeStack[i];
@@ -103,21 +104,18 @@ ArrayHeap<T>::~ArrayHeap() {
 
 template <typename T>
 ArrayHeap<T> const &ArrayHeap<T>::operator=(ArrayHeap<T> const &ah) {
-    this->capacity = ah.capacity;
-    this->numItems = ah.numItems;
-    delete [] this->data;
-    delete [] this->heapAndFreeStack;
-    delete [] this->dataToHeap;
-    this->data = new T[this->capacity];
-    this->heapAndFreeStack = new int[this->capacity];
-    this->dataToHeap = new int[this->capacity];
-
-    for(int i = 0; i < this->capacity; i++) {
-        this->data[i] = ah.data[i];
-        this->heapAndFreeStack[i] = ah.heapAndFreeStack[i];
-        this->dataToHeap[i] = ah.dataToHeap[i];
+    if(this != &ah) {
+        this->capacity = ah.capacity;
+        this->numItems = ah.numItems;
+        this->data = new T[this->capacity];
+        this->heapAndFreeStack = new int[this->capacity];
+        this->dataToHeap = new int[this->capacity];
+        for(int i = 0; i < this->capacity; i++) {
+            this->data[i] = ah.data[i];
+            this->heapAndFreeStack[i] = ah.heapAndFreeStack[i];
+            this->dataToHeap[i] = ah.dataToHeap[i];
+        }
     }
-
     return *this;
 }
 
@@ -138,19 +136,14 @@ int ArrayHeap<T>::insert(T const &item) {
         this->doubleCapacity();
     }
 
-    for (int i = 0; i < this->capacity; i++) {
-        if (this->dataToHeap[i] == -1) {
-            this->data[i] = item;
-            this->heapAndFreeStack[this->numItems] = i;
-            this->dataToHeap[i] = this->numItems;
-            i = this->capacity + 1;
-        }
-    }
-
-    this->bubbleUp(this->numItems);
+    this->data[this->heapAndFreeStack[this->numItems]] = item;
+    this->dataToHeap[this->heapAndFreeStack[this->numItems]] = this->numItems;
     this->numItems++;
 
-    return this->numItems - 1;
+    this->bubbleUp(this->numItems - 1);
+
+    return this->dataToHeap[this->heapAndFreeStack[this->numItems - 1]];
+
 }
 
 /**
@@ -169,12 +162,11 @@ void ArrayHeap<T>::removeMinItem() {
     if(this->numItems <= 0) {
         return;
     }
-
-    this->dataToHeap[this->heapAndFreeStack[this->numItems - 1]] = 0;
-    this->dataToHeap[this->heapAndFreeStack[0]] = -1;
     
-    this->heapAndFreeStack[0] = this->heapAndFreeStack[this->numItems - 1];
+    swap(this->heapAndFreeStack[0], this->heapAndFreeStack[this->numItems - 1]);
+    this->dataToHeap[this->heapAndFreeStack[0]] = 0;
     this->numItems--;
+
     this->bubbleDown(0);
 }
 
@@ -248,13 +240,14 @@ bool ArrayHeap<T>::isOnHeap(int key) const {
 
 template <typename T>
 void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem) {
-    if(this->dataToHeap[key] == -1) {
-        return;
-    }
-
     this->data[this->heapAndFreeStack[key]] = newItem;
-    this->bubbleUp(this->heapAndFreeStack[key]);
-    this->bubbleDown(this->heapAndFreeStack[key]);
+    this->bubbleUp(this->numItems - 1);
+    this->bubbleDown(0);
+    for (int i = 0; i < this->capacity; i++)
+    {
+        cout << this->heapAndFreeStack[this->dataToHeap[i]] << " ";
+    }
+    cout << endl;
 }
 
 /**
@@ -270,27 +263,29 @@ void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem) {
 
 template <typename T>
 void ArrayHeap<T>::doubleCapacity() {
+    int tempCap = this->capacity;
     this->capacity *= 2;
-    T *newData = new T[this->capacity];
-    int *newHeapAndFreeStack = new int[this->capacity];
-    int *newDataToHeap = new int[this->capacity];
+    T *tempData = new T[this->capacity];
+    int *tempHeapAndFreeStack = new int[this->capacity];
+    int *tempDataToHeap = new int[this->capacity];
 
-    for (int i = 0; i < this->capacity; i++) {
-        newDataToHeap[i] = -1;
+    for (int i = 0; i < tempCap; i++) {
+        tempHeapAndFreeStack[i] = this->heapAndFreeStack[i];
+        tempData[i] = this->data[i];
+        tempDataToHeap[i] = this->dataToHeap[i];
     }
 
-    for(int i = 0; i < this->numItems; i++) {
-        newData[i] = this->data[i];
-        newHeapAndFreeStack[i] = this->heapAndFreeStack[i];
-        newDataToHeap[i] = this->dataToHeap[i];
+    for (int i = tempCap; i < this->capacity; i++) {
+        tempHeapAndFreeStack[i] = i;
+        tempDataToHeap[i] = -1;
     }
 
     delete [] this->data;
     delete [] this->heapAndFreeStack;
     delete [] this->dataToHeap;
-    this->data = newData;
-    this->heapAndFreeStack = newHeapAndFreeStack;
-    this->dataToHeap = newDataToHeap;
+    this->data = tempData;
+    this->heapAndFreeStack = tempHeapAndFreeStack;
+    this->dataToHeap = tempDataToHeap;
 }
 
 /**
@@ -307,7 +302,7 @@ void ArrayHeap<T>::doubleCapacity() {
 template <typename T>
 void ArrayHeap<T>::bubbleUp(int ndx) {
     int parent = (ndx - 1) / 2;
-    if(parent < 0) {
+    if(parent < 0 && ndx < this->numItems) {
         return;
     }
 
@@ -335,11 +330,16 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
     int rightChild = (2 * ndx) + 2;
     int minChild = leftChild;
 
+    if (rightChild >= this->numItems && leftChild >= this->numItems) {
+        return;
+    }
+
     if(leftChild >= this->numItems) {
         return;
     }
 
-    if(rightChild < this->numItems && this->data[this->heapAndFreeStack[rightChild]] < this->data[this->heapAndFreeStack[leftChild]]) {
+    if(rightChild < this->numItems && this->data[this->heapAndFreeStack[rightChild]] 
+    < this->data[this->heapAndFreeStack[leftChild]]) {
         minChild = rightChild;
     }
 

@@ -243,11 +243,6 @@ void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem) {
     this->data[this->heapAndFreeStack[key]] = newItem;
     this->bubbleUp(this->numItems - 1);
     this->bubbleDown(0);
-    for (int i = 0; i < this->capacity; i++)
-    {
-        cout << this->heapAndFreeStack[this->dataToHeap[i]] << " ";
-    }
-    cout << endl;
 }
 
 /**

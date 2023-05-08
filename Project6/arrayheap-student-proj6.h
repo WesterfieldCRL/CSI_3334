@@ -37,9 +37,7 @@ ArrayHeap<T>::ArrayHeap() {
     this->dataToHeap = new int[this->capacity];
     for (int i = 0; i < this->capacity; i++) {
         this->heapAndFreeStack[i] = i;
-    }
-    for (int i = 0; i < this->capacity; i++) {
-        this->dataToHeap[i] = -1;
+        this->dataToHeap[i] = i;
     }
 }
 
@@ -136,8 +134,8 @@ int ArrayHeap<T>::insert(T const &item) {
         this->doubleCapacity();
     }
 
+
     this->data[this->heapAndFreeStack[this->numItems]] = item;
-    this->dataToHeap[this->heapAndFreeStack[this->numItems]] = this->numItems;
     this->numItems++;
 
     this->bubbleUp(this->numItems - 1);
@@ -164,9 +162,8 @@ void ArrayHeap<T>::removeMinItem() {
     }
     
     swap(this->heapAndFreeStack[0], this->heapAndFreeStack[this->numItems - 1]);
-    this->dataToHeap[this->heapAndFreeStack[0]] = 0;
+    swap(this->dataToHeap[this->heapAndFreeStack[0]], this->dataToHeap[this->heapAndFreeStack[this->numItems - 1]]);
     this->numItems--;
-
     this->bubbleDown(0);
 }
 
@@ -240,7 +237,7 @@ bool ArrayHeap<T>::isOnHeap(int key) const {
 
 template <typename T>
 void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem) {
-    this->data[this->heapAndFreeStack[key]] = newItem;
+    this->data[key] = newItem;
     this->bubbleUp(this->numItems - 1);
     this->bubbleDown(0);
 }
@@ -272,7 +269,7 @@ void ArrayHeap<T>::doubleCapacity() {
 
     for (int i = tempCap; i < this->capacity; i++) {
         tempHeapAndFreeStack[i] = i;
-        tempDataToHeap[i] = -1;
+        tempDataToHeap[i] = i;
     }
 
     delete [] this->data;

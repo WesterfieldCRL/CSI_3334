@@ -52,6 +52,7 @@ vector<int> Graph::dijkstra(int source) const {
     vector<int> keys;
     ArrayHeap<pair<int, int>> heap; //pair of (distance, vertex)
 
+    //cout << "dijkstra called on source vertex " << source << endl;
 
     int tempListSize = adjacencyList.size();
     for (int i = 0; i < tempListSize; i++) {
@@ -65,8 +66,10 @@ vector<int> Graph::dijkstra(int source) const {
 
     while (heap.getNumItems() > 0) {
         //remove min item
-        pair<int, int> min = heap.getMinItem();
+        pair<int, int> min = heap.getMinItem(); //pair of (distance, vertex)
         heap.removeMinItem();
+
+        //cout << "   pulled vertex " << min.second << " with cost " << min.first << endl;
 
         int minVertex = min.second;
         int minCost = min.first;
@@ -75,15 +78,22 @@ vector<int> Graph::dijkstra(int source) const {
         for (auto it = adjacencyList[minVertex].begin(); it != adjacencyList[minVertex].end(); it++) {
             int newCost = minCost + it->cost;
             if (newCost < dist[it->to]) {
+                //cout << "found shorter path to vertex " << it->to << " via vertex " << min.second << " with cost " << newCost << endl;
                 dist[it->to] = newCost;
-                //if (keys[it->to] != -1 && heap.isOnHeap(keys[it->to]))
-                //{
-                    //heap.changeItemAtKey(keys[it->to], make_pair(newCost, it->to));
-                //}
-                //else
-                //{
+                for (int i = 0; i < keys.size(); i++)
+                {
+                    //cout << "keys[" << i << "] = " << keys[i] << endl;
+                }
+                if (keys[it->to] != -1 && heap.isOnHeap(keys[it->to]))
+                {
+                    //cout << "vertex " << it->to << " already on heap with key " << keys[it->to] << ", updating cost to " << newCost << endl;
+                    heap.changeItemAtKey(keys[it->to], make_pair(newCost, it->to));
+                }
+                else
+                {
                     keys[it->to] = heap.insert(make_pair(newCost, it->to));
-                //}
+                    //cout << "inserted vertex " << it->to << " with cost " << newCost << ", key " << keys[it->to] << endl;
+                }
             }
         }
     }

@@ -54,7 +54,7 @@ int main() {
     vector<int> distances;
 
     int edges;
-
+    int vertices = 0;
     cin >> edges;
 
     //Graph graph(edges);
@@ -68,7 +68,7 @@ int main() {
             //if map is empty, add both computers to map
             computerToIndex[computer1] = computerToIndex.size();
             computerToIndex[computer2] = computerToIndex.size();
-
+            vertices = 2;
             //check if a server
             canBeServer.push_back(false);
             if (computer1.length() > 7) {
@@ -89,7 +89,7 @@ int main() {
             //check if computer already in map
             if (computerToIndex.find(computer1) == computerToIndex.end()) {
                 computerToIndex[computer1] = computerToIndex.size();
-
+                vertices++;
                 //check if a server
                 canBeServer.push_back(false);
                 if (computer1.length() > 7) {
@@ -101,7 +101,7 @@ int main() {
             }
             if (computerToIndex.find(computer2) == computerToIndex.end()) {
                 computerToIndex[computer2] = computerToIndex.size();
-
+                vertices++;
                 //check if a server
                 canBeServer.push_back(false);
                 if (computer2.length() > 7) {
@@ -118,14 +118,14 @@ int main() {
         costs.push_back(cost);
     }
 
-    Graph graph(computerToIndex.size());
-    int tempCosts = costs.size();
-    for (int i = 0; i < tempCosts; i++) {
+    Graph graph(vertices);
+    //int tempCosts = costs.size();
+    for (int i = 0; i < edges; i++) {
         graph.addEdge(computers1[i], computers2[i], costs[i]);
     }
 
-    int tempServerSize = canBeServer.size();
-    for (int i = 0; i < tempServerSize; i++) {
+    //int tempServerSize = canBeServer.size();
+    for (int i = 0; i < vertices; i++) {
         if (canBeServer[i]) {
             distances = graph.dijkstra(i);
             totalCost = 0;

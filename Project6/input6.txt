@@ -1,8 +1,14 @@
-7
-e b 10
-e c 10
-e d 10
-a_server b 50
-a_server c 50
-a_server d 50
-a_server e 50
+13
+a_server b 10
+a_server c 10
+a_server d 10
+a_server f 10
+a_server g 10
+a_server h 10
+a_server e 1
+e b 1
+b c 1
+c d 1
+d f 1
+f g 1
+g h 1

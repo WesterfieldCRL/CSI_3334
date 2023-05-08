@@ -38,20 +38,18 @@ int main() {
     ArrayHeap<pair<int, int>> serverCosts; //cost, vertex
     map<string, int> computerToIndex;
     //vector<bool> canBeServer;
-    vector<string> outputAlphabetically;
-    vector<string> computers1;
-    vector<string> computers2;
+    //vector<string> computers1;
+    //vector<string> computers2;
     //vector<int> costs;
-    bool swap = false;
-    string tempOutput;
+    
     string computer1;
     string computer2;
     int cost;
     string temp;
     int totalCost;
-    int tempDistances;
+    //int tempDistances;
     bool isTooBig;
-    vector<int> distances;
+    
 
     int edges;
     int vertices = 0;
@@ -59,6 +57,7 @@ int main() {
 
     int costs[edges];
     bool servers[edges];
+    pair<int, int> edgeCombos[edges];
     //Graph graph(edges);
     
     for (int i = 0; i < edges; i++) {
@@ -117,29 +116,33 @@ int main() {
             }
         }
 
-        computers1.push_back(computer1);
-        computers2.push_back(computer2);
+        edgeCombos[i] = make_pair(computerToIndex[computer1], computerToIndex[computer2]);
         costs[i] = cost;
     }
 
     Graph graph(vertices);
     //int tempCosts = costs.size();
     for (int i = 0; i < edges; i++) {
-        graph.addEdge(computerToIndex[computers1[i]], computerToIndex[computers2[i]], costs[i]);
+        graph.addEdge(edgeCombos[i].first, edgeCombos[i].second, costs[i]);
     }
 
     //int tempServerSize = canBeServer.size();
     for (int i = 0; i < vertices; i++) {
         if (servers[i]) {
+            vector<int> distances;
             distances = graph.dijkstra(i);
             totalCost = 0;
-            tempDistances = distances.size();
+            //tempDistances = distances.size();
             isTooBig = false;
-            for (int j = 0; j < tempDistances; j++) {
-                totalCost += distances[j];
-                if (distances[j] >= INFINITE_COST) {
+            for (int j = 0; j < vertices; j++) {
+                if (distances.back() >= INFINITE_COST) {
                     isTooBig = true;
-                    j = tempDistances;
+                    j = vertices;
+                }
+                else
+                {
+                    totalCost += distances.back();
+                    distances.pop_back();
                 }
             }
             if (!isTooBig) {
@@ -149,36 +152,42 @@ int main() {
     }
 
     pair<int, int> min = serverCosts.getMinItem();
-    
 
     if (serverCosts.getNumItems() == 0) {
         cout << "no server can serve the whole network" << endl;
     }
     else {
-    
+        //vector<string> outputAlphabetically;
+        string outputAlphabetically[vertices];
+        int numOutputs = 0;
         cout << "total delay: " << min.first << endl;
         serverCosts.removeMinItem();
 
         for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++) {
             if (it->second == min.second) {
-                outputAlphabetically.push_back(it->first);
+                outputAlphabetically[numOutputs] = it->first;
+                numOutputs++;
             }
         }
 
         while (serverCosts.getMinItem().first == min.first && serverCosts.getNumItems() > 0) {
             for (auto it = computerToIndex.begin(); it != computerToIndex.end(); it++) {
                 if (it->second == serverCosts.getMinItem().second) {
-                    outputAlphabetically.push_back(it->first);
+                    outputAlphabetically[numOutputs] = it->first;
+                    numOutputs++;
                 }
             }
             serverCosts.removeMinItem();
         }
 
-        int tempValue = outputAlphabetically.size();
+        //int tempValue = outputAlphabetically.size();
+
+        bool swap = false;
         do {
             swap = false;
-            for (int i = 0; i < tempValue-1; i++) {
+            for (int i = 0; i < numOutputs-1; i++) {
                 if (outputAlphabetically[i] > outputAlphabetically[i+1]) {
+                    string tempOutput;
                     tempOutput = outputAlphabetically[i];
                     outputAlphabetically[i] = outputAlphabetically[i+1];
                     outputAlphabetically[i+1] = tempOutput;
@@ -187,7 +196,7 @@ int main() {
             }
         } while(swap);
 
-        for (int i = 0; i < tempValue; i++) {
+        for (int i = 0; i < numOutputs; i++) {
             cout << outputAlphabetically[i] << endl;
         }
 

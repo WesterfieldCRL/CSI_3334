@@ -1,0 +1,22 @@
+21
+a_server b_server 1
+a_server c_server 1
+a_server d_server 1
+a_server e_server 1
+a_server f_server 1
+b_server a_server 1
+b_server c_server 1
+b_server d_server 1
+b_server e_server 1
+b_server f_server 1
+c_server a_server 1
+c_server b_server 1
+c_server d_server 1
+c_server e_server 1
+c_server f_server 1
+d_server a_server 1
+d_server b_server 1
+d_server c_server 1
+d_server e_server 1
+d_server f_server 1
+e_server f_server 1

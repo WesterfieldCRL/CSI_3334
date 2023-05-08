@@ -37,11 +37,11 @@ int main() {
     enum { INFINITE_COST = 1000000000 };
     ArrayHeap<pair<int, int>> serverCosts; //cost, vertex
     map<string, int> computerToIndex;
-    vector<bool> canBeServer;
+    //vector<bool> canBeServer;
     vector<string> outputAlphabetically;
-    vector<int> computers1;
-    vector<int> computers2;
-    vector<int> costs;
+    vector<string> computers1;
+    vector<string> computers2;
+    //vector<int> costs;
     bool swap = false;
     string tempOutput;
     string computer1;
@@ -57,6 +57,8 @@ int main() {
     int vertices = 0;
     cin >> edges;
 
+    int costs[edges];
+    bool servers[edges];
     //Graph graph(edges);
     
     for (int i = 0; i < edges; i++) {
@@ -66,67 +68,69 @@ int main() {
         //Update map of computer names to index
         if (computerToIndex.size() == 0) {
             //if map is empty, add both computers to map
-            computerToIndex[computer1] = computerToIndex.size();
-            computerToIndex[computer2] = computerToIndex.size();
+            computerToIndex[computer1] = 0;
+            computerToIndex[computer2] = 1;
             vertices = 2;
             //check if a server
-            canBeServer.push_back(false);
+            servers[0] = false;
             if (computer1.length() > 7) {
                 temp = computer1.substr(computer1.length()-7, 7);
                 if (temp == "_server") {
-                    canBeServer[0] = true;
+                    servers[0] = true;
                 }
             }
-            canBeServer.push_back(false);
+            servers[1] = false;
             if (computer2.length() > 7) {
                 temp = computer2.substr(computer2.length()-7, 7);
                 if (temp == "_server") {
-                    canBeServer[1] = true;
+                    servers[1] = true;
                 }
             }
         }
         else {
             //check if computer already in map
             if (computerToIndex.find(computer1) == computerToIndex.end()) {
-                computerToIndex[computer1] = computerToIndex.size();
-                vertices++;
+                computerToIndex[computer1] = vertices;
+                
                 //check if a server
-                canBeServer.push_back(false);
+                servers[vertices] = false;
                 if (computer1.length() > 7) {
                     temp = computer1.substr(computer1.length()-7, 7);
                     if (temp == "_server") {
-                        canBeServer[canBeServer.size()-1] = true;
+                        servers[vertices] = true;
                     }
                 }
+                vertices++;
             }
             if (computerToIndex.find(computer2) == computerToIndex.end()) {
-                computerToIndex[computer2] = computerToIndex.size();
-                vertices++;
+                computerToIndex[computer2] = vertices;
+                
                 //check if a server
-                canBeServer.push_back(false);
+                servers[vertices] = false;
                 if (computer2.length() > 7) {
                     temp = computer2.substr(computer2.length()-7, 7);
                     if (temp == "_server") {
-                        canBeServer[canBeServer.size()-1] = true;
+                        servers[vertices] = true;
                     }
                 }
+                vertices++;
             }
         }
 
-        computers1.push_back(computerToIndex[computer1]);
-        computers2.push_back(computerToIndex[computer2]);
-        costs.push_back(cost);
+        computers1.push_back(computer1);
+        computers2.push_back(computer2);
+        costs[i] = cost;
     }
 
     Graph graph(vertices);
     //int tempCosts = costs.size();
     for (int i = 0; i < edges; i++) {
-        graph.addEdge(computers1[i], computers2[i], costs[i]);
+        graph.addEdge(computerToIndex[computers1[i]], computerToIndex[computers2[i]], costs[i]);
     }
 
     //int tempServerSize = canBeServer.size();
     for (int i = 0; i < vertices; i++) {
-        if (canBeServer[i]) {
+        if (servers[i]) {
             distances = graph.dijkstra(i);
             totalCost = 0;
             tempDistances = distances.size();

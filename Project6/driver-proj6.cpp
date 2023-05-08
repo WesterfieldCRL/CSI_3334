@@ -13,6 +13,11 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <utility>
+#include <algorithm>
+#include <vector>
+#include <queue>
+#include <climits>
 #include "arrayheap-student-proj6.h"
 #include "graph-proj6.h"
 
@@ -33,8 +38,9 @@ using namespace std;
  * Return value: 0 (indicating a successful run)
  */
 
+enum { INFINITE_COST = 1000000000 };
+
 int main() {
-    enum { INFINITE_COST = 1000000000 };
     ArrayHeap<pair<int, int>> serverCosts; //cost, vertex
     map<string, int> computerToIndex;
     //vector<bool> canBeServer;

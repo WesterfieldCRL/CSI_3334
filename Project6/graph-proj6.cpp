@@ -10,6 +10,7 @@
 #include "graph-proj6.h"
 #include "arrayheap-student-proj6.h"
 #include <utility>
+#include <vector>
 
 #include <iostream>
 
@@ -28,12 +29,7 @@ using namespace std;
  */
 
 void Graph::addEdge(int from, int to, int cost) {
-    if (inVertexRange(from) && inVertexRange(to)) {
-        adjacencyList[from].push_back(Edge(to, cost));
-    }
-    else {
-        cout << "Error: Vertex out of range" << endl;
-    }
+    adjacencyList[from].push_back(Edge(to, cost));
 }
 
 /**

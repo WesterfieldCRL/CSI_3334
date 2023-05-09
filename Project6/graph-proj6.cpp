@@ -48,8 +48,6 @@ vector<int> Graph::dijkstra(int source) const {
     vector<int> keys;
     ArrayHeap<pair<int, int>> heap; //pair of (distance, vertex)
 
-    //cout << "DEBUG: dijkstra called on source vertex " << source << endl; //DEBUG
-
     int tempListSize = adjacencyList.size();
     for (int i = 0; i < tempListSize; i++) {
         dist.push_back(INFINITE_COST);
@@ -65,8 +63,6 @@ vector<int> Graph::dijkstra(int source) const {
         pair<int, int> min = heap.getMinItem(); //pair of (distance, vertex)
         heap.removeMinItem();
 
-        //cout << "DEBUG:   pulled vertex " << min.second << " from the frontier with cost " << min.first << endl; //DEBUG
-
         int minVertex = min.second;
         int minCost = min.first;
 
@@ -75,19 +71,13 @@ vector<int> Graph::dijkstra(int source) const {
             int newCost = minCost + it->cost;
             if (newCost < dist[it->to]) {
 
-                //cout << "DEBUG:     found a shorter path to vertex " << it->to << " via vertex " << minVertex << " (old cost = " << dist[it->to] << ", new cost = " << newCost << ")" << endl; //DEBUG
-
                 dist[it->to] = newCost;
 
-                if (keys[it->to] != -1 && heap.isOnHeap(keys[it->to]))
-                {
-                    //cout << "DEBUG:     vertex " << it->to << " was on the frontier with key " << keys[it->to] << "; updating its cost" << endl; //DEBUG
+                if (keys[it->to] != -1 && heap.isOnHeap(keys[it->to])) {
                     heap.changeItemAtKey(keys[it->to], make_pair(newCost, it->to));
                 }
-                else
-                {
+                else {
                     keys[it->to] = heap.insert(make_pair(newCost, it->to));
-                    //cout << "DEBUG:     inserting vertex " << it->to << " on the frontier; received key " << keys[it->to] << endl; //DEBUG
                 }
             }
         }

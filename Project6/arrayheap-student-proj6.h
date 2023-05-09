@@ -134,13 +134,16 @@ int ArrayHeap<T>::insert(T const &item) {
         this->doubleCapacity();
     }
 
+    int temp;
 
     this->data[this->heapAndFreeStack[this->numItems]] = item;
+    this->dataToHeap[this->heapAndFreeStack[this->numItems]] = this->numItems;
     this->numItems++;
+    temp = this->heapAndFreeStack[this->numItems - 1];
 
     this->bubbleUp(this->numItems - 1);
 
-    return this->dataToHeap[this->heapAndFreeStack[this->numItems - 1]];
+    return temp;
 
 }
 
@@ -238,8 +241,8 @@ bool ArrayHeap<T>::isOnHeap(int key) const {
 template <typename T>
 void ArrayHeap<T>::changeItemAtKey(int key, T const &newItem) {
     this->data[key] = newItem;
-    this->bubbleUp(this->numItems - 1);
-    this->bubbleDown(0);
+    this->bubbleUp(this->dataToHeap[key]);
+    this->bubbleDown(this->dataToHeap[key]);
 }
 
 /**

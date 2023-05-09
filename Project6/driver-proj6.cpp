@@ -65,7 +65,7 @@ int main () {
             if (!isInMap) {
                 computerToIndex.insert(make_pair(vertices, tempInput));
                 vertices++;
-
+                //cout << "DEBUG: computer '" << tempInput << "' is vertex " << vertices-1 << endl;
                 if (tempInput.size() > 7 && tempInput.substr(tempInput.length()-7, 7) == "_server") {
                     canBeServer.push_back(true);
                 }
@@ -89,7 +89,7 @@ int main () {
 
     //create graph
     Graph graph(vertices);
-
+    //cout << "DEBUG: creating a graph with " << vertices << " vertices" << endl;
     //add edges to graph
     while (!edgeQueue.empty()) {
         int tempComp1 = edgeQueue.front();
@@ -108,17 +108,19 @@ int main () {
     for (int i = 0; i < vertices; i++) {
         if (canBeServer[i]) {
             vector<int> distances;
+            //cout << "DEBUG: running dijkstra from " << computerToIndex[i] << endl;
             distances = graph.dijkstra(i);
             int totalCost = 0;
             bool isTooBig = false;
+            //cout << "DEBUG: here are the delays" << endl;
             for (int j = 0; j < vertices; j++) {
-                if (distances.back() >= INFINITE_COST) {
+                //cout << "DEBUG:   delay from " << computerToIndex[i] << " to " << computerToIndex[j] << " is " << distances[j] << endl;
+                if (distances[j] >= INFINITE_COST) {
                     isTooBig = true;
-                    j = vertices;
+                    //j = vertices;
                 }
                 else {
-                    totalCost += distances.back();
-                    distances.pop_back();
+                    totalCost += distances[j];
                 }
             }
             if (!isTooBig) {

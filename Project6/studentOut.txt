@@ -1,2 +1,2 @@
-total delay: 289
-f_server
+total delay: 258
+k_server

@@ -48,7 +48,7 @@ vector<int> Graph::dijkstra(int source) const {
     vector<int> keys;
     ArrayHeap<pair<int, int>> heap; //pair of (distance, vertex)
 
-    //cout << "dijkstra called on source vertex " << source << endl;
+    //cout << "DEBUG: dijkstra called on source vertex " << source << endl; //DEBUG
 
     int tempListSize = adjacencyList.size();
     for (int i = 0; i < tempListSize; i++) {
@@ -58,14 +58,14 @@ vector<int> Graph::dijkstra(int source) const {
 
     dist[source] = 0;
 
-    heap.insert(make_pair(0, source));
+    keys[source] = heap.insert(make_pair(0, source));
 
     while (heap.getNumItems() > 0) {
         //remove min item
         pair<int, int> min = heap.getMinItem(); //pair of (distance, vertex)
         heap.removeMinItem();
 
-        //cout << "   pulled vertex " << min.second << " with cost " << min.first << endl;
+        //cout << "DEBUG:   pulled vertex " << min.second << " from the frontier with cost " << min.first << endl; //DEBUG
 
         int minVertex = min.second;
         int minCost = min.first;
@@ -74,25 +74,24 @@ vector<int> Graph::dijkstra(int source) const {
         for (auto it = adjacencyList[minVertex].begin(); it != adjacencyList[minVertex].end(); it++) {
             int newCost = minCost + it->cost;
             if (newCost < dist[it->to]) {
-                //cout << "found shorter path to vertex " << it->to << " via vertex " << min.second << " with cost " << newCost << endl;
+
+                //cout << "DEBUG:     found a shorter path to vertex " << it->to << " via vertex " << minVertex << " (old cost = " << dist[it->to] << ", new cost = " << newCost << ")" << endl; //DEBUG
+
                 dist[it->to] = newCost;
-                for (int i = 0; i < keys.size(); i++)
-                {
-                    //cout << "keys[" << i << "] = " << keys[i] << endl;
-                }
+
                 if (keys[it->to] != -1 && heap.isOnHeap(keys[it->to]))
                 {
-                    //cout << "vertex " << it->to << " already on heap with key " << keys[it->to] << ", updating cost to " << newCost << endl;
+                    //cout << "DEBUG:     vertex " << it->to << " was on the frontier with key " << keys[it->to] << "; updating its cost" << endl; //DEBUG
                     heap.changeItemAtKey(keys[it->to], make_pair(newCost, it->to));
                 }
                 else
                 {
                     keys[it->to] = heap.insert(make_pair(newCost, it->to));
-                    //cout << "inserted vertex " << it->to << " with cost " << newCost << ", key " << keys[it->to] << endl;
+                    //cout << "DEBUG:     inserting vertex " << it->to << " on the frontier; received key " << keys[it->to] << endl; //DEBUG
                 }
             }
         }
     }
-
+    
     return dist;
 }

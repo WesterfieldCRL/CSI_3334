@@ -1,0 +1,13 @@
+12
+a b 1
+c d 5
+e f 0
+f g 5
+h a 9
+d g 1
+a e 7
+h_server i 9
+j h_server 5
+b c 2
+c j 2
+k_server h 9

@@ -5,6 +5,8 @@
  * version: 1.0
  * 
  * This file contains the implementation of the Graph class.
+ * This file contains the implementation of the 
+ * addEdge and dijkstra functions.
  */
 
 #include "graph-proj6.h"
@@ -67,7 +69,8 @@ vector<int> Graph::dijkstra(int source) const {
         int minCost = min.first;
 
         //relax edges
-        for (auto it = adjacencyList[minVertex].begin(); it != adjacencyList[minVertex].end(); it++) {
+        for (auto it = adjacencyList[minVertex].begin(); 
+        it != adjacencyList[minVertex].end(); it++) {
             int newCost = minCost + it->cost;
             if (newCost < dist[it->to]) {
 

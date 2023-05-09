@@ -4,10 +4,11 @@
  * Student name: Wesley Anastasi
  * version: 1.0
  * 
- * This program reads in a list of computers and the connections between them
- * from standard input and determines the minimum cost to connect all computers
- * to a server. The program will print the minimum cost to connect all
- * computers to a server.
+ * This file contains the driver for the this project. It reads in a list of
+ * computers and the connections between them from standard input and 
+ * uses dijkstra's algorithim to determine the minimum cost to connect all 
+ * computers to a server. The program will print
+ * the minimum cost to connect all computers to a server.
  */
 
 #include <iostream>
@@ -26,10 +27,12 @@ using namespace std;
 /**
  * main
  *
- * This function reads in a list of computers and the connections between them
- * from standard input and determines the minimum cost to connect all computers
- * to a server. The program will print the minimum cost to connect all
- * computers to a server.
+ * This function is the driver for the program. It reads in a list of computers
+ * and the connections between them from standard input and adds them to a 
+ * queue. It then creates a graph and adds the edges to the graph. It then calls
+ * dijkstra on each server and adds the total cost to a heap. The heap sorts
+ * the servers by cost and alphabetically. It then prints the
+ * minimum cost to connect all computers to a server.
  * 
  * Parameters:
  *   none
@@ -65,7 +68,8 @@ int main () {
             if (!isInMap) {
                 computerToIndex.insert(make_pair(vertices, tempInput));
                 vertices++;
-                if (tempInput.size() > 7 && tempInput.substr(tempInput.length()-7, 7) == "_server") {
+                if (tempInput.size() > 7 && 
+                tempInput.substr(tempInput.length()-7, 7) == "_server") {
                     canBeServer.push_back(true);
                 }
                 else {

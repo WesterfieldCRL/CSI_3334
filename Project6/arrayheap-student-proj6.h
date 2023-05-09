@@ -5,6 +5,12 @@
  * version: 1.0
  * 
  * This file contains the implementation of the ArrayHeap class.
+ * This file contains an implementation of a constructor,
+ * a copy constructor, a destructor, an assignment operator,
+ * an insert method, an insert, a removeMinItem method, 
+ * a getMinItem method, a getNumItems method, an isOnHeap method,
+ * and a changeItemAtKey method, a double capacity method,
+ * a bubbleUp method, and a bubbleDown method.
  */
 
 #ifndef ARRAY_HEAP_STUDENT_PROJ6_H
@@ -165,7 +171,8 @@ void ArrayHeap<T>::removeMinItem() {
     }
     
     swap(this->heapAndFreeStack[0], this->heapAndFreeStack[this->numItems - 1]);
-    swap(this->dataToHeap[this->heapAndFreeStack[0]], this->dataToHeap[this->heapAndFreeStack[this->numItems - 1]]);
+    swap(this->dataToHeap[this->heapAndFreeStack[0]], 
+    this->dataToHeap[this->heapAndFreeStack[this->numItems - 1]]);
     this->numItems--;
     this->bubbleDown(0);
 }
@@ -303,7 +310,8 @@ void ArrayHeap<T>::bubbleUp(int ndx) {
 
     if(this->data[this->heapAndFreeStack[ndx]] < this->data[this->heapAndFreeStack[parent]]) {
         swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[parent]);
-        swap(this->dataToHeap[this->heapAndFreeStack[ndx]], this->dataToHeap[this->heapAndFreeStack[parent]]);
+        swap(this->dataToHeap[this->heapAndFreeStack[ndx]], 
+        this->dataToHeap[this->heapAndFreeStack[parent]]);
         this->bubbleUp(parent);
     }
 }
@@ -340,7 +348,8 @@ void ArrayHeap<T>::bubbleDown(int ndx) {
 
     if(this->data[this->heapAndFreeStack[minChild]] < this->data[this->heapAndFreeStack[ndx]]) {
         swap(this->heapAndFreeStack[ndx], this->heapAndFreeStack[minChild]);
-        swap(this->dataToHeap[this->heapAndFreeStack[ndx]], this->dataToHeap[this->heapAndFreeStack[minChild]]);
+        swap(this->dataToHeap[this->heapAndFreeStack[ndx]], 
+        this->dataToHeap[this->heapAndFreeStack[minChild]]);
         this->bubbleDown(minChild);
     }
 }
